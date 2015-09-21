@@ -1,0 +1,46 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="?attr/colorPrimary"
+    android:orientation="horizontal"
+    android:id="@+id/llButtonMenu" >
+
+    <com.rey.material.widget.ImageButton
+        android:id="@+id/ibMap"
+        style="@style/RaiseWaveColorTransparentButtonRippleStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.25"
+        android:src="@mipmap/map"
+        app:rd_delayClick="afterRelease" />
+
+    <com.rey.material.widget.ImageButton
+        android:id="@+id/ibBuilding"
+        style="@style/RaiseWaveColorTransparentButtonRippleStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.25"
+        android:src="@mipmap/building"
+        app:rd_delayClick="afterRelease" />
+
+    <com.rey.material.widget.ImageButton
+        android:id="@+id/ibTicket"
+        style="@style/RaiseWaveColorTransparentButtonRippleStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.25"
+        android:src="@mipmap/ticket"
+        app:rd_delayClick="afterRelease" />
+
+    <com.rey.material.widget.ImageButton
+        android:id="@+id/ibUser"
+        style="@style/RaiseWaveColorTransparentButtonRippleStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.25"
+        android:src="@mipmap/user"
+        app:rd_delayClick="afterRelease" />
+
+</LinearLayout>

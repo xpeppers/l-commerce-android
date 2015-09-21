@@ -1,0 +1,52 @@
+<resources>
+    <color name="primary">#395B73</color>
+    <color name="primaryDark">#365269</color>
+    <color name="colorPrimary">#395B73</color>
+    <color name="colorPrimaryDark">#365269</color>
+
+    <color name="white">#ffffff</color>
+    <color name="white_20">#33ffffff</color>
+    <color name="white_40">#66ffffff</color>
+    <color name="white_50">#80ffffff</color>
+    <color name="white_60">#99ffffff</color>
+    <color name="white_80">#CCffffff</color>
+
+    <color name="black">#000000</color>
+    <color name="black_00">#00000000</color>
+    <color name="black_20">#33000000</color>
+    <color name="black_40">#66000000</color>
+    <color name="black_50">#80000000</color>
+    <color name="black_60">#99000000</color>
+    <color name="black_80">#CC000000</color>
+    <color name="light_black">#323232</color>
+
+    <color name="grey">#969696</color>
+    <color name="light_grey">#C8C8C8</color>
+    <color name="xlight_grey">#F0F0F5</color>
+
+    <color name="trentino_grey">#525251</color>
+    <color name="trentino_grey_dark">#2d2d2c</color>
+    <color name="trentino_white">#fbfbfb</color>
+
+    <color name="trentino_red">#eb6337</color>
+    <color name="trentino_yallow">#fed15d</color>
+    <color name="trentino_cyan">#0eb6cb</color>
+    <color name="trentino_magenta">#e7356f</color>
+    <color name="trentino_orange">#f59f42</color>
+    <color name="trentino_green">#00a19a</color>
+
+    <color name="trentino_red_light">#ee825e</color>
+    <color name="trentino_yallow_light">#feda7d</color>
+    <color name="trentino_cyan_light">#3ec4d5</color>
+    <color name="trentino_magenta_light">#ec5d8c</color>
+    <color name="trentino_orange_light">#f6b167</color>
+    <color name="trentino_green_light">#32b3ad</color>
+
+    <color name="trentino_red_dark">#d45d36</color>
+    <color name="trentino_yallow_dark">#e6be57</color>
+    <color name="trentino_cyan_dark">#13a5b9</color>
+    <color name="trentino_magenta_dark">#d13568</color>
+    <color name="trentino_orange_dark">#dd913f</color>
+    <color name="trentino_green_dark">#06938d</color>
+
+</resources>

@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Trentino Local</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_offers">OffersActivity</string>
+    <string name="title_activity_offer_detail">OfferDetailActivity</string>
+    <string name="title_activity_itinerary">ItineraryActivity</string>
+    <string name="title_activity_itinerary_detail">ItineraryDetailActivity</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_paypal">PaypalActivity</string>
+    <string name="title_activity_confirm_payment">ConfirmPaymentActivity</string>
+</resources>
