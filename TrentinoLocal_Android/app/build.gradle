@@ -11,6 +11,15 @@ android {
         versionName "1.0"
     }
 
+    signingConfigs {
+        debug {
+            storeFile file("dev.keystore")
+            storePassword("apassword")
+            keyAlias("linkingCommerce")
+            keyPassword("apassword")
+        }
+    }
+
     buildTypes {
 
         release {
@@ -18,13 +27,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
-        signingConfigs {
-            debug {
-                storeFile file("dev.keystore")
-                storePassword("apassword")
-                keyAlias("linkingCommerce")
-                keyPassword("apassword")
-            }
+        debug{
+            signingConfig signingConfigs.debug
         }
     }
 
