@@ -1,8 +1,8 @@
 <resources>
-    <color name="primary">#395B73</color>
-    <color name="primaryDark">#365269</color>
-    <color name="colorPrimary">#395B73</color>
-    <color name="colorPrimaryDark">#365269</color>
+    <color name="primary">@color/trentino_background</color>
+    <color name="primaryDark">@color/trentino_background</color>
+    <color name="colorPrimary">@color/trentino_background</color>
+    <color name="colorPrimaryDark">@color/trentino_background</color>
 
     <color name="white">#ffffff</color>
     <color name="white_20">#33ffffff</color>
@@ -23,6 +23,8 @@
     <color name="grey">#969696</color>
     <color name="light_grey">#C8C8C8</color>
     <color name="xlight_grey">#F0F0F5</color>
+
+    <color name="trentino_background">#b7d5e0</color>
 
     <color name="trentino_grey">#525251</color>
     <color name="trentino_grey_dark">#2d2d2c</color>
@@ -48,5 +50,4 @@
     <color name="trentino_magenta_dark">#d13568</color>
     <color name="trentino_orange_dark">#dd913f</color>
     <color name="trentino_green_dark">#06938d</color>
-
 </resources>

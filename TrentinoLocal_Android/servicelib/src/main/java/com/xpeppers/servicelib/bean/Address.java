@@ -64,12 +64,8 @@ public class Address implements Serializable {
     public String toString() {
         String msg = "";
 
-        msg += "street: " + getStreet() + "\n";
-        msg += "zip_code: " + getZip_code() + "\n";
-        msg += "city: " + getCity() + "\n";
-        msg += "latitude: " + getLatitude() + "\n";
-        msg += "longitude: " + getLongitude() + "\n";
-        msg += "\n\n";
+        msg += getStreet() + "\n";
+        msg += getZip_code() + " - " + getCity();
 
         return msg;
     }

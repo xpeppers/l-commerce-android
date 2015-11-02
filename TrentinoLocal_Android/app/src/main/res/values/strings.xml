@@ -1,13 +1,27 @@
 <resources>
     <string name="app_name">Trentino Local</string>
+    <string name="google_maps_id">AIzaSyALrKjEV3F8GpZbuxJcqrDcMIrtBgluR6w</string>
+    <string name="facebook_app_id">160566967618650</string>
+    <!-- staging -->
+    <string name="paypal_app_id">AS3mOs2TJGCOdD6OjjZTJhG1bYIgg0cNngd-zBV8PBO1Bor0oG3imoTTYDFM0yS1qEEXHEJvzEplax4M</string>
+    <!-- production -->
+    <!-- string name="paypal_app_id">Af12_vh0I5NBtn1YH6upOVu6aytPJnfL1YgCEfPYwxrm_hHuEhGyg7GTZ8oy7g3uU3w41PCMeID7mRV5</string -->
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_offers">OffersActivity</string>
-    <string name="title_activity_offer_detail">OfferDetailActivity</string>
-    <string name="title_activity_itinerary">ItineraryActivity</string>
-    <string name="title_activity_itinerary_detail">ItineraryDetailActivity</string>
+    <string name="login_title">Trentino\nLocal</string>
+    <string name="login_slogan">vieni a scoprire le migliori offerte\nin Trentino</string>
+    <string name="hello_world">Ciao Mondo!</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_offer_detail">OfferDetailActivity</string>
     <string name="title_activity_paypal">PaypalActivity</string>
     <string name="title_activity_confirm_payment">ConfirmPaymentActivity</string>
+    <string name="offers">Offerte</string>
+    <string name="orders">Acquisti</string>
+    <string name="profile">Profilo</string>
+    <string name="where_use">Dove utilizzare</string>
+    <string name="used_by">Intestazione</string>
+    <string name="how_does_it_work">Come funziona</string>
+    <string name="how_does_it_work_content">Su questo portale puoi acquistare prodotti ed offerte esclusive. Succesivamente ti invieremo una ricevuta d\'acquisto contenente un codice di 6 cifre che potrai utilizzare per effettuare la prenotazione (dove richiesta) e ritirare i prodotti o servizi direttamente presso la struttura indicata.</string>
+    <string name="thanks">Grazie</string>
+    <string name="sent_email">Ti abbiamo inviato una email, il riferimento transazione è il seguente:</string>
+    <string name="continue_shopping">Continua lo shopping</string>
 </resources>

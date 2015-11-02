@@ -1,18 +1,21 @@
 package com.xpeppers.servicelib.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author Emilio Frusciante - FEj (efrusciante AT wish-op DOT com)
  * @since 07/04/15
  */
 public class Offer implements Serializable {
-    private int id;
+    private long id;
     private String title;
     private String description;
     private double original_price;
     private double price;
     private String image_url;
+
+    private List<String> image_gallery;
 
     private String merchant;
     private Address address;
@@ -20,11 +23,11 @@ public class Offer implements Serializable {
     private String email;
     private String web_site;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -66,6 +69,14 @@ public class Offer implements Serializable {
 
     public void setImage_url(String image_url) {
         this.image_url = image_url;
+    }
+
+    public List<String> getImage_gallery() {
+        return image_gallery;
+    }
+
+    public void setImage_gallery(List<String> image_gallery) {
+        this.image_gallery = image_gallery;
     }
 
     public String getMerchant() {

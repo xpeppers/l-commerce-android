@@ -42,7 +42,7 @@ public class OffersService {
         t.start();
     }
 
-    public void get(final double id, final CallBack callBack) {
+    public void get(final long id, final CallBack callBack) {
         Thread t = new Thread() {
             @Override
             public void run() {

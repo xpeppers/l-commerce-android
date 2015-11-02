@@ -9,6 +9,7 @@ import com.xpeppers.servicelib.bean.PaymentRequest;
 import com.xpeppers.servicelib.utils.CallBack;
 import com.xpeppers.servicelib.ws.RestClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,16 +29,23 @@ public class OrdersService {
         return instance;
     }
 
-    public void create(final double userId, final List<Double> offers, final CallBack callBack) {
+    public void create(final String auth, final Long offer, final CallBack callBack) {
+        List<Long> offers = new ArrayList<>();
+        offers.add(offer);
+
+        create(auth, offers, callBack);
+    }
+
+    public void create(final String auth, final List<Long> offers, final CallBack callBack) {
         Thread t = new Thread() {
             @Override
             public void run() {
                 try {
                     RestClient restClient = new RestClient(instance.context);
                     OrderRequest orderRequest = new OrderRequest();
-                    orderRequest.setUser_id(userId);
                     orderRequest.setOffer_ids(offers);
-                    Order order = restClient.getApiService().createOrder(orderRequest);
+                    String token = "Token token=" + auth;
+                    Order order = restClient.getApiService().createOrder(token, orderRequest);
                     callBack.onSuccess(order);
 
                 } catch (Exception e) {
@@ -48,13 +56,14 @@ public class OrdersService {
         t.start();
     }
 
-    public void get(final double id, final CallBack callBack) {
+    public void get(final String auth, final long id,  final CallBack callBack) {
         Thread t = new Thread() {
             @Override
             public void run() {
                 try {
                     RestClient restClient = new RestClient(instance.context);
-                    Order order = restClient.getApiService().getOrder(id);
+                    String token = "Token token=" + auth;
+                    Order order = restClient.getApiService().getOrder(token, id);
                     callBack.onSuccess(order);
 
                 } catch (Exception e) {
@@ -65,7 +74,7 @@ public class OrdersService {
         t.start();
     }
 
-    public void pay(final double id, final String paypalPaymentToken, final CallBack callBack) {
+    public void confirmPayment(final String auth, final long id, final String paypalPaymentToken, final CallBack callBack) {
         Thread t = new Thread() {
             @Override
             public void run() {
@@ -73,7 +82,8 @@ public class OrdersService {
                     RestClient restClient = new RestClient(instance.context);
                     PaymentRequest paymentRequest = new PaymentRequest();
                     paymentRequest.setPaypal_payment_token(paypalPaymentToken);
-                    Payment payment = restClient.getApiService().pay(id, paymentRequest);
+                    String token = "Token token=" + auth;
+                    Payment payment = restClient.getApiService().pay(token, id, paymentRequest);
                     callBack.onSuccess(payment);
 
                 } catch (Exception e) {

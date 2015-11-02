@@ -6,10 +6,12 @@ import android.app.Application;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 
+import com.facebook.AccessToken;
 import com.xpeppers.servicelib.bean.Offer;
+import com.xpeppers.servicelib.bean.OfferBought;
 import com.xpeppers.servicelib.bean.Order;
+import com.xpeppers.servicelib.bean.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,58 +21,66 @@ import java.util.List;
  * @since 07/04/15
  */
 public class Global extends Application {
-    private List<Offer> offers = new ArrayList<>();
-    //private List<Itinerary> itineraries = new ArrayList<>();
-    //private List<Order> reservations = new ArrayList<>();
+    public static final int REQUEST_CODE_PAYPAL = 799;
+    public static final int REQUEST_CODE_FACEBOOK_LOGIN = 798;
 
-    private Offer selectedOffer = null;
-    //private Itinerary selectedItinerary = null;
-    private Order selectedOrder = null;
+    public static final String PROVIDER_FB = "facebook";
+    public static String LOG_TAG = "TRENTINO_LOCAL";
 
     private Activity currentActivity;
+    private boolean apiAuthenticated;
+    private String apiToken;
 
-    private static String LOG_TAG = "TRENTINO_LOCAL";
+    private List<Offer> offers = new ArrayList<>();
+    private Offer selectedOffer = null;
+
+    private List<Order> orders = new ArrayList<>();
+    private Order selectedOrder = null;
+
+    private List<OfferBought> offerBoughts = new ArrayList<>();
+    private OfferBought selectedOfferBought = null;
+
+    private User user;
+    private String userEmailByFacebook;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
         registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
-            // TODO inserire nella callback giusta eventuali funzionalità da eseguire ogni volta sul ciclo di vita di una activity, es. GoogleAnalytics
-
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-                Log.d(LOG_TAG, "Tracking Activity Created: " + activity.getLocalClassName());
+                //Log.d(LOG_TAG, "Tracking Activity Created: " + activity.getLocalClassName());
             }
 
             @Override
             public void onActivityStarted(Activity activity) {
-                Log.d(LOG_TAG, "Tracking Activity Started: " + activity.getLocalClassName());
+                //Log.d(LOG_TAG, "Tracking Activity Started: " + activity.getLocalClassName());
             }
 
             @Override
             public void onActivityResumed(Activity activity) {
-                Log.d(LOG_TAG, "Tracking Activity Resumed: " + activity.getLocalClassName());
+                //Log.d(LOG_TAG, "Tracking Activity Resumed: " + activity.getLocalClassName());
             }
 
             @Override
             public void onActivityPaused(Activity activity) {
-                Log.d(LOG_TAG, "Tracking Activity Paused: " + activity.getLocalClassName());
+                //Log.d(LOG_TAG, "Tracking Activity Paused: " + activity.getLocalClassName());
             }
 
             @Override
             public void onActivityStopped(Activity activity) {
-                Log.d(LOG_TAG, "Tracking Activity Stopped: " + activity.getLocalClassName());
+                //Log.d(LOG_TAG, "Tracking Activity Stopped: " + activity.getLocalClassName());
             }
 
             @Override
             public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-                Log.d(LOG_TAG, "Tracking Activity SaveInstanceState: " + activity.getLocalClassName());
+                //Log.d(LOG_TAG, "Tracking Activity SaveInstanceState: " + activity.getLocalClassName());
             }
 
             @Override
             public void onActivityDestroyed(Activity activity) {
-                Log.d(LOG_TAG, "Tracking Activity Destroyed: " + activity.getLocalClassName());
+                //Log.d(LOG_TAG, "Tracking Activity Destroyed: " + activity.getLocalClassName());
             }
         });
     }
@@ -81,6 +91,29 @@ public class Global extends Application {
 
     public void setCurrentActivity(Activity currentActivity) {
         this.currentActivity = currentActivity;
+    }
+
+    public boolean isApiAuthenticated() {
+        return apiAuthenticated;
+    }
+
+    public void setApiAuthenticated(boolean apiAuthenticated) {
+        this.apiAuthenticated = apiAuthenticated;
+    }
+
+    public String getApiToken() {
+        return apiToken;
+    }
+
+    public void setApiToken(String apiToken) {
+        this.apiToken = apiToken;
+    }
+
+    public boolean isFacebookLogin() {
+        if (getAccessToken() == null) {
+            return false;
+        }
+        return !getAccessToken().isExpired();
     }
 
     public List<Offer> getOffers() {
@@ -99,12 +132,66 @@ public class Global extends Application {
         this.selectedOffer = selectedOffer;
     }
 
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
     public Order getSelectedOrder() {
         return selectedOrder;
     }
 
     public void setSelectedOrder(Order selectedOrder) {
         this.selectedOrder = selectedOrder;
+    }
+
+    public List<OfferBought> getOfferBoughts() {
+        return offerBoughts;
+    }
+
+    public void setOfferBoughts(List<OfferBought> offerBoughts) {
+        this.offerBoughts = offerBoughts;
+    }
+
+    public OfferBought getSelectedOfferBought() {
+        return selectedOfferBought;
+    }
+
+    public void setSelectedOfferBought(OfferBought selectedOfferBought) {
+        this.selectedOfferBought = selectedOfferBought;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getUserEmailByFacebook() {
+        return userEmailByFacebook;
+    }
+
+    public void setUserEmailByFacebook(String userEmailByFacebook) {
+        this.userEmailByFacebook = userEmailByFacebook;
+    }
+
+    public AccessToken getAccessToken() {
+        return AccessToken.getCurrentAccessToken();
+    }
+
+    public void setApiAuth(String token) {
+        if(token == null || token.equals("")) {
+            setApiAuthenticated(false);
+            setApiToken(null);
+        } else {
+            setApiAuthenticated(true);
+            setApiToken(token);
+        }
     }
 
     public int dpToPx(int dp) {

@@ -19,40 +19,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:id="@+id/ivBgOffer"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/placeholder"
-                    />
-                <TextView
-                    android:id="@+id/tvTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:maxLines="2"
-                    android:ellipsize="end"
-                    android:text="Titolo"
-                    android:textSize="@dimen/text_title_size"
-                    android:textColor="@color/trentino_white"
-                    android:padding="@dimen/detail_text_padding"
-                    android:background="@drawable/vertical_gradient"
-                    />
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/tvShortDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Description"
-                android:textSize="@dimen/text_size"
-                android:padding="@dimen/text_padding"
-                />
 
             <HorizontalScrollView
                 android:id="@+id/hsView"
@@ -69,18 +35,34 @@
             </HorizontalScrollView>
 
             <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:textSize="@dimen/text_size"
+                android:padding="@dimen/text_padding"
+                android:textStyle="bold" />
+
+            <TextView
                 android:id="@+id/tvDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Description"
                 android:textSize="@dimen/text_size"
+                android:padding="@dimen/text_padding" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/where_use"
+                android:textSize="@dimen/text_size"
                 android:padding="@dimen/text_padding"
-                />
+                android:textStyle="bold" />
 
             <RelativeLayout
                 android:id="@+id/map_layout"
                 android:layout_width="match_parent"
-                android:layout_height="300dp">
+                android:layout_height="200dp">
 
                 <fragment
                     android:id="@+id/mapView"
@@ -97,6 +79,62 @@
                     android:src="@android:color/transparent" />
 
             </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tvMerchant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Merchant"
+                android:textSize="@dimen/text_size"
+                android:paddingTop="@dimen/text_padding"
+                />
+
+            <TextView
+                android:id="@+id/tvAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Address"
+                android:textSize="@dimen/text_size"
+                />
+            <TextView
+                android:id="@+id/tvTel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tel"
+                android:textSize="@dimen/text_size"
+                />
+            <TextView
+                android:id="@+id/tvEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:textSize="@dimen/text_size"
+                />
+            <TextView
+                android:id="@+id/tvSiteWeb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Site Web"
+                android:textSize="@dimen/text_size"
+                />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/how_does_it_work"
+                android:textSize="@dimen/text_size"
+                android:padding="@dimen/text_padding"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/how_does_it_work_content"
+                android:textSize="@dimen/text_size"
+                android:padding="@dimen/text_padding"
+                />
         </LinearLayout>
     </ScrollView>
     <LinearLayout
@@ -110,9 +148,8 @@
             style="@style/RaiseWaveColorGreenButtonRippleStyle"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="ACQUISTA € 00.00"
+            android:text="ACQUISTA €00.00"
             android:textColor="@color/trentino_white"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Button"
             app:rd_delayClick="afterRelease" />
     </LinearLayout>
 </LinearLayout>

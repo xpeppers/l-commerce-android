@@ -8,25 +8,25 @@ import java.util.List;
  * @since 07/04/15
  */
 public class Order implements Serializable {
-    private double id;
-    private double user_id;
+    private long id;
+    private long user_id;
     private List<Offer> offers;
     private String status;
     private Coupon coupon;
 
-    public double getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(double id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public double getUser_id() {
+    public long getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(double user_id) {
+    public void setUser_id(long user_id) {
         this.user_id = user_id;
     }
 

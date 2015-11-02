@@ -15,7 +15,6 @@ import com.xpeppers.servicelib.utils.Constants;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.Date;
 import java.util.Properties;
 
 import retrofit.RestAdapter;
@@ -56,20 +55,9 @@ public class RestClient {
 
         GsonBuilder builder = new GsonBuilder();
 
-        // Register an adapter to manage the date types as long values
-        // DESERIALIZER
-        builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
-            public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-                return new Date(json.getAsJsonPrimitive().getAsLong());
-            }
-        });
-
         // to serialize and deserialize byte arrays in base64
         // (SEE: http://stackoverflow.com/questions/25522309/converting-json-between-string-and-byte-with-gson)
         builder.registerTypeHierarchyAdapter(byte[].class, new ByteArrayToBase64TypeAdapter());
-
-
-        builder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
         Gson gson = builder.create();
 

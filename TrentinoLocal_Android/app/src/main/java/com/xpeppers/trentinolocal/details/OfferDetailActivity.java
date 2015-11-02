@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -25,14 +27,19 @@ import com.paypal.android.sdk.payments.PaymentConfirmation;
 import com.rey.material.widget.Button;
 import com.squareup.picasso.Picasso;
 import com.xpeppers.servicelib.bean.Offer;
+import com.xpeppers.servicelib.bean.Order;
 import com.xpeppers.servicelib.bean.Payment;
 import com.xpeppers.servicelib.services.OffersService;
 import com.xpeppers.servicelib.services.OrdersService;
 import com.xpeppers.servicelib.utils.CallBack;
 import com.xpeppers.trentinolocal.BaseActivity;
+import com.xpeppers.trentinolocal.Global;
 import com.xpeppers.trentinolocal.R;
+import com.xpeppers.trentinolocal.login.LoginActivity;
+import com.xpeppers.trentinolocal.utils.CustomHtmlTagHandler;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 /**
  * @author Emilio Frusciante - FEj (efrusciante AT wish-op DOT com)
@@ -41,23 +48,21 @@ import java.math.BigDecimal;
 public class OfferDetailActivity extends BaseActivity {
     public final static String EXTRA_OFFER_ID = "extra_offer_id";
 
-    private ImageView ivBgOffer;
+    private long offerId;
+    private long orderId;
+
+    private TextView tvToolbarTitle;
+
     private TextView tvTitle;
-    //private TextView tvShortDescription;
     private TextView tvDescription;
+    private TextView tvMerchant;
+    private TextView tvAddress;
+    private TextView tvTel;
+    private TextView tvEmail;
+    private TextView tvSiteWeb;
     private Button bPurchase;
-    //private LinearLayout llGallery;
-
-    //static final LatLng HAMBURG = new LatLng(53.558, 9.927);
-    //static final LatLng KIEL = new LatLng(53.551, 9.993);
+    private LinearLayout llGallery;
     private GoogleMap map;
-
-    private static PayPalConfiguration config = new PayPalConfiguration()
-            // Start with mock environment (ENVIRONMENT_NO_NETWORK).
-            // When ready, switch to sandbox (ENVIRONMENT_SANDBOX)
-            // or live (ENVIRONMENT_PRODUCTION)
-            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
-            .clientId("AXcACHOqhpKmYnfd9bjv5BPNrmSg4lGLbLEDO-9pIfvM_0dbuLcnQbs9wpzGmeScc6tljPvv2u6ld683");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +73,9 @@ public class OfferDetailActivity extends BaseActivity {
         setSupportActionBar(mToolbarView);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        tvToolbarTitle = (TextView) findViewById(R.id.tvToolbarTitle);
+        tvToolbarTitle.setText("Dettaglio");
 
         final ScrollView svMain = (ScrollView) findViewById(R.id.svMain);
         ImageView transparentImageView = (ImageView) findViewById(R.id.transparent_image);
@@ -98,26 +106,29 @@ public class OfferDetailActivity extends BaseActivity {
             }
         });
 
-        ivBgOffer = (ImageView) findViewById(R.id.ivBgOffer);
         tvTitle = (TextView) findViewById(R.id.tvTitle);
-        //tvShortDescription = (TextView) findViewById(R.id.tvShortDescription);
         tvDescription = (TextView) findViewById(R.id.tvDescription);
+        tvMerchant = (TextView) findViewById(R.id.tvMerchant);
+        tvAddress = (TextView) findViewById(R.id.tvAddress);
+        tvTel = (TextView) findViewById(R.id.tvTel);
+        tvEmail = (TextView) findViewById(R.id.tvEmail);
+        tvSiteWeb = (TextView) findViewById(R.id.tvSiteWeb);
         bPurchase = (Button) findViewById(R.id.bPurchase);
-        //llGallery = (LinearLayout) findViewById(R.id.llGallery);
 
-        Intent intent = getIntent();
-        int offerId = intent.getIntExtra(EXTRA_OFFER_ID, 0);
-        loadData(offerId);
-
+        llGallery = (LinearLayout) findViewById(R.id.llGallery);
         // Map
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.mapView)).getMap();
 
         bPurchase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                onBuyPressed(v);
+                onBuyPressed();
             }
         });
+
+        Intent intent = getIntent();
+        offerId = intent.getLongExtra(EXTRA_OFFER_ID, 0);
+        loadData(offerId);
     }
 
     @Override
@@ -131,7 +142,7 @@ public class OfferDetailActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void loadData(int offerId) {
+    private void loadData(long offerId) {
         OffersService.getInstance(getApplicationContext()).get(offerId, new CallBack() {
             @Override
             public void onSuccess(Object result) {
@@ -157,112 +168,148 @@ public class OfferDetailActivity extends BaseActivity {
             public void run() {
                 Offer offer = global.getSelectedOffer();
 
-                tvTitle.setText(offer.getTitle());
-                //tvShortDescription.setText(Html.fromHtml(offer.getShort_description()));
+                tvToolbarTitle.setText(offer.getTitle());
+                tvTitle.setText(Html.fromHtml(offer.getTitle()));
+                //Spannable spannable = (Spannable) tvTitle.getText();
+                //spannable.setSpan(new StrikethroughSpan(), 3, (offer.getTitle() + " Test barrato").length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 tvDescription.setText(Html.fromHtml(offer.getDescription()));
-                bPurchase.setText("Acquista    € " + offer.getOriginal_price());
-                //new DownloadImage(ivBgOffer).execute(offer.getImage());
-                Picasso.with(getBaseContext())
-                        .load(offer.getImage_url())
-                        .placeholder(R.drawable.placeholder)
-                        .into(ivBgOffer);
+                tvMerchant.setText(offer.getMerchant());
+                tvAddress.setText(offer.getAddress().toString());
+                if(offer.getTelephone() != null && !offer.getTelephone().equals("")) {
+                    tvTel.setText("Tel " + offer.getTelephone());
+                    tvTel.setVisibility(View.VISIBLE);
+                } else {
+                    tvTel.setVisibility(View.GONE);
+                }
+                if(offer.getEmail() != null && !offer.getEmail().equals("")) {
+                    tvEmail.setText("Email " + offer.getEmail());
+                    tvEmail.setVisibility(View.VISIBLE);
+                } else {
+                    tvEmail.setVisibility(View.GONE);
+                }
+                if(offer.getWeb_site() != null && !offer.getWeb_site().equals("")) {
+                    tvSiteWeb.setText("SiteWeb " + offer.getWeb_site());
+                    tvSiteWeb.setVisibility(View.VISIBLE);
+                } else {
+                    tvSiteWeb.setVisibility(View.GONE);
+                }
 
-                /*
-                for (int i = 0; i < offer.getGallery_images().size(); i++) {
+                String formattedOriginalPrice = new DecimalFormat("##,##0.00€").format(offer.getOriginal_price());
+                String formattedPrice = new DecimalFormat("##,##0.00€").format(offer.getPrice());
+                String priceLabel = "COMPRA | ";
+                if(offer.getOriginal_price() > 0) {
+                    priceLabel += "<strike>" + formattedOriginalPrice + "</strike> ";
+                }
+                priceLabel += formattedPrice;
+                Spanned bLabel = Html.fromHtml(priceLabel, null, new CustomHtmlTagHandler());
+                bPurchase.setText(bLabel);
+
+                for (int i = 0; i < offer.getImage_gallery().size(); i++) {
                     ImageView imageView = new ImageView(global.getCurrentActivity());
                     imageView.setId(i);
                     imageView.setPadding(2, 2, 2, 2);
 
-                    //new DownloadImage(imageView).execute(offer.getGallery_images().get(i));
                     Picasso.with(getBaseContext())
-                            .load(offer.getGallery_images().get(i))
+                            .load(offer.getImage_gallery().get(i))
                             .placeholder(R.drawable.placeholder)
+                            .fit()
+                            .centerCrop()
                             .into(imageView);
-                    imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    //imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     llGallery.addView(imageView);
                 }
-                */
 
                 if (map != null) {
                     LatLng position = new LatLng(offer.getAddress().getLatitude(), offer.getAddress().getLongitude());
-                    //Marker pinPosition = map.addMarker(new MarkerOptions().position(position));
-                    //Marker hamburg = map.addMarker(new MarkerOptions().position(position).title("Hamburg"));
-                    /*
-                    Marker kiel = map.addMarker(new MarkerOptions()
-                            .position(KIEL)
-                            .title("Kiel")
-                            .snippet("Kiel is cool")
-                            .icon(BitmapDescriptorFactory
-                                    .fromResource(R.mipmap.ic_launcher)));
-                    */
-
-                    // Move the camera instantly to hamburg with a zoom of 15.
                     map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
-
-                    // Zoom in, animating the camera.
                     map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
-
-
                 }
             }
         });
     }
 
-    public void onBuyPressed(View pressed) {
+    public void onBuyPressed() {
+        if(global.isApiAuthenticated() && global.isFacebookLogin()) {
 
-        // PAYMENT_INTENT_SALE will cause the payment to complete immediately.
-        // Change PAYMENT_INTENT_SALE to
-        //   - PAYMENT_INTENT_AUTHORIZE to only authorize payment and capture funds later.
-        //   - PAYMENT_INTENT_ORDER to create a payment for authorization and capture
-        //     later via calls from your server.
+            OrdersService.getInstance(getApplicationContext()).create(global.getApiToken(), offerId, new CallBack() {
+                @Override
+                public void onSuccess(Object result) {
+                    Order order = (Order) result;
+                    orderId = order.getId();
 
-        PayPalPayment payment = new PayPalPayment(new BigDecimal(global.getSelectedOffer().getPrice()), "EUR",
-                global.getSelectedOffer().getTitle(), PayPalPayment.PAYMENT_INTENT_SALE);
+                    // PAYMENT_INTENT_SALE will cause the payment to complete immediately.
+                    // Change PAYMENT_INTENT_SALE to
+                    //   - PAYMENT_INTENT_AUTHORIZE to only authorize payment and capture funds later.
+                    //   - PAYMENT_INTENT_ORDER to create a payment for authorization and capture
+                    //     later via calls from your server.
 
-        Intent intent = new Intent(this, PaymentActivity.class);
+                    PayPalConfiguration config = new PayPalConfiguration()
+                            // Start with mock environment (ENVIRONMENT_NO_NETWORK).
+                            // When ready, switch to sandbox (ENVIRONMENT_SANDBOX)
+                            // or live (ENVIRONMENT_PRODUCTION)
+                            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
+                            .clientId(getResources().getString(R.string.paypal_app_id));
 
-        // send the same configuration for restart resiliency
-        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+                    PayPalPayment payment = new PayPalPayment(new BigDecimal(global.getSelectedOffer().getPrice()), "EUR",
+                            global.getSelectedOffer().getTitle(), PayPalPayment.PAYMENT_INTENT_SALE);
 
-        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payment);
+                    Intent intent = new Intent(OfferDetailActivity.this, PaymentActivity.class);
 
-        startActivityForResult(intent, 0);
+                    // send the same configuration for restart resiliency
+                    intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+                    intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payment);
+                    startActivityForResult(intent, Global.REQUEST_CODE_PAYPAL);
+                }
+
+                @Override
+                public void onFailure(Throwable caught) {
+
+                }
+            });
+        } else {
+            // Login
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivityForResult(intent, Global.REQUEST_CODE_FACEBOOK_LOGIN);
+        }
     }
 
     @Override
-    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK) {
-            final PaymentConfirmation confirm = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
-            if (confirm != null &&
-                    confirm.getProofOfPayment() != null && confirm.getProofOfPayment().getState().equals("approved")) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == Global.REQUEST_CODE_PAYPAL) {
+            if (resultCode == Activity.RESULT_OK) {
+                final PaymentConfirmation confirm = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+                if (confirm != null &&
+                        confirm.getProofOfPayment() != null && confirm.getProofOfPayment().getState().equals("approved")) {
 
-                // TODO contact my server for verification
-                // TODO: send 'confirm' to your server for verification.
-                // see https://developer.paypal.com/webapps/developer/docs/integration/mobile/verify-mobile-payment/
-                // for more details.
+                    OrdersService.getInstance(getBaseContext()).confirmPayment(global.getApiToken(), orderId, confirm.getProofOfPayment().getPaymentId(), new CallBack() {
+                        @Override
+                        public void onSuccess(Object result) {
+                            Payment payment = (Payment) result;
+                            Intent intent = new Intent(OfferDetailActivity.this, ConfirmOrderDetailActivity.class);
+                            intent.putExtra(ConfirmOrderDetailActivity.EXTRA_PAYMENT_ID, payment.getPaypal_payment_token());
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                        }
 
-                OrdersService.getInstance(getBaseContext()).pay(global.getSelectedOrder().getId(), confirm.getProofOfPayment().getPaymentId(), new CallBack() {
-                    @Override
-                    public void onSuccess(Object result) {
-                        Payment payment = (Payment) result;
-                        Intent intent = new Intent(OfferDetailActivity.this, ConfirmOrderDetailActivity.class);
-                        intent.putExtra(ConfirmOrderDetailActivity.EXTRA_PAYMENT_ID, payment.getPaypal_payment_token());
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-                    }
+                        @Override
+                        public void onFailure(Throwable caught) {
 
-                    @Override
-                    public void onFailure(Throwable caught) {
-
-                    }
-                });
+                        }
+                    });
+                }
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                Log.i(Global.LOG_TAG, "PAYPAL: The user canceled.");
+            } else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
+                Log.i(Global.LOG_TAG, "PAYPAL: An invalid Payment or PayPalConfiguration was submitted. Please see the docs.");
             }
         }
-        else if (resultCode == Activity.RESULT_CANCELED) {
-            Log.i("paymentExample", "The user canceled.");
-        }
-        else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
-            Log.i("paymentExample", "An invalid Payment or PayPalConfiguration was submitted. Please see the docs.");
+
+        if(requestCode == Global.REQUEST_CODE_FACEBOOK_LOGIN) {
+            if (resultCode == Activity.RESULT_OK) {
+                onBuyPressed();
+            } else {
+                Log.i(Global.LOG_TAG, "FACEBOOK: Login error");
+            }
         }
     }
 }

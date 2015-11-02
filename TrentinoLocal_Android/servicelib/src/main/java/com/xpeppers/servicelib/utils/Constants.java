@@ -20,9 +20,16 @@ public class Constants {
 
     public final static String USERS = "/users";
     public final static String AUTH = "/auth";
+    public final static String MERCHANT = "/auth/merchants";
+    public final static String PROFILE = "/profile";
 
     public final static String ORDERS = "/orders";
     public final static String ORDER =  "/orders/{id}";
 
     public final static String PAYMENT = "/orders/{id}/payments";
+
+    public final static String BOUGHT_BY_USERS = "/bought_offers";
+    public final static String BOUGHT_BY_USER = "/bought_offers/{id}";
+
+    public final static String SOLD_BY_MERCHANT = "/sold_offers";
 }

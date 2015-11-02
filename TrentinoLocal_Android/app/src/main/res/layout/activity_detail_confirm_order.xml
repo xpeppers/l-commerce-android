@@ -9,86 +9,62 @@
 
     <include layout="@layout/toolbar"/>
 
-    <ScrollView
-        android:id="@+id/svMain"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
-        <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:paddingLeft="@dimen/internal_padding"
+        android:paddingRight="@dimen/internal_padding"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/visto"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:text="@string/thanks"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_price_size"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sent_email"
+            android:textSize="@dimen/text_size"
+            />
+
+        <TextView
+            android:id="@+id/tvCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="CODE1234567"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_code_size"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/footer_height"
+        android:layout_weight="0"
+        android:orientation="horizontal">
+
+        <com.rey.material.widget.Button
+            android:id="@+id/bContinue"
+            style="@style/RaiseWaveColorGreenButtonRippleStyle"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:id="@+id/ivBgOffer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/placeholder"
-                    />
-                <TextView
-                    android:id="@+id/tvConfirm"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:maxLines="2"
-                    android:ellipsize="end"
-                    android:text="Acquisto effettuato con successo"
-                    android:textSize="@dimen/text_title_size"
-                    android:textColor="@color/trentino_white"
-                    android:padding="@dimen/detail_text_padding"
-                    android:background="@drawable/vertical_gradient"
-                    />
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/tvDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="dettagli offerta"
-                android:textSize="@dimen/text_size"
-                android:padding="@dimen/text_padding"
-                />
-
-            <ImageView
-                android:id="@+id/ivQRCode"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center"
-                android:src="@drawable/qr_code" />
-
-            <TextView
-                android:id="@+id/tvCode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Codice offerta:"
-                android:textSize="@dimen/text_size"
-                android:padding="@dimen/text_padding" />
-
-            <RelativeLayout
-                android:id="@+id/map_layout"
-                android:layout_width="match_parent"
-                android:layout_height="300dp">
-
-                <fragment
-                    android:id="@+id/mapView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="-100dp"
-                    android:layout_marginBottom="-100dp"
-                    android:name="com.google.android.gms.maps.MapFragment"/>
-
-                <ImageView
-                    android:id="@+id/transparent_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@android:color/transparent" />
-
-            </RelativeLayout>
-        </LinearLayout>
-    </ScrollView>
+            android:layout_height="50dp"
+            android:text="@string/continue_shopping"
+            android:textColor="@color/trentino_white"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Button"
+            app:rd_delayClick="afterRelease" />
+    </LinearLayout>
 </LinearLayout>

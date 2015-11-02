@@ -1,10 +1,14 @@
 package com.xpeppers.trentinolocal;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.TypedValue;
+
+import com.facebook.CallbackManager;
+import com.facebook.FacebookSdk;
 
 /**
  * @author Emilio Frusciante - FEj (efrusciante AT wish-op DOT com)
@@ -12,11 +16,15 @@ import android.util.TypedValue;
  */
 public class BaseFragment extends Fragment {
     protected Global global;
+    protected CallbackManager callbackManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         global = (Global) getActivity().getApplicationContext();
+
+        FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
     }
 
     @Override
@@ -35,6 +43,12 @@ public class BaseFragment extends Fragment {
     public void onDestroy() {
         clearReferences();
         super.onDestroy();
+    }
+
+    @Override
+    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     private void clearReferences(){
@@ -79,11 +93,13 @@ public class BaseFragment extends Fragment {
     }
 
     protected void asyncDialog(final String title, final String message, final boolean finishActivity) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                global.showErrorDialog(title, message);
-            }
-        });
+        if(getActivity() != null) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    global.showErrorDialog(title, message);
+                }
+            });
+        }
     }
 }

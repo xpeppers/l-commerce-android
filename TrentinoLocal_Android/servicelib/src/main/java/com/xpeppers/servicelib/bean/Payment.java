@@ -7,14 +7,14 @@ import java.io.Serializable;
  * @since 2015/09/17
  */
 public class Payment implements Serializable {
-    private double id;
+    private long id;
     private String paypal_payment_token;
 
-    public double getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(double id) {
+    public void setId(long id) {
         this.id = id;
     }
 

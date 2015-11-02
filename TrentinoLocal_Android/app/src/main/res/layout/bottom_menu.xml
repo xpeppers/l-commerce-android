@@ -7,40 +7,33 @@
     android:orientation="horizontal"
     android:id="@+id/llButtonMenu" >
 
-    <com.rey.material.widget.ImageButton
-        android:id="@+id/ibMap"
+    <com.rey.material.widget.Button
+        android:id="@+id/bOffer"
         style="@style/RaiseWaveColorTransparentButtonRippleStyle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.25"
-        android:src="@mipmap/map"
+        android:layout_weight="0.33"
+        android:text="@string/offers"
+        android:textColor="@color/white"
         app:rd_delayClick="afterRelease" />
 
-    <com.rey.material.widget.ImageButton
-        android:id="@+id/ibBuilding"
+    <com.rey.material.widget.Button
+        android:id="@+id/bOrder"
         style="@style/RaiseWaveColorTransparentButtonRippleStyle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.25"
-        android:src="@mipmap/building"
+        android:layout_weight="0.33"
+        android:text="@string/orders"
+        android:textColor="@color/white"
         app:rd_delayClick="afterRelease" />
 
-    <com.rey.material.widget.ImageButton
-        android:id="@+id/ibTicket"
+    <com.rey.material.widget.Button
+        android:id="@+id/bProfile"
         style="@style/RaiseWaveColorTransparentButtonRippleStyle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.25"
-        android:src="@mipmap/ticket"
+        android:layout_weight="0.33"
+        android:text="@string/profile"
+        android:textColor="@color/white"
         app:rd_delayClick="afterRelease" />
-
-    <com.rey.material.widget.ImageButton
-        android:id="@+id/ibUser"
-        style="@style/RaiseWaveColorTransparentButtonRippleStyle"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.25"
-        android:src="@mipmap/user"
-        app:rd_delayClick="afterRelease" />
-
 </LinearLayout>

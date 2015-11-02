@@ -65,4 +65,22 @@ public class UsersService {
         };
         t.start();
     }
+
+    public void getProfile(final String auth, final CallBack callBack) {
+        Thread t = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    RestClient restClient = new RestClient(instance.context);
+                    String token = "Token token=" + auth;
+                    User user = restClient.getApiService().getProfile(token);
+                    callBack.onSuccess(user);
+
+                } catch (Exception e) {
+                    callBack.onFailure(e);
+                }
+            }
+        };
+        t.start();
+    }
 }

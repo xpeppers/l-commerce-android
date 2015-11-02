@@ -1,31 +1,25 @@
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.xpeppers.trentinolocal.main.MainActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.xpeppers.trentinolocal.main.MainActivity" >
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:id="@+id/root">
-
-        <FrameLayout
-            android:id="@+id/flPager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <android.support.v4.view.ViewPager
-                android:id="@+id/vpContent"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </FrameLayout>
-
-        <include layout="@layout/bottom_menu"/>
-    </LinearLayout>
+    android:orientation="vertical"
+    android:id="@+id/root">
 
     <include layout="@layout/toolbar"/>
 
-</FrameLayout>
+    <FrameLayout
+        android:id="@+id/flPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vpContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+
+    <include layout="@layout/bottom_menu"/>
+</LinearLayout>
