@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Trentino Local</string>
-    <string name="google_maps_id">AIzaSyALrKjEV3F8GpZbuxJcqrDcMIrtBgluR6w</string>
+    <string name="google_maps_id">AIzaSyC20LFgVKFp-shpY-fYV3jrUOqVSIztcVc</string>
     <string name="facebook_app_id">160566967618650</string>
     <!-- staging -->
     <string name="paypal_app_id">AS3mOs2TJGCOdD6OjjZTJhG1bYIgg0cNngd-zBV8PBO1Bor0oG3imoTTYDFM0yS1qEEXHEJvzEplax4M</string>
