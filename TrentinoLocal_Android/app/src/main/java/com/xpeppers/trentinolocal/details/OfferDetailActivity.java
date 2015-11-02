@@ -34,6 +34,7 @@ import com.xpeppers.servicelib.services.OrdersService;
 import com.xpeppers.servicelib.utils.CallBack;
 import com.xpeppers.trentinolocal.BaseActivity;
 import com.xpeppers.trentinolocal.Global;
+import com.xpeppers.trentinolocal.PayPalConf;
 import com.xpeppers.trentinolocal.R;
 import com.xpeppers.trentinolocal.login.LoginActivity;
 import com.xpeppers.trentinolocal.utils.CustomHtmlTagHandler;
@@ -244,11 +245,8 @@ public class OfferDetailActivity extends BaseActivity {
                     //     later via calls from your server.
 
                     PayPalConfiguration config = new PayPalConfiguration()
-                            // Start with mock environment (ENVIRONMENT_NO_NETWORK).
-                            // When ready, switch to sandbox (ENVIRONMENT_SANDBOX)
-                            // or live (ENVIRONMENT_PRODUCTION)
-                            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
-                            .clientId(getResources().getString(R.string.paypal_app_id));
+                            .environment(PayPalConf.MODE)
+                            .clientId(PayPalConf.API_KEY);
 
                     PayPalPayment payment = new PayPalPayment(new BigDecimal(global.getSelectedOffer().getPrice()), "EUR",
                             global.getSelectedOffer().getTitle(), PayPalPayment.PAYMENT_INTENT_SALE);

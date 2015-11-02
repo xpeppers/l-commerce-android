@@ -12,15 +12,7 @@ android {
         versionName "1.0"
     }
     buildTypes {
-        def INT = "int"
-        debug {
-            buildConfigField INT, "API_SERVER", "0"
-        }
-        alpha {
-            buildConfigField INT, "API_SERVER", "1"
-        }
         release {
-            buildConfigField INT, "API_SERVER", "2"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

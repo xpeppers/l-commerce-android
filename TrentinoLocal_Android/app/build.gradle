@@ -12,6 +12,13 @@ android {
     }
 
     signingConfigs {
+        release {
+            storeFile file("dev.keystore")
+            storePassword("apassword")
+            keyAlias("linkingCommerce")
+            keyPassword("apassword")
+        }
+
         debug {
             storeFile file("dev.keystore")
             storePassword("apassword")
@@ -25,10 +32,18 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            signingConfig signingConfigs.debug
+
+            resValue "string", "facebook_app_id", "160566967618650"
+            resValue "string", "google_maps_id", "AIzaSyC20LFgVKFp-shpY-fYV3jrUOqVSIztcVc"
         }
 
         debug{
             signingConfig signingConfigs.debug
+
+            resValue "string", "facebook_app_id", "160566967618650"
+            resValue "string", "google_maps_id", "AIzaSyC20LFgVKFp-shpY-fYV3jrUOqVSIztcVc"
         }
     }
 
@@ -38,8 +53,21 @@ android {
             print "Debuggable: "
             println buildType.debuggable
     }
+
     productFlavors {
+        production {
+            applicationId "com.xpeppers.trentinolocal"
+        }
+
+        staging {
+            applicationId "com.xpeppers.trentinolocal"
+        }
+
+        dev {
+            applicationId "com.xpeppers.trentinolocal"
+        }
     }
+
     defaultConfig {
         multiDexEnabled true
     }

@@ -2,6 +2,7 @@ package com.xpeppers.servicelib.ws;
 
 import android.content.Context;
 import android.util.Base64;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -9,7 +10,6 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
-import com.xpeppers.servicelib.BuildConfig;
 import com.xpeppers.servicelib.utils.AssetsPropertyReader;
 import com.xpeppers.servicelib.utils.Constants;
 
@@ -33,23 +33,12 @@ public class RestClient {
     {
         this.context = context;
 
-        String BASE_URL = Constants.BASE_PATH;
+        String BASE_URL = Constants.DEFAULT_PATH;
         Properties servicesProperties = AssetsPropertyReader.getInstance(context).getProperties(Constants.SERVICES_PROPERTIES);
 
         if(servicesProperties != null && !servicesProperties.isEmpty()) {
-            switch (BuildConfig.API_SERVER) {
-                case 0:
-                    BASE_URL = servicesProperties.getProperty(Constants.PROPERTIES_DEBUG_BASE_URL);
-                    break;
-                case 1:
-                    BASE_URL = servicesProperties.getProperty(Constants.PROPERTIES_ALPHA_BASE_URL);
-                    break;
-                case 2:
-                    BASE_URL = servicesProperties.getProperty(Constants.PROPERTIES_RELEASE_BASE_URL);
-                    break;
-                default:
-                    BASE_URL = Constants.BASE_PATH;
-            }
+            BASE_URL = servicesProperties.getProperty(Constants.BASE_URL);
+            Log.d("url", BASE_URL);
         }
 
 
