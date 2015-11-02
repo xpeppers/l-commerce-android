@@ -238,22 +238,15 @@ public class OfferDetailActivity extends BaseActivity {
                     Order order = (Order) result;
                     orderId = order.getId();
 
-                    // PAYMENT_INTENT_SALE will cause the payment to complete immediately.
-                    // Change PAYMENT_INTENT_SALE to
-                    //   - PAYMENT_INTENT_AUTHORIZE to only authorize payment and capture funds later.
-                    //   - PAYMENT_INTENT_ORDER to create a payment for authorization and capture
-                    //     later via calls from your server.
-
                     PayPalConfiguration config = new PayPalConfiguration()
                             .environment(PayPalConf.MODE)
                             .clientId(PayPalConf.API_KEY);
 
                     PayPalPayment payment = new PayPalPayment(new BigDecimal(global.getSelectedOffer().getPrice()), "EUR",
-                            global.getSelectedOffer().getTitle(), PayPalPayment.PAYMENT_INTENT_SALE);
+                            global.getSelectedOffer().getTitle(), PayPalPayment.PAYMENT_INTENT_AUTHORIZE);
 
                     Intent intent = new Intent(OfferDetailActivity.this, PaymentActivity.class);
 
-                    // send the same configuration for restart resiliency
                     intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
                     intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payment);
                     startActivityForResult(intent, Global.REQUEST_CODE_PAYPAL);
