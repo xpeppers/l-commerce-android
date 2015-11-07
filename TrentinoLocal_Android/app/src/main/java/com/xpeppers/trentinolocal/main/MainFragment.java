@@ -1,6 +1,7 @@
 package com.xpeppers.trentinolocal.main;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +25,8 @@ import com.xpeppers.trentinolocal.BaseFragment;
 import com.xpeppers.trentinolocal.R;
 import com.xpeppers.trentinolocal.adapter.OfferAdapter;
 import com.xpeppers.trentinolocal.adapter.OfferBoughtAdapter;
+import com.xpeppers.trentinolocal.details.HowActivity;
+import com.xpeppers.trentinolocal.details.SupportActivity;
 
 import java.util.List;
 
@@ -85,6 +88,22 @@ public class MainFragment extends BaseFragment {
                     rootView = (ViewGroup) inflater
                             .inflate(R.layout.fragment_profile, container, false);
                     loadProfile(rootView);
+                    TextView tvHow = (TextView) rootView.findViewById(R.id.tvHow);
+                    tvHow.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent how = new Intent(v.getContext(), HowActivity.class);
+                            v.getContext().startActivity(how);
+                        }
+                    });
+                    TextView tvSupport = (TextView) rootView.findViewById(R.id.tvSupport);
+                    tvSupport.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent support = new Intent(v.getContext(), SupportActivity.class);
+                            v.getContext().startActivity(support);
+                        }
+                    });
                 } else {
                     rootView = (ViewGroup) inflater
                             .inflate(R.layout.fragment_empty, container, false);

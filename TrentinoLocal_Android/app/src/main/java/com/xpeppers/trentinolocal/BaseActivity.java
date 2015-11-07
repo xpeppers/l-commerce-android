@@ -3,6 +3,7 @@ package com.xpeppers.trentinolocal;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
@@ -12,6 +13,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.appevents.AppEventsLogger;
+import com.google.android.gms.maps.model.LatLng;
 import com.xpeppers.servicelib.bean.Auth;
 import com.xpeppers.servicelib.services.UsersService;
 import com.xpeppers.servicelib.utils.CallBack;
@@ -138,5 +140,40 @@ public class BaseActivity extends AppCompatActivity {
         parameters.putString("fields", "email");
         request.setParameters(parameters);
         request.executeAsync();
+    }
+
+    protected void callNumber(String number) {
+        Intent callIntent = new Intent(Intent.ACTION_DIAL);
+        callIntent.setData(Uri.parse("tel:" + number));
+        startActivity(callIntent);
+    }
+
+    protected void openWeb(String url) {
+        if (!url.startsWith("http://") && !url.startsWith("https://"))
+            url = "http://" + url;
+
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(browserIntent);
+    }
+
+    protected void sendEmail(String emailTo) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("plain/text");
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[] { emailTo });
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Richiesta d'informazioni");
+        //intent.putExtra(Intent.EXTRA_TEXT, "mail body");
+        startActivity(Intent.createChooser(intent, ""));
+    }
+
+    protected void openNavigator(String address, LatLng position) {
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                Uri.parse("http://maps.google.com/maps?daddr="+ position.latitude +"," + position.longitude));
+        startActivity(intent);
+
+        /*
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q=" +position.latitude+","+position.longitude));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        */
     }
 }

@@ -18,7 +18,11 @@ import android.widget.TextView;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
@@ -167,7 +171,7 @@ public class OfferDetailActivity extends BaseActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Offer offer = global.getSelectedOffer();
+                final Offer offer = global.getSelectedOffer();
 
                 tvToolbarTitle.setText(offer.getTitle());
                 tvTitle.setText(Html.fromHtml(offer.getTitle()));
@@ -176,21 +180,46 @@ public class OfferDetailActivity extends BaseActivity {
                 tvDescription.setText(Html.fromHtml(offer.getDescription()));
                 tvMerchant.setText(offer.getMerchant());
                 tvAddress.setText(offer.getAddress().toString());
-                if(offer.getTelephone() != null && !offer.getTelephone().equals("")) {
-                    tvTel.setText("Tel " + offer.getTelephone());
+                tvAddress.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        LatLng position = new LatLng(offer.getAddress().getLatitude(), offer.getAddress().getLongitude());
+                        openNavigator(offer.getAddress().toString(), position);
+                    }
+                });
+                if (offer.getTelephone() != null && !offer.getTelephone().equals("")) {
+                    tvTel.setText(getResources().getString(R.string.tel, offer.getTelephone()));
                     tvTel.setVisibility(View.VISIBLE);
+                    tvTel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            callNumber(offer.getTelephone());
+                        }
+                    });
                 } else {
                     tvTel.setVisibility(View.GONE);
                 }
-                if(offer.getEmail() != null && !offer.getEmail().equals("")) {
-                    tvEmail.setText("Email " + offer.getEmail());
+                if (offer.getEmail() != null && !offer.getEmail().equals("")) {
+                    tvEmail.setText(getResources().getString(R.string.email, offer.getEmail()));
                     tvEmail.setVisibility(View.VISIBLE);
+                    tvEmail.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            sendEmail(offer.getEmail());
+                        }
+                    });
                 } else {
                     tvEmail.setVisibility(View.GONE);
                 }
-                if(offer.getWeb_site() != null && !offer.getWeb_site().equals("")) {
-                    tvSiteWeb.setText("SiteWeb " + offer.getWeb_site());
+                if (offer.getWeb_site() != null && !offer.getWeb_site().equals("")) {
+                    tvSiteWeb.setText(getResources().getString(R.string.siteweb, offer.getWeb_site()));
                     tvSiteWeb.setVisibility(View.VISIBLE);
+                    tvSiteWeb.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            openWeb(offer.getWeb_site());
+                        }
+                    });
                 } else {
                     tvSiteWeb.setVisibility(View.GONE);
                 }
@@ -198,7 +227,7 @@ public class OfferDetailActivity extends BaseActivity {
                 String formattedOriginalPrice = new DecimalFormat("##,##0.00€").format(offer.getOriginal_price());
                 String formattedPrice = new DecimalFormat("##,##0.00€").format(offer.getPrice());
                 String priceLabel = "COMPRA | ";
-                if(offer.getOriginal_price() > 0) {
+                if (offer.getOriginal_price() > 0) {
                     priceLabel += "<strike>" + formattedOriginalPrice + "</strike> ";
                 }
                 priceLabel += formattedPrice;
@@ -221,12 +250,23 @@ public class OfferDetailActivity extends BaseActivity {
                 }
 
                 if (map != null) {
-                    LatLng position = new LatLng(offer.getAddress().getLatitude(), offer.getAddress().getLongitude());
-                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
-                    map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+                    configureMap(map, offer.getAddress().getLatitude(), offer.getAddress().getLongitude());
                 }
             }
         });
+    }
+
+    private void configureMap(GoogleMap map, double lat, double lon)
+    {
+        if (map == null)
+            return; // Google Maps not available
+
+        LatLng position = new LatLng(lat, lon);
+        Marker marker = map.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory.fromResource(R.mipmap.pin)));
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        builder.include(position);
+        LatLngBounds bounds = builder.build();
+        map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 20));
     }
 
     public void onBuyPressed() {

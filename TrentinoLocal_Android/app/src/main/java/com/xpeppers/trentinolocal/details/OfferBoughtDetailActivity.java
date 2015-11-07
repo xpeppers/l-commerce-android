@@ -15,7 +15,11 @@ import android.widget.TextView;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 import com.xpeppers.servicelib.bean.OfferBought;
 import com.xpeppers.servicelib.services.OffersBoughtService;
@@ -40,11 +44,13 @@ public class OfferBoughtDetailActivity extends BaseActivity {
     private TextView tvTel;
     private TextView tvEmail;
     private TextView tvSiteWeb;
+    private LinearLayout llCall;
     private TextView tvUserFullname;
-    private TextView tvStatus;
+    //private TextView tvStatus;
     private TextView tvCoupon;
     private TextView tvPrice;
     private TextView tvDate;
+    private TextView tvHowDoesItWork;
     private LinearLayout llGallery;
     private GoogleMap map;
 
@@ -97,11 +103,14 @@ public class OfferBoughtDetailActivity extends BaseActivity {
         tvTel = (TextView) findViewById(R.id.tvTel);
         tvEmail = (TextView) findViewById(R.id.tvEmail);
         tvSiteWeb = (TextView) findViewById(R.id.tvSiteWeb);
+        llCall = (LinearLayout) findViewById(R.id.llCall);
+
         tvUserFullname = (TextView) findViewById(R.id.tvUserFullname);
-        tvStatus = (TextView) findViewById(R.id.tvStatus);
+        //tvStatus = (TextView) findViewById(R.id.tvStatus);
         tvCoupon = (TextView) findViewById(R.id.tvCoupon);
         tvPrice = (TextView) findViewById(R.id.tvPrice);
         tvDate = (TextView) findViewById(R.id.tvDate);
+        tvHowDoesItWork = (TextView) findViewById(R.id.tvHowDoesItWork);
 
         llGallery = (LinearLayout) findViewById(R.id.llGallery);
 
@@ -147,33 +156,68 @@ public class OfferBoughtDetailActivity extends BaseActivity {
                 tvDescription.setText(Html.fromHtml(offerBought.getDescription()));
                 tvMerchant.setText(offerBought.getMerchant());
                 tvAddress.setText(offerBought.getAddress().toString());
-                if(offerBought.getTelephone() != null && !offerBought.getTelephone().equals("")) {
-                    tvTel.setText("Tel " + offerBought.getTelephone());
+                tvAddress.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        LatLng position = new LatLng(offerBought.getAddress().getLatitude(), offerBought.getAddress().getLongitude());
+                        openNavigator(offerBought.getAddress().toString(), position);
+                    }
+                });
+                if (offerBought.getTelephone() != null && !offerBought.getTelephone().equals("")) {
+                    tvTel.setText(getResources().getString(R.string.tel, offerBought.getTelephone()));
                     tvTel.setVisibility(View.VISIBLE);
+                    tvTel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            callNumber(offerBought.getTelephone());
+                        }
+                    });
+                    llCall.setVisibility(View.VISIBLE);
+                    llCall.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            callNumber(offerBought.getTelephone());
+                        }
+                    });
                 } else {
                     tvTel.setVisibility(View.GONE);
+                    llCall.setVisibility(View.GONE);
                 }
-                if(offerBought.getEmail() != null && !offerBought.getEmail().equals("")) {
-                    tvEmail.setText("Email " + offerBought.getEmail());
+                if (offerBought.getEmail() != null && !offerBought.getEmail().equals("")) {
+                    tvEmail.setText(getResources().getString(R.string.email, offerBought.getEmail()));
                     tvEmail.setVisibility(View.VISIBLE);
+                    tvEmail.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            sendEmail(offerBought.getEmail());
+                        }
+                    });
                 } else {
                     tvEmail.setVisibility(View.GONE);
                 }
-                if(offerBought.getWeb_site() != null && !offerBought.getWeb_site().equals("")) {
-                    tvSiteWeb.setText("SiteWeb " + offerBought.getWeb_site());
+                if (offerBought.getWeb_site() != null && !offerBought.getWeb_site().equals("")) {
+                    tvSiteWeb.setText(getResources().getString(R.string.siteweb, offerBought.getWeb_site()));
                     tvSiteWeb.setVisibility(View.VISIBLE);
+                    tvSiteWeb.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            openWeb(offerBought.getWeb_site());
+                        }
+                    });
                 } else {
                     tvSiteWeb.setVisibility(View.GONE);
                 }
-                tvUserFullname.setText("Nome " + offerBought.getUser_fullname());
-                tvStatus.setText("Status " + offerBought.getStatus());
-                tvCoupon.setText("Coupon " + offerBought.getCoupon().getCode());
+                tvUserFullname.setText(offerBought.getUser_fullname());
+                //tvStatus.setText("Status " + offerBought.getStatus());
+                tvCoupon.setText(offerBought.getCoupon().getCode());
 
                 String formattedPrice = new DecimalFormat("##,##0.00€").format(offerBought.getPrice());
-                tvPrice.setText("Costo " + formattedPrice);
+                tvPrice.setText(formattedPrice);
 
                 String dateFormat = new SimpleDateFormat("dd/MM/yyyy").format(offerBought.getPurchase_date());
-                tvDate.setText("Acquistato il " + dateFormat);
+                tvDate.setText(dateFormat);
+
+                tvHowDoesItWork.setText(getResources().getString(R.string.how_does_it_work_content_2, offerBought.getTelephone()));
 
                 for (int i = 0; i < offerBought.getImage_gallery().size(); i++) {
                     ImageView imageView = new ImageView(global.getCurrentActivity());
@@ -191,11 +235,22 @@ public class OfferBoughtDetailActivity extends BaseActivity {
                 }
 
                 if (map != null) {
-                    LatLng position = new LatLng(offerBought.getAddress().getLatitude(), offerBought.getAddress().getLongitude());
-                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
-                    map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+                    configureMap(map, offerBought.getAddress().getLatitude(), offerBought.getAddress().getLongitude());
                 }
             }
         });
+    }
+
+    private void configureMap(GoogleMap map, double lat, double lon)
+    {
+        if (map == null)
+            return; // Google Maps not available
+
+        LatLng position = new LatLng(lat, lon);
+        Marker marker = map.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory.fromResource(R.mipmap.pin)));
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        builder.include(position);
+        LatLngBounds bounds = builder.build();
+        map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 20));
     }
 }

@@ -15,33 +15,68 @@
         android:paddingRight="@dimen/internal_padding"
         android:gravity="center">
 
-        <com.mikepenz.materialdrawer.view.BezelImageView
-            android:id="@+id/bivProfileImage"
-            android:layout_width="180dp"
-            android:layout_height="180dp"
-            android:scaleType="centerCrop"
-            android:clickable="false"
-            android:elevation="2dp"
-            app:biv_maskDrawable="@drawable/circle_mask"
-            app:biv_selectorOnPress="@color/material_drawer_primary"
-            android:src="@drawable/profile_placeholder" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+            <com.mikepenz.materialdrawer.view.BezelImageView
+                android:id="@+id/bivProfileImage"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:scaleType="centerCrop"
+                android:clickable="false"
+                android:elevation="2dp"
+                app:biv_maskDrawable="@drawable/circle_mask"
+                app:biv_selectorOnPress="@color/material_drawer_primary"
+                android:src="@drawable/profile_placeholder" />
 
-        <TextView
-            android:id="@+id/tvProfileName"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/tvProfileName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="NAME"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_price_size"
+                />
+            <TextView
+                android:id="@+id/tvProfileEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="email"
+                android:textSize="@dimen/text_size"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="NAME"
-            android:textStyle="bold"
-            android:textSize="@dimen/text_price_size"
-            />
-        <TextView
-            android:id="@+id/tvProfileEmail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="email"
-            android:textSize="@dimen/text_size"
-            />
+            android:orientation="vertical"
+            android:padding="@dimen/text_padding">
+            <TextView
+                android:id="@+id/tvHow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:clickable="true"
+                android:text="@string/how"
+                android:textSize="@dimen/text_size"
+                android:paddingBottom="@dimen/text_padding"
+                />
+
+            <TextView
+                android:id="@+id/tvSupport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:clickable="true"
+                android:text="@string/support"
+                android:textSize="@dimen/text_size"
+                />
+        </LinearLayout>
     </LinearLayout>
 </FrameLayout>
 

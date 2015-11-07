@@ -10,6 +10,8 @@ import com.squareup.picasso.Picasso;
 import com.xpeppers.trentinolocal.Global;
 import com.xpeppers.trentinolocal.R;
 
+import java.text.DecimalFormat;
+
 /**
  * @author Emilio Frusciante - FEj (efrusciante AT wish-op DOT com)
  * @since 07/04/15
@@ -37,6 +39,8 @@ public class OfferAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         int i = position;
         offerViewHolder.setOfferId(global.getOffers().get(i).getId());
         offerViewHolder.getTvTitle().setText(global.getOffers().get(i).getTitle());
+        String formattedPrice = new DecimalFormat("##,##0.00€").format(global.getOffers().get(i).getPrice());
+        offerViewHolder.getTvPrice().setText(formattedPrice);
 
         // show The Image
         Picasso.with(context)

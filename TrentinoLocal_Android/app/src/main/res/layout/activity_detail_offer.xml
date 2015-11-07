@@ -87,6 +87,7 @@
                 android:text="Merchant"
                 android:textSize="@dimen/text_size"
                 android:paddingTop="@dimen/text_padding"
+                android:paddingLeft="@dimen/text_padding"
                 />
 
             <TextView
@@ -95,6 +96,7 @@
                 android:layout_height="wrap_content"
                 android:text="Address"
                 android:textSize="@dimen/text_size"
+                android:paddingLeft="@dimen/text_padding"
                 />
             <TextView
                 android:id="@+id/tvTel"
@@ -102,6 +104,7 @@
                 android:layout_height="wrap_content"
                 android:text="Tel"
                 android:textSize="@dimen/text_size"
+                android:paddingLeft="@dimen/text_padding"
                 />
             <TextView
                 android:id="@+id/tvEmail"
@@ -109,6 +112,7 @@
                 android:layout_height="wrap_content"
                 android:text="Email"
                 android:textSize="@dimen/text_size"
+                android:paddingLeft="@dimen/text_padding"
                 />
             <TextView
                 android:id="@+id/tvSiteWeb"
@@ -116,6 +120,7 @@
                 android:layout_height="wrap_content"
                 android:text="Site Web"
                 android:textSize="@dimen/text_size"
+                android:paddingLeft="@dimen/text_padding"
                 />
 
 

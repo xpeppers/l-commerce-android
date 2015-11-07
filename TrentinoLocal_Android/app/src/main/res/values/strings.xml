@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Trentino Local</string>
-    <string name="login_title">Trentino\nLocal</string>
+    <string name="app_name">Trentino Agriturismo</string>
+    <string name="login_title">Trentino\nAgriturismo</string>
     <string name="login_slogan">vieni a scoprire le migliori offerte\nin Trentino</string>
     <string name="hello_world">Ciao Mondo!</string>
     <string name="title_activity_main">MainActivity</string>
@@ -11,10 +11,76 @@
     <string name="orders">Acquisti</string>
     <string name="profile">Profilo</string>
     <string name="where_use">Dove utilizzare</string>
-    <string name="used_by">Intestazione</string>
+    <string name="used_by">Titolare Offerta</string>
+    <string name="code">Codice Offerta</string>
+    <string name="date">Data Acquisto</string>
+    <string name="price">Prezzo</string>
     <string name="how_does_it_work">Come funziona</string>
-    <string name="how_does_it_work_content">Su questo portale puoi acquistare prodotti ed offerte esclusive. Succesivamente ti invieremo una ricevuta d\'acquisto contenente un codice di 6 cifre che potrai utilizzare per effettuare la prenotazione (dove richiesta) e ritirare i prodotti o servizi direttamente presso la struttura indicata.</string>
+    <string name="how_does_it_work_content">Su questo portale puoi acquistare prodotti ed offerte esclusive.
+        Succesivamente ti invieremo una ricevuta d\'acquisto contenente un codice di 6 cifre che potrai utilizzare per
+        effettuare la prenotazione (dove richiesta) e ritirare i prodotti o servizi direttamente presso la struttura indicata.</string>
+    <string name="how_does_it_work_content_2">Effettua la prenotazione con il proprietario della struttura contattando servizio al %s\n
+        Recati presso la struttura e mostra il codice offerta per ottenere il servizio.\n
+        Eventuali integrazioni e servizi aggiuntivi devono essere pagati all\'arrivo.</string>
+    <string name="support">Supporto</string>
+    <string name="support_description">Se hai bisogno di supporto puoi contattare il nostro servizio clienti o
+        la struttura presso cui hai effettuato l\'acquisto.</string>
+    <string name="support_description_2">Nel caso in cui si intenda attivare una procedura di "Reso/Recesso" è possibile inviare
+        la richiesta tramite modulo online fornendo il riferimento dell\'ordine e del prodotto oggetto del reso/recesso.
+        Un incaricato del servizio di supporto fornirà tutte le informazioni necessarie al corretto completamento della richiesta.\n
+        \n
+        Le informazioni di dettaglio circa i resi e i recessi sono riportate a cura del venditore all’interno delle condizioni di
+        vendita previste per ciascuna offerta. Il diritto di recesso si può esercitare senza alcuna penalità e senza specificarne il motivo,
+        entro 14 giorni lavorativi dal giorno del ricevimento dei prodotti acquistati o entro 14 giorni lavorativi dal momento dell’acquisto
+        nel caso di servizi.\n
+        \n
+        Il diritto di recesso non si applica a: – ordine di Prodotti freschi o conservati a temperatura controllata;\n
+        – ordine di Prodotti confezionati su misura o chiaramente personalizzati;\n
+        – ordine di Prodotti che rischiano di deteriorarsi o scadere rapidamente;\n
+        – ordine di Prodotti sigillati che non si prestano ad essere restituiti per motivi igienici o connessi alla protezione della
+        salute o che sono stati aperti dopo la consegna.</string>
+    <string name="how">Come Funziona</string>
+    <string name="how_description">Il territorio trentino ha moltissimo da offrire, questo portale nasce per raccogliere una
+        selezione di offerte legate all\'associazione di agriturismi trentini. Potrai trovare offerte per l\'acquisto di
+        prodotti a Km 0 e per il pernottamento nelle strutture convenzionate.\n
+        \n
+        Per effettuare l\'acquisto occorre essere registrati, puoi farlo utilizzando un tuo account social
+        per velocizzare l\'accesso e non doverti ricordare la password.\n
+        \n
+        Gli acquisti sono gestiti in maniera sicura con Paypal, puoi pagare con il tuo account Paypal o con carta di
+        credito. A seguito dell’acquisto puoi trovare un riepilogo dell\'acquisto contenente un codice di 6 cifre che
+        potrai utilizzare per effettuare la prenotazione (dove richiesta) e ricevere i prodotti o servizi direttamente
+        presso la struttura indicata. Mostra in agriturismo il codice di 6 cifre, il proprietario dell\'attività può
+        verificare la validità dell\'acquisto e fornirti i beni e servizi.\n
+        \n
+        La piattaforma di Agriturismo Trentino mette a disposizione degli agrituristi la possibilità di inserire
+        offerte dei loro beni e servizi. I turisti, o visitatori in generale, possono effettuare le prenotazioni
+        presso le strutture presenti sulla piattaforma per andare a ritirare direttamente in agriturismo beni e
+        servizi. Con l\'acquisto di una offerta da parte del visitatore si instaura un rapporto diretto con l\'agriturismo
+        presso cui è stata fatta la prenotazione.\n
+        \n
+        La piattaforma di Agriturismo Trentino si limita a consentire ai venditori di pubblicare i contenuti sul
+        sito per i loro scopi di informazione promozionale.Le offerte sono redatte dall\'incaricato di ciascun
+        agriturismo, non è garantita l\'accuratezza delle informazioni contenute. La piattaforma di Agriturismo
+        Trentino non deve essere considerata come approvazione del livello di qualità di ciascun agriturismo.
+        Le informazioni sui prodotti e servizi, mappe, immagini, informazioni visualizzate sulla piattaforma
+        sono da intendersi solo come una linea guida e non sono vincolanti in ogni modo. Le relazioni e ogni
+        eventuale rapporto contrattuale instaurato tra gli utenti e gli agrituristi riguarderà esclusivamente
+        queste due parti.\n
+        \n
+        Le condizioni di vendita riportate per ciascuna offerta sono stati predisposte ad esclusiva cura e
+        responsabilità dal singolo venditore e potranno essere di volta in volta modificate da quest’ultimo.
+        Il servizio di supporto è a disposizione per fornirti, per conto dei Venditori, informazioni e supporto
+        in relazione alle offerte e alle relative condizioni di vendita, pur restando i venditori stessi gli
+        unici responsabili delle offerte.</string>
     <string name="thanks">Grazie</string>
     <string name="sent_email">Ti abbiamo inviato una email, il riferimento transazione è il seguente:</string>
     <string name="continue_shopping">Continua lo shopping</string>
+    <string name="merchant">Azienda %s</string>
+    <string name="address">Indirizzo %s</string>
+    <string name="tel">Tel %s</string>
+    <string name="email">Email %s</string>
+    <string name="siteweb">Sito Web %s</string>
+    <string name="call">Chiama</string>
+    <string name="title_activity_how">HowActivity</string>
 </resources>

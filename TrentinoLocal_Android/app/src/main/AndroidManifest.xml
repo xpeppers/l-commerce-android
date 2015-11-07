@@ -25,31 +25,29 @@
     <uses-feature
         android:name="android.hardware.camera.autofocus"
         android:required="false" />
-
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
 
     <application
-        android:name="com.xpeppers.trentinolocal.Global"
+        android:name=".Global"
         android:allowBackup="true"
         android:icon="@mipmap/icone"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="@string/google_maps_id" />
-
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
         <service
             android:name="com.paypal.android.sdk.payments.PayPalService"
             android:exported="false" />
 
         <activity
-            android:name="com.xpeppers.trentinolocal.main.MainActivity"
+            android:name=".main.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -59,19 +57,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.xpeppers.trentinolocal.SearchActivity"
+            android:name=".SearchActivity"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.xpeppers.trentinolocal.login.LoginActivity"
+            android:name=".login.LoginActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.xpeppers.trentinolocal.details.OfferDetailActivity"
+            android:name=".details.OfferDetailActivity"
             android:label="@string/title_activity_offer_detail"
             android:screenOrientation="portrait" >
         </activity>
@@ -81,7 +79,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.xpeppers.trentinolocal.details.ConfirmOrderDetailActivity"
+            android:name=".details.ConfirmOrderDetailActivity"
             android:label="@string/title_activity_confirm_payment"
             android:screenOrientation="portrait" >
         </activity>
@@ -106,11 +104,21 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name=".details.HowActivity"
+            android:label="@string/title_activity_how"
+            android:parentActivityName=".BaseActivity"
+            android:theme="@style/AppTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.xpeppers.trentinolocal.BaseActivity" />
+        </activity>
+        <activity android:name=".details.SupportActivity" >
+        </activity>
     </application>
 
 </manifest>
