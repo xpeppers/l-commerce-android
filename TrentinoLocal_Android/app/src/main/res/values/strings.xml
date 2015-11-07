@@ -74,6 +74,8 @@
         in relazione alle offerte e alle relative condizioni di vendita, pur restando i venditori stessi gli
         unici responsabili delle offerte.</string>
     <string name="thanks">Grazie</string>
+    <string name="error">Errore</string>
+    <string name="error_payment">Errore durante il pagamento</string>
     <string name="sent_email">Ti abbiamo inviato una email, il riferimento transazione è il seguente:</string>
     <string name="continue_shopping">Continua lo shopping</string>
     <string name="merchant">Azienda %s</string>

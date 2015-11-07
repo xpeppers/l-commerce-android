@@ -119,6 +119,8 @@
         </activity>
         <activity android:name=".details.SupportActivity" >
         </activity>
+        <activity android:name=".details.ErrorOrderActivity" >
+        </activity>
     </application>
 
 </manifest>

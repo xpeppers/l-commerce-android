@@ -324,7 +324,8 @@ public class OfferDetailActivity extends BaseActivity {
 
                         @Override
                         public void onFailure(Throwable caught) {
-
+                            Intent intent = new Intent(OfferDetailActivity.this, ErrorOrderActivity.class);
+                            startActivity(intent);
                         }
                     });
                 }
