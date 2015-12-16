@@ -280,7 +280,7 @@ public class OfferDetailActivity extends BaseActivity {
 
                     PayPalConfiguration config = new PayPalConfiguration()
                             .environment(PayPalConf.MODE)
-                            .clientId(PayPalConf.API_KEY);
+                            .clientId(PayPalConf.APP_ID);
 
                     PayPalPayment payment = new PayPalPayment(new BigDecimal(global.getSelectedOffer().getPrice()), "EUR",
                             global.getSelectedOffer().getTitle(), PayPalPayment.PAYMENT_INTENT_AUTHORIZE);
