@@ -35,14 +35,14 @@ android {
 
             signingConfig signingConfigs.debug
 
-            resValue "string", "facebook_app_id", "160566967618650"
+            resValue "string", "facebook_app_id", "yourvalue"
             resValue "string", "google_maps_id", "AIzaSyC20LFgVKFp-shpY-fYV3jrUOqVSIztcVc"
         }
 
         debug {
             signingConfig signingConfigs.debug
 
-            resValue "string", "facebook_app_id", "160566967618650"
+            resValue "string", "facebook_app_id", "yourvalue"
             resValue "string", "google_maps_id", "AIzaSyC20LFgVKFp-shpY-fYV3jrUOqVSIztcVc"
         }
     }
