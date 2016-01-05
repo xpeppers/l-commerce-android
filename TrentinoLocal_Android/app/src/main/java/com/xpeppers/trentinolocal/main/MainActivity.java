@@ -16,6 +16,8 @@ import com.facebook.appevents.AppEventsLogger;
 import com.github.ksoichiro.android.observablescrollview.CacheFragmentStatePagerAdapter;
 import com.rey.material.widget.Button;
 import com.xpeppers.servicelib.bean.Auth;
+import com.xpeppers.servicelib.bean.Reseller;
+import com.xpeppers.servicelib.services.ResellerService;
 import com.xpeppers.servicelib.services.UsersService;
 import com.xpeppers.servicelib.utils.CallBack;
 import com.xpeppers.trentinolocal.BaseActivity;
@@ -79,6 +81,7 @@ public class MainActivity extends BaseActivity {
 
             }
         });
+
         configureButtonMenu();
 
         // Init First Page
@@ -91,6 +94,23 @@ public class MainActivity extends BaseActivity {
         if(global.isFacebookLogin() && !global.isApiAuthenticated()) {
             apiLogin();
             getEmailFromFacebook();
+        }
+
+        if(global.getReseller() == null) {
+            ResellerService.getInstance(global.getApplicationContext()).getReseller(new CallBack() {
+                @Override
+                public void onSuccess(Object result) {
+                    Reseller reseller = (Reseller) result;
+                    global.setReseller(reseller);
+
+                    activateEventButton();
+                }
+
+                @Override
+                public void onFailure(Throwable caught) {
+
+                }
+            });
         }
     }
 
@@ -131,6 +151,34 @@ public class MainActivity extends BaseActivity {
                     secureButtonMenu(2);
                 }
             });
+        }
+
+        activateEventButton();
+    }
+
+    protected void activateEventButton() {
+        final Button bEvent = (Button) findViewById(R.id.bEvent);
+        if(bEvent != null) {
+            if(global.getReseller() != null && global.getReseller().getButton_text() != null && !global.getReseller().getButton_text().equals(""))
+                bEvent.setText(global.getReseller().getButton_text());
+
+            if(global.getReseller() != null && global.getReseller().getCustom_url() != null && !global.getReseller().getCustom_url().equals("")) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        bEvent.setVisibility(View.VISIBLE);
+                    }
+                });
+
+                bEvent.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        openWeb(global.getReseller().getCustom_url());
+                    }
+                });
+            } else {
+                bEvent.setVisibility(View.GONE);
+            }
         }
     }
 

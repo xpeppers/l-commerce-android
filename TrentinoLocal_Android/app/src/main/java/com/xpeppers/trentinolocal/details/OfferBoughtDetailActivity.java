@@ -1,12 +1,14 @@
 package com.xpeppers.trentinolocal.details;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -20,6 +22,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
+import com.rey.material.widget.ImageButton;
 import com.squareup.picasso.Picasso;
 import com.xpeppers.servicelib.bean.OfferBought;
 import com.xpeppers.servicelib.services.OffersBoughtService;
@@ -40,10 +45,16 @@ public class OfferBoughtDetailActivity extends BaseActivity {
     private TextView tvTitle;
     private TextView tvDescription;
     private TextView tvMerchant;
+
     private TextView tvAddress;
+    private ImageButton ibAddress;
     private TextView tvTel;
+    private ImageButton ibTel;
     private TextView tvEmail;
+    private ImageButton ibEmail;
     private TextView tvSiteWeb;
+    private ImageButton ibSiteWeb;
+
     private LinearLayout llCall;
     private TextView tvUserFullname;
     //private TextView tvStatus;
@@ -51,7 +62,9 @@ public class OfferBoughtDetailActivity extends BaseActivity {
     private TextView tvPrice;
     private TextView tvDate;
     private TextView tvHowDoesItWork;
+    private HorizontalScrollView hsViewMultiImage;
     private LinearLayout llGallery;
+    private ImageView ivOfferSingleImage;
     private GoogleMap map;
 
     @Override
@@ -100,9 +113,37 @@ public class OfferBoughtDetailActivity extends BaseActivity {
         tvDescription = (TextView) findViewById(R.id.tvDescription);
         tvMerchant = (TextView) findViewById(R.id.tvMerchant);
         tvAddress = (TextView) findViewById(R.id.tvAddress);
+        ibAddress = (ImageButton) findViewById(R.id.ibAddress);
+        ibAddress.setImageDrawable(
+                new IconicsDrawable(this)
+                        .icon(GoogleMaterial.Icon.gmd_near_me)
+                        .color(Color.BLACK)
+                        .sizeDp(24));
+
         tvTel = (TextView) findViewById(R.id.tvTel);
+        ibTel = (ImageButton) findViewById(R.id.ibTel);
+        ibTel.setImageDrawable(
+                new IconicsDrawable(this)
+                        .icon(GoogleMaterial.Icon.gmd_phone)
+                        .color(Color.BLACK)
+                        .sizeDp(24));
+
         tvEmail = (TextView) findViewById(R.id.tvEmail);
+        ibEmail = (ImageButton) findViewById(R.id.ibEmail);
+        ibEmail.setImageDrawable(
+                new IconicsDrawable(this)
+                        .icon(GoogleMaterial.Icon.gmd_mail)
+                        .color(Color.BLACK)
+                        .sizeDp(24));
+
         tvSiteWeb = (TextView) findViewById(R.id.tvSiteWeb);
+        ibSiteWeb = (ImageButton) findViewById(R.id.ibSiteWeb);
+        ibSiteWeb.setImageDrawable(
+                new IconicsDrawable(this)
+                        .icon(GoogleMaterial.Icon.gmd_web)
+                        .color(Color.BLACK)
+                        .sizeDp(24));
+
         llCall = (LinearLayout) findViewById(R.id.llCall);
 
         tvUserFullname = (TextView) findViewById(R.id.tvUserFullname);
@@ -112,7 +153,9 @@ public class OfferBoughtDetailActivity extends BaseActivity {
         tvDate = (TextView) findViewById(R.id.tvDate);
         tvHowDoesItWork = (TextView) findViewById(R.id.tvHowDoesItWork);
 
+        hsViewMultiImage = (HorizontalScrollView) findViewById(R.id.hsViewMultiImage);
         llGallery = (LinearLayout) findViewById(R.id.llGallery);
+        ivOfferSingleImage = (ImageView) findViewById(R.id.ivOfferSingleImage);
 
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.mapView)).getMap();
 
@@ -163,10 +206,24 @@ public class OfferBoughtDetailActivity extends BaseActivity {
                         openNavigator(offerBought.getAddress().toString(), position);
                     }
                 });
+                ibAddress.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        LatLng position = new LatLng(offerBought.getAddress().getLatitude(), offerBought.getAddress().getLongitude());
+                        openNavigator(offerBought.getAddress().toString(), position);
+                    }
+                });
                 if (offerBought.getTelephone() != null && !offerBought.getTelephone().equals("")) {
                     tvTel.setText(getResources().getString(R.string.tel, offerBought.getTelephone()));
                     tvTel.setVisibility(View.VISIBLE);
                     tvTel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            callNumber(offerBought.getTelephone());
+                        }
+                    });
+                    ibTel.setVisibility(View.VISIBLE);
+                    ibTel.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             callNumber(offerBought.getTelephone());
@@ -181,6 +238,7 @@ public class OfferBoughtDetailActivity extends BaseActivity {
                     });
                 } else {
                     tvTel.setVisibility(View.GONE);
+                    ibTel.setVisibility(View.GONE);
                     llCall.setVisibility(View.GONE);
                 }
                 if (offerBought.getEmail() != null && !offerBought.getEmail().equals("")) {
@@ -192,8 +250,16 @@ public class OfferBoughtDetailActivity extends BaseActivity {
                             sendEmail(offerBought.getEmail());
                         }
                     });
+                    ibEmail.setVisibility(View.VISIBLE);
+                    ibEmail.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            sendEmail(offerBought.getEmail());
+                        }
+                    });
                 } else {
                     tvEmail.setVisibility(View.GONE);
+                    ibEmail.setVisibility(View.GONE);
                 }
                 if (offerBought.getWeb_site() != null && !offerBought.getWeb_site().equals("")) {
                     tvSiteWeb.setText(getResources().getString(R.string.siteweb, offerBought.getWeb_site()));
@@ -204,8 +270,16 @@ public class OfferBoughtDetailActivity extends BaseActivity {
                             openWeb(offerBought.getWeb_site());
                         }
                     });
+                    ibSiteWeb.setVisibility(View.VISIBLE);
+                    ibSiteWeb.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            openWeb(offerBought.getWeb_site());
+                        }
+                    });
                 } else {
                     tvSiteWeb.setVisibility(View.GONE);
+                    ibSiteWeb.setVisibility(View.GONE);
                 }
                 tvUserFullname.setText(offerBought.getUser_fullname());
                 //tvStatus.setText("Status " + offerBought.getStatus());
@@ -219,19 +293,33 @@ public class OfferBoughtDetailActivity extends BaseActivity {
 
                 tvHowDoesItWork.setText(getResources().getString(R.string.how_does_it_work_content_2, offerBought.getTelephone()));
 
-                for (int i = 0; i < offerBought.getImage_gallery().size(); i++) {
-                    ImageView imageView = new ImageView(global.getCurrentActivity());
-                    imageView.setId(i);
-                    imageView.setPadding(2, 2, 2, 2);
+                if(offerBought.getImage_gallery().size() == 1) {
+                    hsViewMultiImage.setVisibility(View.GONE);
+                    ivOfferSingleImage.setVisibility(View.VISIBLE);
 
                     Picasso.with(getBaseContext())
-                            .load(offerBought.getImage_gallery().get(i))
+                            .load(offerBought.getImage_gallery().get(0))
                             .placeholder(R.drawable.placeholder)
                             .fit()
                             .centerCrop()
-                            .into(imageView);
-                    //imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                    llGallery.addView(imageView);
+                            .into(ivOfferSingleImage);
+                } else {
+                    hsViewMultiImage.setVisibility(View.VISIBLE);
+                    ivOfferSingleImage.setVisibility(View.GONE);
+                    for (int i = 0; i < offerBought.getImage_gallery().size(); i++) {
+                        ImageView imageView = new ImageView(global.getCurrentActivity());
+                        imageView.setId(i);
+                        imageView.setPadding(2, 2, 2, 2);
+
+                        Picasso.with(getBaseContext())
+                                .load(offerBought.getImage_gallery().get(i))
+                                .placeholder(R.drawable.placeholder)
+                                .fit()
+                                .centerCrop()
+                                .into(imageView);
+                        //imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        llGallery.addView(imageView);
+                    }
                 }
 
                 if (map != null) {

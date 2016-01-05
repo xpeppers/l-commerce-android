@@ -15,7 +15,7 @@
         android:layout_weight="0.33"
         android:text="@string/offers"
         android:textColor="@color/white"
-        app:rd_delayClick="afterRelease" />
+        app:rd_delayClick="untilRelease" />
 
     <com.rey.material.widget.Button
         android:id="@+id/bOrder"
@@ -25,7 +25,18 @@
         android:layout_weight="0.33"
         android:text="@string/orders"
         android:textColor="@color/white"
-        app:rd_delayClick="afterRelease" />
+        app:rd_delayClick="untilRelease" />
+
+    <com.rey.material.widget.Button
+        android:id="@+id/bEvent"
+        style="@style/RaiseWaveColorTransparentButtonRippleStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.33"
+        android:text="@string/events"
+        android:textColor="@color/white"
+        app:rd_delayClick="untilRelease"
+        android:visibility="gone" />
 
     <com.rey.material.widget.Button
         android:id="@+id/bProfile"
@@ -35,5 +46,5 @@
         android:layout_weight="0.33"
         android:text="@string/profile"
         android:textColor="@color/white"
-        app:rd_delayClick="afterRelease" />
+        app:rd_delayClick="untilRelease" />
 </LinearLayout>

@@ -65,6 +65,24 @@
         <item name="rd_bottomPadding">2dp</item>
     </style>
 
+    <style name="RaiseWaveColorOrangeLightButtonRippleStyle" parent="Material.Drawable.Ripple.Wave.Light">
+        <item name="android:background">@color/trentino_orange_light</item>
+        <item name="rd_rippleColor">#33000000</item>
+        <item name="rd_leftPadding">1dp</item>
+        <item name="rd_topPadding">1dp</item>
+        <item name="rd_rightPadding">1dp</item>
+        <item name="rd_bottomPadding">2dp</item>
+    </style>
+
+    <style name="RaiseWaveColorCyanLightButtonRippleStyle" parent="Material.Drawable.Ripple.Wave.Light">
+        <item name="android:background">@color/trentino_cyan_light</item>
+        <item name="rd_rippleColor">#33000000</item>
+        <item name="rd_leftPadding">1dp</item>
+        <item name="rd_topPadding">1dp</item>
+        <item name="rd_rightPadding">1dp</item>
+        <item name="rd_bottomPadding">2dp</item>
+    </style>
+
     <style name="RaiseWaveColorRedButtonRippleStyle" parent="Material.Drawable.Ripple.Wave.Light">
         <item name="android:background">@color/trentino_red_dark</item>
         <item name="rd_rippleColor">#33000000</item>

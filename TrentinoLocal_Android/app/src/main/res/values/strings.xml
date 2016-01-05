@@ -10,6 +10,7 @@
     <string name="title_activity_confirm_payment">ConfirmPaymentActivity</string>
     <string name="offers">Offerte</string>
     <string name="orders">Acquisti</string>
+    <string name="events">Eventi</string>
     <string name="profile">Profilo</string>
     <string name="where_use">Dove utilizzare</string>
     <string name="used_by">Titolare Offerta</string>
@@ -70,4 +71,5 @@
     <string name="siteweb">Sito Web %s</string>
     <string name="call">Chiama</string>
     <string name="title_activity_how">HowActivity</string>
+    <string name="reservation">PRENOTA %s</string>
 </resources>

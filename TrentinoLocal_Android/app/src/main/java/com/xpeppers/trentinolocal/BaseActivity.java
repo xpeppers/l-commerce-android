@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 
@@ -14,6 +15,7 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.appevents.AppEventsLogger;
 import com.google.android.gms.maps.model.LatLng;
+import com.mikepenz.iconics.context.IconicsLayoutInflater;
 import com.xpeppers.servicelib.bean.Auth;
 import com.xpeppers.servicelib.services.UsersService;
 import com.xpeppers.servicelib.utils.CallBack;
@@ -31,11 +33,13 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        global = (Global) getApplicationContext();
-
+        LayoutInflaterCompat.setFactory(getLayoutInflater(), new IconicsLayoutInflater(getDelegate()));
         FacebookSdk.sdkInitialize(getApplicationContext());
+
+        global = (Global) getApplicationContext();
         callbackManager = CallbackManager.Factory.create();
+
+        super.onCreate(savedInstanceState);
     }
 
     @Override

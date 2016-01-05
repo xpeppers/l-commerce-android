@@ -117,7 +117,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.xpeppers.trentinolocal.BaseActivity" />
         </activity>
-        <activity android:name=".details.SupportActivity" >
+        <activity android:name=".details.StaticPageActivity" >
         </activity>
         <activity android:name=".details.ErrorOrderActivity" >
         </activity>

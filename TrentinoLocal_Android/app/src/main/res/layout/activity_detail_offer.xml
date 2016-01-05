@@ -20,19 +20,55 @@
             android:orientation="vertical">
 
 
-            <HorizontalScrollView
-                android:id="@+id/hsView"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/detail_image_height" >
+                android:layout_height="@dimen/detail_image_height">
+
+                <HorizontalScrollView
+                    android:id="@+id/hsViewMultiImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/detail_image_height"
+                    android:visibility="visible" >
+
+                    <LinearLayout
+                        android:id="@+id/llGallery"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal" >
+                    </LinearLayout>
+
+                </HorizontalScrollView>
+
+                <ImageView
+                    android:id="@+id/ivOfferSingleImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/detail_image_height"
+                    android:src="@drawable/placeholder"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
 
                 <LinearLayout
-                    android:id="@+id/llGallery"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal" >
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/detail_text_padding"
+                    android:orientation="horizontal"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/vertical_gradient"
+                    android:gravity="right" >
+
+                    <TextView
+                        android:id="@+id/tvPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:text="€00.00"
+                        android:textSize="@dimen/text_title_size"
+                        android:textColor="@color/white" />
                 </LinearLayout>
 
-            </HorizontalScrollView>
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/tvTitle"
@@ -90,38 +126,113 @@
                 android:paddingLeft="@dimen/text_padding"
                 />
 
-            <TextView
-                android:id="@+id/tvAddress"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Address"
-                android:textSize="@dimen/text_size"
+                android:orientation="horizontal"
                 android:paddingLeft="@dimen/text_padding"
-                />
-            <TextView
-                android:id="@+id/tvTel"
+                android:paddingStart="@dimen/text_padding"
+                android:paddingBottom="@dimen/text_padding"
+                android:gravity="center">
+
+                <com.rey.material.widget.ImageButton
+                    android:id="@+id/ibAddress"
+                    style="@style/RaiseWaveColorGreenButtonRippleStyle"
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    app:rd_delayClick="afterRelease" />
+
+                <TextView
+                    android:id="@+id/tvAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/address"
+                    android:textSize="@dimen/text_size"
+                    android:paddingLeft="@dimen/text_padding"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tel"
-                android:textSize="@dimen/text_size"
+                android:orientation="horizontal"
                 android:paddingLeft="@dimen/text_padding"
-                />
-            <TextView
-                android:id="@+id/tvEmail"
+                android:paddingStart="@dimen/text_padding"
+                android:paddingBottom="@dimen/text_padding"
+                android:gravity="center">
+
+                <com.rey.material.widget.ImageButton
+                    android:id="@+id/ibTel"
+                    style="@style/RaiseWaveColorGreenButtonRippleStyle"
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    app:rd_delayClick="afterRelease" />
+
+                <TextView
+                    android:id="@+id/tvTel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/tel"
+                    android:textSize="@dimen/text_size"
+                    android:paddingLeft="@dimen/text_padding"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Email"
-                android:textSize="@dimen/text_size"
+                android:orientation="horizontal"
                 android:paddingLeft="@dimen/text_padding"
-                />
-            <TextView
-                android:id="@+id/tvSiteWeb"
+                android:paddingStart="@dimen/text_padding"
+                android:paddingBottom="@dimen/text_padding"
+                android:gravity="center">
+
+                <com.rey.material.widget.ImageButton
+                    android:id="@+id/ibEmail"
+                    style="@style/RaiseWaveColorGreenButtonRippleStyle"
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    app:rd_delayClick="afterRelease" />
+
+                <TextView
+                    android:id="@+id/tvEmail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/email"
+                    android:textSize="@dimen/text_size"
+                    android:paddingLeft="@dimen/text_padding"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Site Web"
-                android:textSize="@dimen/text_size"
+                android:orientation="horizontal"
                 android:paddingLeft="@dimen/text_padding"
-                />
+                android:paddingStart="@dimen/text_padding"
+                android:paddingBottom="@dimen/text_padding"
+                android:gravity="center">
+
+                <com.rey.material.widget.ImageButton
+                    android:id="@+id/ibSiteWeb"
+                    style="@style/RaiseWaveColorGreenButtonRippleStyle"
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    app:rd_delayClick="afterRelease" />
+
+                <TextView
+                    android:id="@+id/tvSiteWeb"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/siteweb"
+                    android:textSize="@dimen/text_size"
+                    android:paddingLeft="@dimen/text_padding"
+                    />
+            </LinearLayout>
 
 
             <TextView
@@ -153,7 +264,7 @@
             style="@style/RaiseWaveColorGreenButtonRippleStyle"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="ACQUISTA €00.00"
+            android:text="PRENOTA €00.00"
             android:textColor="@color/trentino_white"
             app:rd_delayClick="afterRelease" />
     </LinearLayout>

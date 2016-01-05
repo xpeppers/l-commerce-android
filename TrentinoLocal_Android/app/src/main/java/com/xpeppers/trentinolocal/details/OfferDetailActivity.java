@@ -2,14 +2,15 @@ package com.xpeppers.trentinolocal.details;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.text.Spanned;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -23,12 +24,15 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
 import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
 import com.rey.material.widget.Button;
+import com.rey.material.widget.ImageButton;
 import com.squareup.picasso.Picasso;
 import com.xpeppers.servicelib.bean.Offer;
 import com.xpeppers.servicelib.bean.Order;
@@ -41,7 +45,6 @@ import com.xpeppers.trentinolocal.Global;
 import com.xpeppers.trentinolocal.PayPalConf;
 import com.xpeppers.trentinolocal.R;
 import com.xpeppers.trentinolocal.login.LoginActivity;
-import com.xpeppers.trentinolocal.utils.CustomHtmlTagHandler;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -62,11 +65,18 @@ public class OfferDetailActivity extends BaseActivity {
     private TextView tvDescription;
     private TextView tvMerchant;
     private TextView tvAddress;
+    private ImageButton ibAddress;
     private TextView tvTel;
+    private ImageButton ibTel;
     private TextView tvEmail;
+    private ImageButton ibEmail;
     private TextView tvSiteWeb;
+    private ImageButton ibSiteWeb;
+    private TextView tvPrice;
     private Button bPurchase;
+    private HorizontalScrollView hsViewMultiImage;
     private LinearLayout llGallery;
+    private ImageView ivOfferSingleImage;
     private GoogleMap map;
 
     @Override
@@ -115,12 +125,44 @@ public class OfferDetailActivity extends BaseActivity {
         tvDescription = (TextView) findViewById(R.id.tvDescription);
         tvMerchant = (TextView) findViewById(R.id.tvMerchant);
         tvAddress = (TextView) findViewById(R.id.tvAddress);
+        ibAddress = (ImageButton) findViewById(R.id.ibAddress);
+        ibAddress.setImageDrawable(
+                new IconicsDrawable(this)
+                        .icon(GoogleMaterial.Icon.gmd_near_me)
+                        .color(Color.BLACK)
+                        .sizeDp(24));
+
         tvTel = (TextView) findViewById(R.id.tvTel);
+        ibTel = (ImageButton) findViewById(R.id.ibTel);
+        ibTel.setImageDrawable(
+                new IconicsDrawable(this)
+                        .icon(GoogleMaterial.Icon.gmd_phone)
+                        .color(Color.BLACK)
+                        .sizeDp(24));
+
         tvEmail = (TextView) findViewById(R.id.tvEmail);
+        ibEmail = (ImageButton) findViewById(R.id.ibEmail);
+        ibEmail.setImageDrawable(
+                new IconicsDrawable(this)
+                        .icon(GoogleMaterial.Icon.gmd_mail)
+                        .color(Color.BLACK)
+                        .sizeDp(24));
+
         tvSiteWeb = (TextView) findViewById(R.id.tvSiteWeb);
+        ibSiteWeb = (ImageButton) findViewById(R.id.ibSiteWeb);
+        ibSiteWeb.setImageDrawable(
+                new IconicsDrawable(this)
+                        .icon(GoogleMaterial.Icon.gmd_web)
+                        .color(Color.BLACK)
+                        .sizeDp(24));
+
+        tvPrice = (TextView) findViewById(R.id.tvPrice);
         bPurchase = (Button) findViewById(R.id.bPurchase);
 
+        hsViewMultiImage = (HorizontalScrollView) findViewById(R.id.hsViewMultiImage);
         llGallery = (LinearLayout) findViewById(R.id.llGallery);
+        ivOfferSingleImage = (ImageView) findViewById(R.id.ivOfferSingleImage);
+
         // Map
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.mapView)).getMap();
 
@@ -187,6 +229,14 @@ public class OfferDetailActivity extends BaseActivity {
                         openNavigator(offer.getAddress().toString(), position);
                     }
                 });
+                ibAddress.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        LatLng position = new LatLng(offer.getAddress().getLatitude(), offer.getAddress().getLongitude());
+                        openNavigator(offer.getAddress().toString(), position);
+                    }
+                });
+
                 if (offer.getTelephone() != null && !offer.getTelephone().equals("")) {
                     tvTel.setText(getResources().getString(R.string.tel, offer.getTelephone()));
                     tvTel.setVisibility(View.VISIBLE);
@@ -196,8 +246,16 @@ public class OfferDetailActivity extends BaseActivity {
                             callNumber(offer.getTelephone());
                         }
                     });
+                    ibTel.setVisibility(View.VISIBLE);
+                    ibTel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            callNumber(offer.getTelephone());
+                        }
+                    });
                 } else {
                     tvTel.setVisibility(View.GONE);
+                    ibTel.setVisibility(View.GONE);
                 }
                 if (offer.getEmail() != null && !offer.getEmail().equals("")) {
                     tvEmail.setText(getResources().getString(R.string.email, offer.getEmail()));
@@ -208,8 +266,16 @@ public class OfferDetailActivity extends BaseActivity {
                             sendEmail(offer.getEmail());
                         }
                     });
+                    ibEmail.setVisibility(View.VISIBLE);
+                    ibEmail.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            sendEmail(offer.getEmail());
+                        }
+                    });
                 } else {
                     tvEmail.setVisibility(View.GONE);
+                    ibEmail.setVisibility(View.GONE);
                 }
                 if (offer.getWeb_site() != null && !offer.getWeb_site().equals("")) {
                     tvSiteWeb.setText(getResources().getString(R.string.siteweb, offer.getWeb_site()));
@@ -220,33 +286,62 @@ public class OfferDetailActivity extends BaseActivity {
                             openWeb(offer.getWeb_site());
                         }
                     });
+                    ibSiteWeb.setVisibility(View.VISIBLE);
+                    ibSiteWeb.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            openWeb(offer.getWeb_site());
+                        }
+                    });
                 } else {
                     tvSiteWeb.setVisibility(View.GONE);
+                    ibSiteWeb.setVisibility(View.GONE);
                 }
 
-                String formattedOriginalPrice = new DecimalFormat("##,##0.00€").format(offer.getOriginal_price());
                 String formattedPrice = new DecimalFormat("##,##0.00€").format(offer.getPrice());
-                String priceLabel = "COMPRA | ";
+                tvPrice.setText(formattedPrice);
+
+                //String formattedOriginalPrice = new DecimalFormat("##,##0.00€").format(offer.getOriginal_price());
+                /*
+                String priceLabel = "PRENOTA | ";
                 if (offer.getOriginal_price() > 0) {
                     priceLabel += "<strike>" + formattedOriginalPrice + "</strike> ";
                 }
                 priceLabel += formattedPrice;
                 Spanned bLabel = Html.fromHtml(priceLabel, null, new CustomHtmlTagHandler());
-                bPurchase.setText(bLabel);
+                */
 
-                for (int i = 0; i < offer.getImage_gallery().size(); i++) {
-                    ImageView imageView = new ImageView(global.getCurrentActivity());
-                    imageView.setId(i);
-                    imageView.setPadding(2, 2, 2, 2);
+                String formattedReservationPrice = new DecimalFormat("##,##0.00€").format(offer.getReservation_price());
+                bPurchase.setText(getResources().getString(R.string.reservation, formattedReservationPrice));
+
+                if(offer.getImage_gallery().size() == 1) {
+                    hsViewMultiImage.setVisibility(View.GONE);
+                    ivOfferSingleImage.setVisibility(View.VISIBLE);
 
                     Picasso.with(getBaseContext())
-                            .load(offer.getImage_gallery().get(i))
+                            .load(offer.getImage_gallery().get(0))
                             .placeholder(R.drawable.placeholder)
                             .fit()
                             .centerCrop()
-                            .into(imageView);
-                    //imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                    llGallery.addView(imageView);
+                            .into(ivOfferSingleImage);
+                } else {
+                    hsViewMultiImage.setVisibility(View.VISIBLE);
+                    ivOfferSingleImage.setVisibility(View.GONE);
+
+                    for (int i = 0; i < offer.getImage_gallery().size(); i++) {
+                        ImageView imageView = new ImageView(global.getCurrentActivity());
+                        imageView.setId(i);
+                        imageView.setPadding(2, 2, 2, 2);
+
+                        Picasso.with(getBaseContext())
+                                .load(offer.getImage_gallery().get(i))
+                                .placeholder(R.drawable.placeholder)
+                                .fit()
+                                .centerCrop()
+                                .into(imageView);
+                        //imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        llGallery.addView(imageView);
+                    }
                 }
 
                 if (map != null) {

@@ -24,4 +24,5 @@ public class Constants {
     public final static String BOUGHT_BY_USERS = "/bought_offers";
     public final static String BOUGHT_BY_USER = "/bought_offers/{id}";
 
+    public final static String RESELLER = "/reseller";
 }

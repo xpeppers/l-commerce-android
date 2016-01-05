@@ -10,9 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.facebook.login.LoginManager;
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.mikepenz.materialdrawer.view.BezelImageView;
+import com.rey.material.widget.Button;
 import com.squareup.picasso.Picasso;
 import com.xpeppers.servicelib.bean.Offer;
 import com.xpeppers.servicelib.bean.OfferBought;
@@ -25,8 +27,7 @@ import com.xpeppers.trentinolocal.BaseFragment;
 import com.xpeppers.trentinolocal.R;
 import com.xpeppers.trentinolocal.adapter.OfferAdapter;
 import com.xpeppers.trentinolocal.adapter.OfferBoughtAdapter;
-import com.xpeppers.trentinolocal.details.HowActivity;
-import com.xpeppers.trentinolocal.details.SupportActivity;
+import com.xpeppers.trentinolocal.details.StaticPageActivity;
 
 import java.util.List;
 
@@ -89,21 +90,48 @@ public class MainFragment extends BaseFragment {
                             .inflate(R.layout.fragment_profile, container, false);
                     loadProfile(rootView);
                     TextView tvHow = (TextView) rootView.findViewById(R.id.tvHow);
-                    tvHow.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent how = new Intent(v.getContext(), HowActivity.class);
-                            v.getContext().startActivity(how);
-                        }
-                    });
+                    if(global.getReseller() != null && global.getReseller().getHow_it_works() != null && !global.getReseller().getHow_it_works().equals("")) {
+                        tvHow.setVisibility(View.VISIBLE);
+
+                        tvHow.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent staticPage = new Intent(v.getContext(), StaticPageActivity.class);
+                                staticPage.putExtra(StaticPageActivity.EXTRA_TITLE, rootView.getResources().getString(R.string.how));
+                                staticPage.putExtra(StaticPageActivity.EXTRA_BODY, global.getReseller().getHow_it_works());
+                                v.getContext().startActivity(staticPage);
+                            }
+                        });
+                    } else {
+                        tvHow.setVisibility(View.GONE);
+                    }
+
                     TextView tvSupport = (TextView) rootView.findViewById(R.id.tvSupport);
-                    tvSupport.setOnClickListener(new View.OnClickListener() {
+                    if(global.getReseller() != null && global.getReseller().getSupport() != null && !global.getReseller().getSupport().equals("")) {
+                        tvSupport.setVisibility(View.VISIBLE);
+
+                        tvSupport.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent staticPage = new Intent(v.getContext(), StaticPageActivity.class);
+                                staticPage.putExtra(StaticPageActivity.EXTRA_TITLE, rootView.getResources().getString(R.string.support));
+                                staticPage.putExtra(StaticPageActivity.EXTRA_BODY, global.getReseller().getSupport());
+                                v.getContext().startActivity(staticPage);
+                            }
+                        });
+                    } else {
+                        tvSupport.setVisibility(View.GONE);
+                    }
+
+                    Button bLogout = (Button) rootView.findViewById(R.id.bLogout);
+                    bLogout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent support = new Intent(v.getContext(), SupportActivity.class);
-                            v.getContext().startActivity(support);
+                            LoginManager.getInstance().logOut();
+                            // TODO: go to first tab
                         }
                     });
+
                 } else {
                     rootView = (ViewGroup) inflater
                             .inflate(R.layout.fragment_empty, container, false);
@@ -262,7 +290,7 @@ public class MainFragment extends BaseFragment {
                         swipeRefreshLayout.setRefreshing(false);
 
                         if (offerAdapter == null) {
-                            offerAdapter = new OfferAdapter(getActivity().getBaseContext());
+                            offerAdapter = new OfferAdapter(global.getApplicationContext());
                             recyclerView.setAdapter(offerAdapter);
                         }
                         offerAdapter.notifyDataSetChanged();
@@ -276,7 +304,7 @@ public class MainFragment extends BaseFragment {
                         swipeRefreshLayout.setRefreshing(false);
 
                         if (offerBoughtAdapter == null) {
-                            offerBoughtAdapter = new OfferBoughtAdapter(getActivity().getBaseContext());
+                            offerBoughtAdapter = new OfferBoughtAdapter(global.getApplicationContext());
                             recyclerView.setAdapter(offerBoughtAdapter);
                         }
                         offerBoughtAdapter.notifyDataSetChanged();

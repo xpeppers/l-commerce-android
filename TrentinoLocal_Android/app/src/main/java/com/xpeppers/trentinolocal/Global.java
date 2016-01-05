@@ -11,6 +11,7 @@ import com.facebook.AccessToken;
 import com.xpeppers.servicelib.bean.Offer;
 import com.xpeppers.servicelib.bean.OfferBought;
 import com.xpeppers.servicelib.bean.Order;
+import com.xpeppers.servicelib.bean.Reseller;
 import com.xpeppers.servicelib.bean.User;
 
 import java.util.ArrayList;
@@ -42,6 +43,8 @@ public class Global extends Application {
 
     private User user;
     private String userEmailByFacebook;
+
+    private Reseller reseller;
 
     @Override
     public void onCreate() {
@@ -178,6 +181,14 @@ public class Global extends Application {
 
     public void setUserEmailByFacebook(String userEmailByFacebook) {
         this.userEmailByFacebook = userEmailByFacebook;
+    }
+
+    public Reseller getReseller() {
+        return reseller;
+    }
+
+    public void setReseller(Reseller reseller) {
+        this.reseller = reseller;
     }
 
     public AccessToken getAccessToken() {

@@ -13,6 +13,8 @@
 
     <dimen name="text_padding">10dp</dimen>
 
+    <dimen name="icon_size">38dp</dimen>
+
     <dimen name="image_height">200dp</dimen>
     <dimen name="detail_image_height">200dp</dimen>
     <dimen name="detail_text_padding">10dp</dimen>

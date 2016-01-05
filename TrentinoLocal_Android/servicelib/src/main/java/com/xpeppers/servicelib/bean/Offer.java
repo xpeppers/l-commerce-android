@@ -13,7 +13,10 @@ public class Offer implements Serializable {
     private String description;
     private double original_price;
     private double price;
+    private double reservation_price;
     private String image_url;
+    private double latitude;
+    private double longitude;
 
     private List<String> image_gallery;
 
@@ -63,12 +66,36 @@ public class Offer implements Serializable {
         this.price = price;
     }
 
+    public double getReservation_price() {
+        return reservation_price;
+    }
+
+    public void setReservation_price(double reservation_price) {
+        this.reservation_price = reservation_price;
+    }
+
     public String getImage_url() {
         return image_url;
     }
 
     public void setImage_url(String image_url) {
         this.image_url = image_url;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public List<String> getImage_gallery() {
@@ -128,7 +155,10 @@ public class Offer implements Serializable {
         msg += "description: " + getDescription() + "\n";
         msg += "original_price: " + getOriginal_price() + "\n";
         msg += "price: " + getPrice() + "\n";
+        msg += "reservation_price: " + getReservation_price() + "\n";
         msg += "image_url: " + getImage_url() + "\n";
+        msg += "latitude: " + getLatitude() + "\n";
+        msg += "longitude: " + getLongitude() + "\n";
         msg += "merchant: " + getMerchant() + "\n";
         msg += "address: " + getAddress().toString() + "\n";
         msg += "telephone: " + getTelephone() + "\n";

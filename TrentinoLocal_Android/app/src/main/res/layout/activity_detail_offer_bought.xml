@@ -170,38 +170,114 @@
                         android:text="@string/merchant"
                         android:textSize="@dimen/text_size"
                         />
-                    <TextView
-                        android:id="@+id/tvAddress"
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:text="@string/address"
-                        android:textSize="@dimen/text_size"
-                        />
-                    <TextView
-                        android:id="@+id/tvTel"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/text_padding"
+                        android:paddingStart="@dimen/text_padding"
+                        android:paddingBottom="@dimen/text_padding"
+                        android:gravity="center">
+
+                        <com.rey.material.widget.ImageButton
+                            android:id="@+id/ibAddress"
+                            style="@style/RaiseWaveColorGreenButtonRippleStyle"
+                            android:layout_width="@dimen/icon_size"
+                            android:layout_height="@dimen/icon_size"
+                            app:rd_delayClick="afterRelease" />
+
+                        <TextView
+                            android:id="@+id/tvAddress"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/address"
+                            android:textSize="@dimen/text_size"
+                            android:paddingLeft="@dimen/text_padding"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:text="@string/tel"
-                        android:textSize="@dimen/text_size"
-                        />
-                    <TextView
-                        android:id="@+id/tvEmail"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/text_padding"
+                        android:paddingStart="@dimen/text_padding"
+                        android:paddingBottom="@dimen/text_padding"
+                        android:gravity="center">
+
+                        <com.rey.material.widget.ImageButton
+                            android:id="@+id/ibTel"
+                            style="@style/RaiseWaveColorGreenButtonRippleStyle"
+                            android:layout_width="@dimen/icon_size"
+                            android:layout_height="@dimen/icon_size"
+                            app:rd_delayClick="afterRelease" />
+
+                        <TextView
+                            android:id="@+id/tvTel"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/tel"
+                            android:textSize="@dimen/text_size"
+                            android:paddingLeft="@dimen/text_padding"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:text="@string/email"
-                        android:textSize="@dimen/text_size"
-                        />
-                    <TextView
-                        android:id="@+id/tvSiteWeb"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/text_padding"
+                        android:paddingStart="@dimen/text_padding"
+                        android:paddingBottom="@dimen/text_padding"
+                        android:gravity="center">
+
+                        <com.rey.material.widget.ImageButton
+                            android:id="@+id/ibEmail"
+                            style="@style/RaiseWaveColorGreenButtonRippleStyle"
+                            android:layout_width="@dimen/icon_size"
+                            android:layout_height="@dimen/icon_size"
+                            app:rd_delayClick="afterRelease" />
+
+                        <TextView
+                            android:id="@+id/tvEmail"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/email"
+                            android:textSize="@dimen/text_size"
+                            android:paddingLeft="@dimen/text_padding"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:text="@string/siteweb"
-                        android:textSize="@dimen/text_size"
-                        />
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/text_padding"
+                        android:paddingStart="@dimen/text_padding"
+                        android:paddingBottom="@dimen/text_padding"
+                        android:gravity="center">
+
+                        <com.rey.material.widget.ImageButton
+                            android:id="@+id/ibSiteWeb"
+                            style="@style/RaiseWaveColorGreenButtonRippleStyle"
+                            android:layout_width="@dimen/icon_size"
+                            android:layout_height="@dimen/icon_size"
+                            app:rd_delayClick="afterRelease" />
+
+                        <TextView
+                            android:id="@+id/tvSiteWeb"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/siteweb"
+                            android:textSize="@dimen/text_size"
+                            android:paddingLeft="@dimen/text_padding"
+                            />
+                    </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/llCall"
@@ -262,19 +338,35 @@
                 android:padding="@dimen/text_padding"
                 />
 
-            <HorizontalScrollView
-                android:id="@+id/hsView"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/detail_image_height" >
+                android:layout_height="@dimen/detail_image_height">
 
-                <LinearLayout
-                    android:id="@+id/llGallery"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal" >
-                </LinearLayout>
+                <HorizontalScrollView
+                    android:id="@+id/hsViewMultiImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/detail_image_height"
+                    android:visibility="visible" >
 
-            </HorizontalScrollView>
+                    <LinearLayout
+                        android:id="@+id/llGallery"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal" >
+                    </LinearLayout>
+
+                </HorizontalScrollView>
+
+                <ImageView
+                    android:id="@+id/ivOfferSingleImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/detail_image_height"
+                    android:src="@drawable/placeholder"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/tvDescription"
