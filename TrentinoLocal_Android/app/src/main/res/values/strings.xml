@@ -72,4 +72,5 @@
     <string name="call">Chiama</string>
     <string name="title_activity_how">HowActivity</string>
     <string name="reservation">PRENOTA %s</string>
+    <string name="price_detail" formatted="false">Pronotato con %s tramite applicazione mobile\nPagherai %s al ritiro</string>
 </resources>

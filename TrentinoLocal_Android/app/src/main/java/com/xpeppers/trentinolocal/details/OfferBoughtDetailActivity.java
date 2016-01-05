@@ -285,8 +285,10 @@ public class OfferBoughtDetailActivity extends BaseActivity {
                 //tvStatus.setText("Status " + offerBought.getStatus());
                 tvCoupon.setText(offerBought.getCoupon().getCode());
 
+                String formattedReservationPrice = new DecimalFormat("##,##0.00€").format(offerBought.getReservation_price());
                 String formattedPrice = new DecimalFormat("##,##0.00€").format(offerBought.getPrice());
-                tvPrice.setText(formattedPrice);
+                String price = getResources().getString(R.string.price_detail, formattedReservationPrice, formattedPrice);
+                tvPrice.setText(price);
 
                 String dateFormat = new SimpleDateFormat("dd/MM/yyyy").format(offerBought.getPurchase_date());
                 tvDate.setText(dateFormat);

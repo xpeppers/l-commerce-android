@@ -26,6 +26,9 @@ public class Offer implements Serializable {
     private String email;
     private String web_site;
 
+    private String facebook;
+    private String twitter;
+
     public long getId() {
         return id;
     }
@@ -144,6 +147,22 @@ public class Offer implements Serializable {
 
     public void setWeb_site(String web_site) {
         this.web_site = web_site;
+    }
+
+    public String getFacebook() {
+        return facebook;
+    }
+
+    public void setFacebook(String facebook) {
+        this.facebook = facebook;
+    }
+
+    public String getTwitter() {
+        return twitter;
+    }
+
+    public void setTwitter(String twitter) {
+        this.twitter = twitter;
     }
 
     @Override

@@ -125,7 +125,7 @@ public class MainFragment extends BaseFragment {
                     }
 
                     */
-                    
+
                     Button bHow = (Button) rootView.findViewById(R.id.bHow);
                     if(global.getReseller() != null && global.getReseller().getHow_it_works() != null && !global.getReseller().getHow_it_works().equals("")) {
                         bHow.setVisibility(View.VISIBLE);

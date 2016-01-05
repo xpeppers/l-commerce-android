@@ -15,16 +15,23 @@ public class OfferBought implements Serializable {
     private String image_url;
     private String status;
 
-    private double price;
     private Coupon coupon;
+
     private String user_fullname;
     private Date purchase_date;
+
+    private double price;
+    private double reservation_price;
+
     private List<String>  image_gallery;
     private String merchant;
     private Address address;
     private String telephone;
     private String email;
     private String web_site;
+
+    private String facebook;
+    private String twitter;
 
     public long getId() {
         return id;
@@ -144,6 +151,30 @@ public class OfferBought implements Serializable {
 
     public void setWeb_site(String web_site) {
         this.web_site = web_site;
+    }
+
+    public double getReservation_price() {
+        return reservation_price;
+    }
+
+    public void setReservation_price(double reservation_price) {
+        this.reservation_price = reservation_price;
+    }
+
+    public String getFacebook() {
+        return facebook;
+    }
+
+    public void setFacebook(String facebook) {
+        this.facebook = facebook;
+    }
+
+    public String getTwitter() {
+        return twitter;
+    }
+
+    public void setTwitter(String twitter) {
+        this.twitter = twitter;
     }
 
     @Override
