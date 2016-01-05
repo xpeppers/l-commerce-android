@@ -89,6 +89,7 @@ public class MainFragment extends BaseFragment {
                     rootView = (ViewGroup) inflater
                             .inflate(R.layout.fragment_profile, container, false);
                     loadProfile(rootView);
+                    /*
                     TextView tvHow = (TextView) rootView.findViewById(R.id.tvHow);
                     if(global.getReseller() != null && global.getReseller().getHow_it_works() != null && !global.getReseller().getHow_it_works().equals("")) {
                         tvHow.setVisibility(View.VISIBLE);
@@ -123,12 +124,48 @@ public class MainFragment extends BaseFragment {
                         tvSupport.setVisibility(View.GONE);
                     }
 
+                    */
+                    
+                    Button bHow = (Button) rootView.findViewById(R.id.bHow);
+                    if(global.getReseller() != null && global.getReseller().getHow_it_works() != null && !global.getReseller().getHow_it_works().equals("")) {
+                        bHow.setVisibility(View.VISIBLE);
+
+                        bHow.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent staticPage = new Intent(v.getContext(), StaticPageActivity.class);
+                                staticPage.putExtra(StaticPageActivity.EXTRA_TITLE, rootView.getResources().getString(R.string.how));
+                                staticPage.putExtra(StaticPageActivity.EXTRA_BODY, global.getReseller().getHow_it_works());
+                                v.getContext().startActivity(staticPage);
+                            }
+                        });
+                    } else {
+                        bHow.setVisibility(View.GONE);
+                    }
+
+                    Button bSupport = (Button) rootView.findViewById(R.id.bSupport);
+                    if(global.getReseller() != null && global.getReseller().getSupport() != null && !global.getReseller().getSupport().equals("")) {
+                        bSupport.setVisibility(View.VISIBLE);
+
+                        bSupport.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent staticPage = new Intent(v.getContext(), StaticPageActivity.class);
+                                staticPage.putExtra(StaticPageActivity.EXTRA_TITLE, rootView.getResources().getString(R.string.support));
+                                staticPage.putExtra(StaticPageActivity.EXTRA_BODY, global.getReseller().getSupport());
+                                v.getContext().startActivity(staticPage);
+                            }
+                        });
+                    } else {
+                        bSupport.setVisibility(View.GONE);
+                    }
+
                     Button bLogout = (Button) rootView.findViewById(R.id.bLogout);
                     bLogout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             LoginManager.getInstance().logOut();
-                            // TODO: go to first tab
+                            ((MainActivity) getActivity()).selectCurrentPage(0);
                         }
                     });
 

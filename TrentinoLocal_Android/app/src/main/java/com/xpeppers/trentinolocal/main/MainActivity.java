@@ -216,6 +216,10 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    public void selectCurrentPage(int number) {
+        vpContent.setCurrentItem(number);
+    }
+
     public void selectButtonMenu(int number) {
         LinearLayout llButtonMenu = (LinearLayout) findViewById(R.id.llButtonMenu);
         int childCount = llButtonMenu.getChildCount();

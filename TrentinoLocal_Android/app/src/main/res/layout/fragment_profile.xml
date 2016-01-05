@@ -71,6 +71,7 @@
                     android:text="@string/how"
                     android:textSize="@dimen/text_size"
                     android:paddingBottom="@dimen/text_padding"
+                    android:visibility="gone"
                     />
 
                 <TextView
@@ -81,7 +82,26 @@
                     android:clickable="true"
                     android:text="@string/support"
                     android:textSize="@dimen/text_size"
+                    android:visibility="gone"
                     />
+                <com.rey.material.widget.Button
+                    android:id="@+id/bHow"
+                    style="@style/RaiseWaveColorGreenButtonRippleStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="@dimen/text_padding"
+                    android:text="@string/how"
+                    android:textColor="@color/trentino_white"
+                    app:rd_delayClick="afterRelease" />
+
+                <com.rey.material.widget.Button
+                    android:id="@+id/bSupport"
+                    style="@style/RaiseWaveColorGreenButtonRippleStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="@string/support"
+                    android:textColor="@color/trentino_white"
+                    app:rd_delayClick="afterRelease" />
             </LinearLayout>
         </LinearLayout>
 
