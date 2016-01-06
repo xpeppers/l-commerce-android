@@ -1,13 +1,16 @@
 package com.xpeppers.trentinolocal;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
+import android.view.WindowManager;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
@@ -30,6 +33,7 @@ import org.json.JSONObject;
 public class BaseActivity extends AppCompatActivity {
     protected Global global;
     protected CallbackManager callbackManager;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,7 @@ public class BaseActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
 
         global = (Global) getApplicationContext();
+        global.setCurrentActivity(this);
         callbackManager = CallbackManager.Factory.create();
 
         super.onCreate(savedInstanceState);
@@ -179,5 +184,23 @@ public class BaseActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         */
+    }
+
+    protected void showProgressDialog() {
+        progressDialog = new ProgressDialog(global.getCurrentActivity());
+        try {
+            progressDialog.show();
+        } catch (WindowManager.BadTokenException e) {
+        }
+        progressDialog.setCancelable(false);
+        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        progressDialog.setContentView(R.layout.progress_dialog);
+        //progressDialog.show();
+    }
+
+    protected void hideProgressDialog() {
+        if(progressDialog != null) {
+            progressDialog.dismiss();
+        }
     }
 }

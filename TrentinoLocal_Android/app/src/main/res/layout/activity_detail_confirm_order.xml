@@ -49,6 +49,16 @@
             android:textStyle="bold"
             android:textSize="@dimen/text_code_size"
             />
+
+        <TextView
+            android:id="@+id/tvOfferCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="@string/offer_code"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_code_size"
+            />
     </LinearLayout>
 
     <LinearLayout

@@ -15,6 +15,7 @@ import com.xpeppers.trentinolocal.main.MainActivity;
 public class ConfirmOrderDetailActivity extends BaseActivity {
     public static final String EXTRA_TITLE = "extra_title";
     public static final String EXTRA_PAYMENT_ID = "extra_payment_id";
+    public static final String EXTRA_OFFER_CODE = "extra_offer_code";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,7 @@ public class ConfirmOrderDetailActivity extends BaseActivity {
         Intent intent = getIntent();
         String title = intent.getStringExtra(EXTRA_TITLE);
         String paymentId = intent.getStringExtra(EXTRA_PAYMENT_ID);
+        String offerCode = intent.getStringExtra(EXTRA_OFFER_CODE);
 
 
         Toolbar mToolbarView = (Toolbar) findViewById(R.id.toolbar);
@@ -36,6 +38,13 @@ public class ConfirmOrderDetailActivity extends BaseActivity {
 
         TextView tvCode = (TextView) findViewById(R.id.tvCode);
         tvCode.setText(paymentId);
+
+        TextView tvOfferCode = (TextView) findViewById(R.id.tvOfferCode);
+        tvOfferCode.setText(getResources().getString(R.string.offer_code, offerCode));
+        if(offerCode != null)
+            tvOfferCode.setVisibility(View.VISIBLE);
+        else
+            tvOfferCode.setVisibility(View.GONE);
 
         Button bContinue = (Button) findViewById(R.id.bContinue);
         bContinue.setOnClickListener(new View.OnClickListener() {

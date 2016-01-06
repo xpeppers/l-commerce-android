@@ -34,6 +34,7 @@ import com.paypal.android.sdk.payments.PaymentConfirmation;
 import com.rey.material.widget.Button;
 import com.rey.material.widget.ImageButton;
 import com.squareup.picasso.Picasso;
+import com.xpeppers.servicelib.bean.Coupon;
 import com.xpeppers.servicelib.bean.Offer;
 import com.xpeppers.servicelib.bean.Order;
 import com.xpeppers.servicelib.bean.Payment;
@@ -58,6 +59,7 @@ public class OfferDetailActivity extends BaseActivity {
 
     private long offerId;
     private long orderId;
+    private Coupon orderCoupon;
 
     private TextView tvToolbarTitle;
 
@@ -83,6 +85,8 @@ public class OfferDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_offer);
+
+        showProgressDialog();
 
         Toolbar mToolbarView = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbarView);
@@ -193,12 +197,14 @@ public class OfferDetailActivity extends BaseActivity {
         OffersService.getInstance(getApplicationContext()).get(offerId, new CallBack() {
             @Override
             public void onSuccess(Object result) {
+                hideProgressDialog();
                 Offer offer = (Offer) result;
                 asyncResponse(offer);
             }
 
             @Override
             public void onFailure(Throwable caught) {
+                hideProgressDialog();
                 asyncDialog("Error", caught.getMessage());
             }
         });
@@ -366,12 +372,16 @@ public class OfferDetailActivity extends BaseActivity {
 
     public void onBuyPressed() {
         if(global.isApiAuthenticated() && global.isFacebookLogin()) {
+            showProgressDialog();
 
             OrdersService.getInstance(getApplicationContext()).create(global.getApiToken(), offerId, new CallBack() {
                 @Override
                 public void onSuccess(Object result) {
+                    hideProgressDialog();
+
                     Order order = (Order) result;
                     orderId = order.getId();
+                    orderCoupon = order.getCoupon();
 
                     PayPalConfiguration config = new PayPalConfiguration()
                             .environment(PayPalConf.MODE)
@@ -389,7 +399,7 @@ public class OfferDetailActivity extends BaseActivity {
 
                 @Override
                 public void onFailure(Throwable caught) {
-
+                    hideProgressDialog();
                 }
             });
         } else {
@@ -401,24 +411,32 @@ public class OfferDetailActivity extends BaseActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        global.setCurrentActivity(this);
+
         if(requestCode == Global.REQUEST_CODE_PAYPAL) {
             if (resultCode == Activity.RESULT_OK) {
                 final PaymentConfirmation confirm = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
                 if (confirm != null &&
                         confirm.getProofOfPayment() != null && confirm.getProofOfPayment().getState().equals("approved")) {
+                    showProgressDialog();
 
                     OrdersService.getInstance(getBaseContext()).confirmPayment(global.getApiToken(), orderId, confirm.getProofOfPayment().getPaymentId(), new CallBack() {
                         @Override
                         public void onSuccess(Object result) {
+                            hideProgressDialog();
                             Payment payment = (Payment) result;
                             Intent intent = new Intent(OfferDetailActivity.this, ConfirmOrderDetailActivity.class);
                             intent.putExtra(ConfirmOrderDetailActivity.EXTRA_PAYMENT_ID, payment.getPaypal_payment_token());
+                            if(orderCoupon != null)
+                                intent.putExtra(ConfirmOrderDetailActivity.EXTRA_OFFER_CODE, orderCoupon.getCode());
+
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                         }
 
                         @Override
                         public void onFailure(Throwable caught) {
+                            hideProgressDialog();
                             Intent intent = new Intent(OfferDetailActivity.this, ErrorOrderActivity.class);
                             startActivity(intent);
                         }

@@ -72,6 +72,8 @@ public class OfferBoughtDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_offer_bought);
 
+        showProgressDialog();
+
         Toolbar mToolbarView = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbarView);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -179,12 +181,14 @@ public class OfferBoughtDetailActivity extends BaseActivity {
         OffersBoughtService.getInstance(getApplicationContext()).get(global.getApiToken(), offerBoughtId, new CallBack() {
             @Override
             public void onSuccess(Object result) {
+                hideProgressDialog();
                 OfferBought offerBought = (OfferBought) result;
                 asyncResponse(offerBought);
             }
 
             @Override
             public void onFailure(Throwable caught) {
+                hideProgressDialog();
                 asyncDialog("Error", caught.getMessage());
             }
         });

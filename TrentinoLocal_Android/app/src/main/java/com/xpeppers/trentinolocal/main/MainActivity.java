@@ -223,15 +223,20 @@ public class MainActivity extends BaseActivity {
     public void selectButtonMenu(int number) {
         LinearLayout llButtonMenu = (LinearLayout) findViewById(R.id.llButtonMenu);
         int childCount = llButtonMenu.getChildCount();
+
+        if(number == 2 && global.getReseller() != null && global.getReseller().getCustom_url() != null && !global.getReseller().getCustom_url().equals("")) {
+            number = 3;
+        }
+
         for (int i = 0; i < childCount; i++) {
             View view = llButtonMenu.getChildAt(i);
             if (view instanceof Button) {
-                if(i != number) {
-                    view.setAlpha(0.5f);
-                    view.setClickable(true);
-                } else {
+                if(i == number) {
                     view.setAlpha(1f);
                     view.setClickable(false);
+                } else {
+                    view.setAlpha(0.5f);
+                    view.setClickable(true);
                 }
             }
         }
