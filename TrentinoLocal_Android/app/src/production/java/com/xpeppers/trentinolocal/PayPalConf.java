@@ -3,7 +3,6 @@ import com.paypal.android.sdk.payments.PayPalConfiguration;
 
 public class PayPalConf {
 
-    public final static String MODE = PayPalConfiguration.ENVIRONMENT_SANDBOX;
-    public final static String APP_ID = "AQQUkVb65LNxGCR6enWzS7kbaf99AMg2lNHL1jWRaRJOSOfqczSgJio06EXSlHDoWmNw8_loQfRU2_2V";
-
+    public final static String MODE = PayPalConfiguration.ENVIRONMENT_PRODUCTION;
+    public final static String APP_ID = "AZ67IUgBE_PhwFCPI6Cgz3zknblgXicFsvNzox2YAV5sC50xPp8DIggyQcoKMf3WGV-sXZsYxxS_cXsp";
 }
