@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.facebook.login.LoginManager;
@@ -85,93 +86,102 @@ public class MainFragment extends BaseFragment {
                 }
                 break;
             case 2:
-                if(global.isApiAuthenticated() && global.isFacebookLogin()) {
+            case 3:
+                if(mPageNumber == 2 && global.getReseller() != null && global.getReseller().getCustom_url() != null && !global.getReseller().getCustom_url().equals("")) {
                     rootView = (ViewGroup) inflater
-                            .inflate(R.layout.fragment_profile, container, false);
-                    loadProfile(rootView);
-                    /*
-                    TextView tvHow = (TextView) rootView.findViewById(R.id.tvHow);
-                    if(global.getReseller() != null && global.getReseller().getHow_it_works() != null && !global.getReseller().getHow_it_works().equals("")) {
-                        tvHow.setVisibility(View.VISIBLE);
-
-                        tvHow.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent staticPage = new Intent(v.getContext(), StaticPageActivity.class);
-                                staticPage.putExtra(StaticPageActivity.EXTRA_TITLE, rootView.getResources().getString(R.string.how));
-                                staticPage.putExtra(StaticPageActivity.EXTRA_BODY, global.getReseller().getHow_it_works());
-                                v.getContext().startActivity(staticPage);
-                            }
-                        });
-                    } else {
-                        tvHow.setVisibility(View.GONE);
-                    }
-
-                    TextView tvSupport = (TextView) rootView.findViewById(R.id.tvSupport);
-                    if(global.getReseller() != null && global.getReseller().getSupport() != null && !global.getReseller().getSupport().equals("")) {
-                        tvSupport.setVisibility(View.VISIBLE);
-
-                        tvSupport.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent staticPage = new Intent(v.getContext(), StaticPageActivity.class);
-                                staticPage.putExtra(StaticPageActivity.EXTRA_TITLE, rootView.getResources().getString(R.string.support));
-                                staticPage.putExtra(StaticPageActivity.EXTRA_BODY, global.getReseller().getSupport());
-                                v.getContext().startActivity(staticPage);
-                            }
-                        });
-                    } else {
-                        tvSupport.setVisibility(View.GONE);
-                    }
-
-                    */
-
-                    Button bHow = (Button) rootView.findViewById(R.id.bHow);
-                    if(global.getReseller() != null && global.getReseller().getHow_it_works() != null && !global.getReseller().getHow_it_works().equals("")) {
-                        bHow.setVisibility(View.VISIBLE);
-
-                        bHow.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent staticPage = new Intent(v.getContext(), StaticPageActivity.class);
-                                staticPage.putExtra(StaticPageActivity.EXTRA_TITLE, rootView.getResources().getString(R.string.how));
-                                staticPage.putExtra(StaticPageActivity.EXTRA_BODY, global.getReseller().getHow_it_works());
-                                v.getContext().startActivity(staticPage);
-                            }
-                        });
-                    } else {
-                        bHow.setVisibility(View.GONE);
-                    }
-
-                    Button bSupport = (Button) rootView.findViewById(R.id.bSupport);
-                    if(global.getReseller() != null && global.getReseller().getSupport() != null && !global.getReseller().getSupport().equals("")) {
-                        bSupport.setVisibility(View.VISIBLE);
-
-                        bSupport.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent staticPage = new Intent(v.getContext(), StaticPageActivity.class);
-                                staticPage.putExtra(StaticPageActivity.EXTRA_TITLE, rootView.getResources().getString(R.string.support));
-                                staticPage.putExtra(StaticPageActivity.EXTRA_BODY, global.getReseller().getSupport());
-                                v.getContext().startActivity(staticPage);
-                            }
-                        });
-                    } else {
-                        bSupport.setVisibility(View.GONE);
-                    }
-
-                    Button bLogout = (Button) rootView.findViewById(R.id.bLogout);
-                    bLogout.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            LoginManager.getInstance().logOut();
-                            ((MainActivity) getActivity()).selectCurrentPage(0);
-                        }
-                    });
-
+                            .inflate(R.layout.fragment_webview, container, false);
+                    WebView webView = (WebView) rootView.findViewById(R.id.webView);
+                    webView.getSettings().setJavaScriptEnabled(true);
+                    webView.loadUrl(global.getReseller().getCustom_url());
                 } else {
-                    rootView = (ViewGroup) inflater
-                            .inflate(R.layout.fragment_empty, container, false);
+                    if (global.isApiAuthenticated() && global.isFacebookLogin()) {
+                        rootView = (ViewGroup) inflater
+                                .inflate(R.layout.fragment_profile, container, false);
+                        loadProfile(rootView);
+                        /*
+                        TextView tvHow = (TextView) rootView.findViewById(R.id.tvHow);
+                        if(global.getReseller() != null && global.getReseller().getHow_it_works() != null && !global.getReseller().getHow_it_works().equals("")) {
+                            tvHow.setVisibility(View.VISIBLE);
+
+                            tvHow.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent staticPage = new Intent(v.getContext(), StaticPageActivity.class);
+                                    staticPage.putExtra(StaticPageActivity.EXTRA_TITLE, rootView.getResources().getString(R.string.how));
+                                    staticPage.putExtra(StaticPageActivity.EXTRA_BODY, global.getReseller().getHow_it_works());
+                                    v.getContext().startActivity(staticPage);
+                                }
+                            });
+                        } else {
+                            tvHow.setVisibility(View.GONE);
+                        }
+
+                        TextView tvSupport = (TextView) rootView.findViewById(R.id.tvSupport);
+                        if(global.getReseller() != null && global.getReseller().getSupport() != null && !global.getReseller().getSupport().equals("")) {
+                            tvSupport.setVisibility(View.VISIBLE);
+
+                            tvSupport.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent staticPage = new Intent(v.getContext(), StaticPageActivity.class);
+                                    staticPage.putExtra(StaticPageActivity.EXTRA_TITLE, rootView.getResources().getString(R.string.support));
+                                    staticPage.putExtra(StaticPageActivity.EXTRA_BODY, global.getReseller().getSupport());
+                                    v.getContext().startActivity(staticPage);
+                                }
+                            });
+                        } else {
+                            tvSupport.setVisibility(View.GONE);
+                        }
+
+                        */
+
+                        Button bHow = (Button) rootView.findViewById(R.id.bHow);
+                        if (global.getReseller() != null && global.getReseller().getHow_it_works() != null && !global.getReseller().getHow_it_works().equals("")) {
+                            bHow.setVisibility(View.VISIBLE);
+
+                            bHow.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent staticPage = new Intent(v.getContext(), StaticPageActivity.class);
+                                    staticPage.putExtra(StaticPageActivity.EXTRA_TITLE, rootView.getResources().getString(R.string.how));
+                                    staticPage.putExtra(StaticPageActivity.EXTRA_BODY, global.getReseller().getHow_it_works());
+                                    v.getContext().startActivity(staticPage);
+                                }
+                            });
+                        } else {
+                            bHow.setVisibility(View.GONE);
+                        }
+
+                        Button bSupport = (Button) rootView.findViewById(R.id.bSupport);
+                        if (global.getReseller() != null && global.getReseller().getSupport() != null && !global.getReseller().getSupport().equals("")) {
+                            bSupport.setVisibility(View.VISIBLE);
+
+                            bSupport.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent staticPage = new Intent(v.getContext(), StaticPageActivity.class);
+                                    staticPage.putExtra(StaticPageActivity.EXTRA_TITLE, rootView.getResources().getString(R.string.support));
+                                    staticPage.putExtra(StaticPageActivity.EXTRA_BODY, global.getReseller().getSupport());
+                                    v.getContext().startActivity(staticPage);
+                                }
+                            });
+                        } else {
+                            bSupport.setVisibility(View.GONE);
+                        }
+
+                        Button bLogout = (Button) rootView.findViewById(R.id.bLogout);
+                        bLogout.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                LoginManager.getInstance().logOut();
+                                ((MainActivity) getActivity()).selectCurrentPage(0);
+                            }
+                        });
+
+                    } else {
+                        rootView = (ViewGroup) inflater
+                                .inflate(R.layout.fragment_empty, container, false);
+                    }
                 }
                 break;
             case 0:

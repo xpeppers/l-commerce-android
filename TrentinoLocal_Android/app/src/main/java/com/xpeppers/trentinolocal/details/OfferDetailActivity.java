@@ -3,6 +3,7 @@ package com.xpeppers.trentinolocal.details;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -75,6 +76,7 @@ public class OfferDetailActivity extends BaseActivity {
     private TextView tvSiteWeb;
     private ImageButton ibSiteWeb;
     private TextView tvPrice;
+    private TextView tvOldPrice;
     private Button bPurchase;
     private HorizontalScrollView hsViewMultiImage;
     private LinearLayout llGallery;
@@ -161,6 +163,7 @@ public class OfferDetailActivity extends BaseActivity {
                         .sizeDp(24));
 
         tvPrice = (TextView) findViewById(R.id.tvPrice);
+        tvOldPrice = (TextView) findViewById(R.id.tvOldPrice);
         bPurchase = (Button) findViewById(R.id.bPurchase);
 
         hsViewMultiImage = (HorizontalScrollView) findViewById(R.id.hsViewMultiImage);
@@ -307,7 +310,15 @@ public class OfferDetailActivity extends BaseActivity {
                 String formattedPrice = new DecimalFormat("##,##0.00€").format(offer.getPrice());
                 tvPrice.setText(formattedPrice);
 
-                //String formattedOriginalPrice = new DecimalFormat("##,##0.00€").format(offer.getOriginal_price());
+                if(offer.getOriginal_price() > 0) {
+                    String formattedOriginalPrice = new DecimalFormat("##,##0.00€").format(offer.getOriginal_price());
+                    tvOldPrice.setText(Html.fromHtml("<strike>" + formattedOriginalPrice + "</strike>"));
+                    tvOldPrice.setPaintFlags(tvOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    tvOldPrice.setVisibility(View.VISIBLE);
+                } else {
+                    tvOldPrice.setVisibility(View.GONE);
+                }
+
                 /*
                 String priceLabel = "PRENOTA | ";
                 if (offer.getOriginal_price() > 0) {

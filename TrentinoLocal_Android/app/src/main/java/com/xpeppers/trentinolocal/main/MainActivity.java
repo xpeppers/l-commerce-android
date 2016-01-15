@@ -57,6 +57,8 @@ public class MainActivity extends BaseActivity {
         vpContent = (ViewPager) findViewById(R.id.vpContent);
 
         contentPagerAdapter = new ContentPagerAdapter(getSupportFragmentManager());
+        contentPagerAdapter.setPageNumber(NUMBER_PAGES);
+
         vpContent.setAdapter(contentPagerAdapter);
 
         vpContent.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -67,7 +69,11 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                if((position == 1 || position == 2) && !(global.isApiAuthenticated() && global.isFacebookLogin())) {
+                if((position == 1
+                        || (position == 2
+                            && (global.getReseller() == null || global.getReseller().getCustom_url() == null
+                            || global.getReseller().getCustom_url().equals(""))) || position == 3)
+                        && !(global.isApiAuthenticated() && global.isFacebookLogin())) {
                     secureButtonMenu(position);
                     vpContent.setCurrentItem(0);
                 } else {
@@ -148,7 +154,11 @@ public class MainActivity extends BaseActivity {
             bProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    secureButtonMenu(2);
+                    int pageNumber = 2;
+                    if(global.getReseller() != null && global.getReseller().getCustom_url() != null && !global.getReseller().getCustom_url().equals("")) {
+                        pageNumber = 3;
+                    }
+                    secureButtonMenu(pageNumber);
                 }
             });
         }
@@ -170,10 +180,15 @@ public class MainActivity extends BaseActivity {
                     }
                 });
 
+                NUMBER_PAGES = 4;
+                contentPagerAdapter.setPageNumber(NUMBER_PAGES);
+                contentPagerAdapter.notifyDataSetChanged();
+
                 bEvent.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        openWeb(global.getReseller().getCustom_url());
+                        secureButtonMenu(2);
+                        //openWeb(global.getReseller().getCustom_url());
                     }
                 });
             } else {
@@ -208,7 +223,11 @@ public class MainActivity extends BaseActivity {
     }
 
     private void secureButtonMenu(int pageNumber) {
-        if(global.isApiAuthenticated() && global.isFacebookLogin()) {
+        if((pageNumber == 0
+                || (pageNumber == 2
+                    && global.getReseller() != null && global.getReseller().getCustom_url() != null
+                    && !global.getReseller().getCustom_url().equals("")))
+                || (global.isApiAuthenticated() && global.isFacebookLogin())) {
             vpContent.setCurrentItem(pageNumber);
         } else {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
@@ -224,9 +243,11 @@ public class MainActivity extends BaseActivity {
         LinearLayout llButtonMenu = (LinearLayout) findViewById(R.id.llButtonMenu);
         int childCount = llButtonMenu.getChildCount();
 
+        /*
         if(number == 2 && global.getReseller() != null && global.getReseller().getCustom_url() != null && !global.getReseller().getCustom_url().equals("")) {
             number = 3;
         }
+        */
 
         for (int i = 0; i < childCount; i++) {
             View view = llButtonMenu.getChildAt(i);
@@ -249,7 +270,12 @@ public class MainActivity extends BaseActivity {
                 title = getResources().getString(R.string.orders);
                 break;
             case 2:
-                title = getResources().getString(R.string.profile);
+            case 3:
+                if(pageNumber == 2 && global.getReseller() != null && global.getReseller().getCustom_url() != null && !global.getReseller().getCustom_url().equals("")) {
+                    title = global.getReseller().getButton_text();
+                } else {
+                    title = getResources().getString(R.string.profile);
+                }
                 break;
             case 0:
             default:
@@ -274,6 +300,8 @@ public class MainActivity extends BaseActivity {
     }
 
     private class ContentPagerAdapter extends CacheFragmentStatePagerAdapter {
+        private int pageNumber = NUMBER_PAGES;
+
         public ContentPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -285,12 +313,16 @@ public class MainActivity extends BaseActivity {
 
         @Override
         public int getCount() {
-            return NUMBER_PAGES;
+            return pageNumber;
         }
 
         @Override
         public int getItemPosition(Object object) {
             return POSITION_NONE;
+        }
+
+        public void setPageNumber(int pageNumber) {
+            this.pageNumber = pageNumber;
         }
     }
 }
