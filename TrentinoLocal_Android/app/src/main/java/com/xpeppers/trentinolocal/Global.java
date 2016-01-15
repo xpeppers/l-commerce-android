@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 
 import com.facebook.AccessToken;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 import com.xpeppers.servicelib.bean.Offer;
 import com.xpeppers.servicelib.bean.OfferBought;
 import com.xpeppers.servicelib.bean.Order;
@@ -27,6 +29,10 @@ public class Global extends Application {
 
     public static final String PROVIDER_FB = "facebook";
     public static String LOG_TAG = "TRENTINO_LOCAL";
+
+    public static String GoogleAnalyticsCode = "UA-65854002-6";
+    public static GoogleAnalytics analytics;
+    public static Tracker tracker;
 
     private Activity currentActivity;
     private boolean apiAuthenticated;
@@ -49,6 +55,14 @@ public class Global extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        analytics = GoogleAnalytics.getInstance(this);
+        analytics.setLocalDispatchPeriod(1800);
+
+        tracker = analytics.newTracker(GoogleAnalyticsCode); // Replace with actual tracker id
+        tracker.enableExceptionReporting(true);
+        tracker.enableAdvertisingIdCollection(true);
+        tracker.enableAutoActivityTracking(true);
 
         registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
             @Override
