@@ -229,7 +229,7 @@ public class OfferDetailActivity extends BaseActivity {
                 //Spannable spannable = (Spannable) tvTitle.getText();
                 //spannable.setSpan(new StrikethroughSpan(), 3, (offer.getTitle() + " Test barrato").length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 tvDescription.setText(Html.fromHtml(offer.getDescription()));
-                tvMerchant.setText(offer.getMerchant());
+                tvMerchant.setText(Html.fromHtml(offer.getMerchant()));
                 tvAddress.setText(offer.getAddress().toString());
                 tvAddress.setOnClickListener(new View.OnClickListener() {
                     @Override

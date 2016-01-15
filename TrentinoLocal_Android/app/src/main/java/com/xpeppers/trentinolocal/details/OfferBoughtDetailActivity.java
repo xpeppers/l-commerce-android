@@ -201,7 +201,7 @@ public class OfferBoughtDetailActivity extends BaseActivity {
                 tvToolbarTitle.setText(offerBought.getTitle());
                 tvTitle.setText(Html.fromHtml(offerBought.getTitle()));
                 tvDescription.setText(Html.fromHtml(offerBought.getDescription()));
-                tvMerchant.setText(offerBought.getMerchant());
+                tvMerchant.setText(Html.fromHtml(offerBought.getMerchant()));
                 tvAddress.setText(offerBought.getAddress().toString());
                 tvAddress.setOnClickListener(new View.OnClickListener() {
                     @Override
