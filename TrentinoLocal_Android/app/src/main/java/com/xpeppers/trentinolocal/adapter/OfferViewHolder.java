@@ -18,12 +18,14 @@ public class OfferViewHolder extends RecyclerView.ViewHolder {
     private ImageView ivOffer;
     private TextView tvTitle;
     private TextView tvPrice;
+    private TextView tvOldPrice;
 
     OfferViewHolder(View itemView) {
         super(itemView);
         ivOffer = (ImageView) itemView.findViewById(R.id.ivOffer);
         tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
         tvPrice = (TextView) itemView.findViewById(R.id.tvPrice);
+        tvOldPrice = (TextView) itemView.findViewById(R.id.tvOldPrice);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,5 +67,13 @@ public class OfferViewHolder extends RecyclerView.ViewHolder {
 
     public void setTvPrice(TextView tvPrice) {
         this.tvPrice = tvPrice;
+    }
+
+    public TextView getTvOldPrice() {
+        return tvOldPrice;
+    }
+
+    public void setTvOldPrice(TextView tvOldPrice) {
+        this.tvOldPrice = tvOldPrice;
     }
 }

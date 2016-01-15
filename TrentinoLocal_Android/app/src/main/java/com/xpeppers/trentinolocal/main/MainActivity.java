@@ -76,7 +76,9 @@ public class MainActivity extends BaseActivity {
                         && !(global.isApiAuthenticated() && global.isFacebookLogin())) {
                     secureButtonMenu(position);
                     vpContent.setCurrentItem(0);
+                    //Log.d(Global.LOG_TAG, "OnPageSelected position: " + 0);
                 } else {
+                    //Log.d(Global.LOG_TAG, "OnPageSelected position: " + position);
                     selectButtonMenu(position);
                     selectHeaderTitle(position);
                 }
@@ -177,20 +179,25 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void run() {
                         bEvent.setVisibility(View.VISIBLE);
+
+                        bEvent.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                //Log.d(Global.LOG_TAG, "EventButton clicked");
+                                secureButtonMenu(2);
+                                //openWeb(global.getReseller().getCustom_url());
+                            }
+                        });
+
                     }
                 });
+
+                //Log.d(Global.LOG_TAG, "EventButton configure");
 
                 NUMBER_PAGES = 4;
                 contentPagerAdapter.setPageNumber(NUMBER_PAGES);
                 contentPagerAdapter.notifyDataSetChanged();
 
-                bEvent.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        secureButtonMenu(2);
-                        //openWeb(global.getReseller().getCustom_url());
-                    }
-                });
             } else {
                 bEvent.setVisibility(View.GONE);
             }
@@ -223,11 +230,13 @@ public class MainActivity extends BaseActivity {
     }
 
     private void secureButtonMenu(int pageNumber) {
+        //Log.d(Global.LOG_TAG, "SecureButton pageNumber " + pageNumber);
         if((pageNumber == 0
                 || (pageNumber == 2
                     && global.getReseller() != null && global.getReseller().getCustom_url() != null
                     && !global.getReseller().getCustom_url().equals("")))
                 || (global.isApiAuthenticated() && global.isFacebookLogin())) {
+            //Log.d(Global.LOG_TAG, "SecureButton CurrentItem pageNumber " + pageNumber);
             vpContent.setCurrentItem(pageNumber);
         } else {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);

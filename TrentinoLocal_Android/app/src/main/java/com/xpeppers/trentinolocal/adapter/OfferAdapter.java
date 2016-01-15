@@ -1,7 +1,9 @@
 package com.xpeppers.trentinolocal.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +43,15 @@ public class OfferAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         offerViewHolder.getTvTitle().setText(global.getOffers().get(i).getTitle());
         String formattedPrice = new DecimalFormat("##,##0.00€").format(global.getOffers().get(i).getPrice());
         offerViewHolder.getTvPrice().setText(formattedPrice);
+
+        if(global.getOffers().get(i).getOriginal_price() > 0) {
+            String formattedOriginalPrice = new DecimalFormat("##,##0.00€").format(global.getOffers().get(i).getOriginal_price());
+            offerViewHolder.getTvOldPrice().setText(Html.fromHtml("<strike>" + formattedOriginalPrice + "</strike>"));
+            offerViewHolder.getTvOldPrice().setPaintFlags(offerViewHolder.getTvOldPrice().getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            offerViewHolder.getTvOldPrice().setVisibility(View.VISIBLE);
+        } else {
+            offerViewHolder.getTvOldPrice().setVisibility(View.GONE);
+        }
 
         // show The Image
         Picasso.with(context)
