@@ -398,7 +398,7 @@ public class OfferDetailActivity extends BaseActivity {
                             .environment(PayPalConf.MODE)
                             .clientId(PayPalConf.APP_ID);
 
-                    PayPalPayment payment = new PayPalPayment(new BigDecimal(global.getSelectedOffer().getPrice()), "EUR",
+                    PayPalPayment payment = new PayPalPayment(new BigDecimal(global.getSelectedOffer().getReservation_price()), "EUR",
                             global.getSelectedOffer().getTitle(), PayPalPayment.PAYMENT_INTENT_AUTHORIZE);
 
                     Intent intent = new Intent(OfferDetailActivity.this, PaymentActivity.class);
