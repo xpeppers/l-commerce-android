@@ -33,17 +33,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
-            signingConfig signingConfigs.debug
-
-            resValue "string", "facebook_app_id", "yourvalue"
-            resValue "string", "google_maps_id", "yourvalue"
+            signingConfig signingConfigs.release
         }
 
         debug {
             signingConfig signingConfigs.debug
-
-            resValue "string", "facebook_app_id", "yourvalue"
-            resValue "string", "google_maps_id", "yourvalue"
         }
     }
 
@@ -57,14 +51,23 @@ android {
     productFlavors {
         production {
             applicationId "com.xpeppers.tdvpass"
+
+            resValue "string", "facebook_app_id", "yourvalue"
+            resValue "string", "google_maps_id", "yourvalue"
         }
 
         staging {
             applicationId "com.xpeppers.tdvpass"
+
+            resValue "string", "facebook_app_id", "yourvalue"
+            resValue "string", "google_maps_id", "yourvalue"
         }
 
         dev {
-            applicationId "com.xpeppers.tdvpass"
+            applicationId "com.xpeppers.trentinolocal"
+
+            resValue "string", "facebook_app_id", "yourvalue"
+            resValue "string", "google_maps_id", "AIzaSyC20LFgVKFp-shpY-fYV3jrUOqVSIztcVc"
         }
     }
 
