@@ -8,7 +8,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.facebook.login.LoginManager;
@@ -91,8 +93,20 @@ public class MainFragment extends BaseFragment {
                     rootView = (ViewGroup) inflater
                             .inflate(R.layout.fragment_webview, container, false);
                     WebView webView = (WebView) rootView.findViewById(R.id.webView);
+                    final ProgressBar pbWebviewSpinner = (ProgressBar) rootView.findViewById(R.id.pbWebviewSpinner);
                     webView.getSettings().setJavaScriptEnabled(true);
                     webView.loadUrl(global.getReseller().getCustom_url());
+                    webView.setWebChromeClient(new WebChromeClient() {
+                        public void onProgressChanged(WebView view, int progress) {
+                            if (progress < 100 && pbWebviewSpinner.getVisibility() == ProgressBar.GONE) {
+                                pbWebviewSpinner.setVisibility(ProgressBar.VISIBLE);
+                            }
+                            pbWebviewSpinner.setProgress(progress);
+                            if (progress == 100) {
+                                pbWebviewSpinner.setVisibility(ProgressBar.GONE);
+                            }
+                        }
+                    });
                 } else {
                     if (global.isApiAuthenticated() && global.isFacebookLogin()) {
                         rootView = (ViewGroup) inflater
