@@ -337,14 +337,13 @@ public class OfferBoughtDetailActivity extends BaseActivity {
 
     private void configureMap(GoogleMap map, double lat, double lon)
     {
-        if (map == null)
-            return; // Google Maps not available
-
-        LatLng position = new LatLng(lat, lon);
-        Marker marker = map.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory.fromResource(R.mipmap.pin)));
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        builder.include(position);
-        LatLngBounds bounds = builder.build();
-        map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 20));
+        if (map != null) {
+            LatLng position = new LatLng(lat, lon);
+            map.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory.fromResource(R.mipmap.pin)));
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+            builder.include(position);
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(position, 15.0f));
+            map.getUiSettings().setScrollGesturesEnabled(false);
+        }
     }
 }

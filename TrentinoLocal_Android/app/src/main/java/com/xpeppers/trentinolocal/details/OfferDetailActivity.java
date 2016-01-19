@@ -310,7 +310,7 @@ public class OfferDetailActivity extends BaseActivity {
                 String formattedPrice = new DecimalFormat("##,##0.00€").format(offer.getPrice());
                 tvPrice.setText(formattedPrice);
 
-                if(offer.getOriginal_price() > 0) {
+                if (offer.getOriginal_price() > 0) {
                     String formattedOriginalPrice = new DecimalFormat("##,##0.00€").format(offer.getOriginal_price());
                     tvOldPrice.setText(Html.fromHtml("<strike>" + formattedOriginalPrice + "</strike>"));
                     tvOldPrice.setPaintFlags(tvOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -331,7 +331,7 @@ public class OfferDetailActivity extends BaseActivity {
                 String formattedReservationPrice = new DecimalFormat("##,##0.00€").format(offer.getReservation_price());
                 bPurchase.setText(getResources().getString(R.string.reservation, formattedReservationPrice));
 
-                if(offer.getImage_gallery().size() == 1) {
+                if (offer.getImage_gallery().size() == 1) {
                     hsViewMultiImage.setVisibility(View.GONE);
                     ivOfferSingleImage.setVisibility(View.VISIBLE);
 
@@ -356,7 +356,6 @@ public class OfferDetailActivity extends BaseActivity {
                                 .fit()
                                 .centerCrop()
                                 .into(imageView);
-                        //imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                         llGallery.addView(imageView);
                     }
                 }
@@ -370,15 +369,14 @@ public class OfferDetailActivity extends BaseActivity {
 
     private void configureMap(GoogleMap map, double lat, double lon)
     {
-        if (map == null)
-            return; // Google Maps not available
-
-        LatLng position = new LatLng(lat, lon);
-        Marker marker = map.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory.fromResource(R.mipmap.pin)));
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        builder.include(position);
-        LatLngBounds bounds = builder.build();
-        map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 20));
+        if (map != null) {
+            LatLng position = new LatLng(lat, lon);
+            map.addMarker(new MarkerOptions().position(position).icon(BitmapDescriptorFactory.fromResource(R.mipmap.pin)));
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+            builder.include(position);
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(position, 15.0f));
+            map.getUiSettings().setScrollGesturesEnabled(false);
+        }
     }
 
     public void onBuyPressed() {
