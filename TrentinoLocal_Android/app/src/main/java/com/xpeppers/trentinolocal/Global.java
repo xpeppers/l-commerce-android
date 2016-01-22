@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 
+import com.crashlytics.android.Crashlytics;
 import com.facebook.AccessToken;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
@@ -16,6 +17,7 @@ import com.xpeppers.servicelib.bean.Order;
 import com.xpeppers.servicelib.bean.Reseller;
 import com.xpeppers.servicelib.bean.User;
 
+import io.fabric.sdk.android.Fabric;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +57,7 @@ public class Global extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
 
         analytics = GoogleAnalytics.getInstance(this);
         analytics.setLocalDispatchPeriod(1800);
