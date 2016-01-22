@@ -49,23 +49,20 @@ android {
     }
 
     productFlavors {
-        production {
+        tdv {
             applicationId "com.xpeppers.tdvpass"
-
             resValue "string", "facebook_app_id", "yourvalue"
             resValue "string", "google_maps_id", "yourvalue"
         }
 
         staging {
             applicationId "com.xpeppers.tdvpass"
-
             resValue "string", "facebook_app_id", "yourvalue"
             resValue "string", "google_maps_id", "yourvalue"
         }
 
         dev {
             applicationId "com.xpeppers.trentinolocal"
-
             resValue "string", "facebook_app_id", "yourvalue"
             resValue "string", "google_maps_id", "AIzaSyC20LFgVKFp-shpY-fYV3jrUOqVSIztcVc"
         }

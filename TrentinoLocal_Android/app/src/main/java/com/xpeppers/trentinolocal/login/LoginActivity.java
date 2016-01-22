@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -36,7 +37,7 @@ public class LoginActivity extends BaseActivity {
             loginUser();
         }
 
-        ImageButton ibClose = (ImageButton) findViewById(R.id.ibClose);
+        TextView ibClose = (TextView) findViewById(R.id.ibClose);
         ibClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
