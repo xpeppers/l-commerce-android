@@ -18,9 +18,7 @@
     <string name="date">Data Acquisto</string>
     <string name="price">Prezzo</string>
     <string name="how_does_it_work">Come funziona</string>
-    <string name="how_does_it_work_content">Su questo portale puoi acquistare prodotti ed offerte esclusive.
-        Succesivamente ti invieremo una ricevuta d\'acquisto contenente un codice di 6 cifre che potrai utilizzare per
-        effettuare la prenotazione (dove richiesta) e ritirare i prodotti o servizi direttamente presso la struttura indicata.</string>
+    <string name="how_does_it_work_content">Tramite questa applicazione puoi prenotare prodotti ed offerte esclusive. Dopo la prenotazione potrai visualizzare il codice per la riscossione dell\'offerta nella sezione "Acquisti". Il codice da diritto ad accedere all\'offerta descritta presso l\'esercizio commerciale partner e va mostrato al commerciante al momento della riscossione.</string>
     <string name="how_does_it_work_content_2">Effettua la prenotazione con il proprietario della struttura contattando servizio al %s\n
         Recati presso la struttura e mostra il codice offerta per ottenere il servizio.\n
         Eventuali integrazioni e servizi aggiuntivi devono essere pagati all\'arrivo.</string>
@@ -62,7 +60,7 @@
     <string name="thanks">Grazie</string>
     <string name="error">Errore</string>
     <string name="error_payment">Errore durante il pagamento</string>
-    <string name="sent_email">Ti abbiamo inviato una email, il riferimento transazione è il seguente:</string>
+    <string name="sent_email">Ti abbiamo inviato una email.\nIl riferimento transazione è il seguente:</string>
     <string name="continue_shopping">Continua lo shopping</string>
     <string name="merchant">Azienda %s</string>
     <string name="address">Indirizzo %s</string>
@@ -74,4 +72,5 @@
     <string name="reservation">PRENOTA %s</string>
     <string name="price_detail" formatted="false">Pronotato con %s tramite applicazione mobile\nPagherai %s al ritiro</string>
     <string name="offer_code">Codice Offerta %s</string>
+    <string name="go_to_orders_to_see_the_code">Visualizza il codice da mostrare all\'esercente per la riscossione dell\'offerta nella sezione \"Acquisti\" dell\'applicazione</string>
 </resources>
