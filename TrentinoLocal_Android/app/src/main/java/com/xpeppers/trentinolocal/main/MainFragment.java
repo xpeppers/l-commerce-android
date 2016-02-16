@@ -31,6 +31,7 @@ import com.xpeppers.trentinolocal.R;
 import com.xpeppers.trentinolocal.adapter.OfferAdapter;
 import com.xpeppers.trentinolocal.adapter.OfferBoughtAdapter;
 import com.xpeppers.trentinolocal.details.StaticPageActivity;
+import com.xpeppers.trentinolocal.utils.Tracker;
 
 import java.util.List;
 
@@ -200,13 +201,13 @@ public class MainFragment extends BaseFragment {
                 break;
             case 0:
             default:
+                Tracker.sendScreenView("OFFERTE");
                 rootView = (ViewGroup) inflater
                         .inflate(R.layout.fragment_offers, container, false);
                 loadCardList(rootView, RemoteDataType.OFFER);
         }
         return rootView;
     }
-
 
     @Override
     public void onDestroy() {

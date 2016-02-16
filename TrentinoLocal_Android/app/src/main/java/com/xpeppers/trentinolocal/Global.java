@@ -64,7 +64,6 @@ public class Global extends Application {
         tracker = analytics.newTracker(getResources().getString(R.string.google_analytics_tracking_id));
         tracker.enableExceptionReporting(true);
         tracker.enableAdvertisingIdCollection(true);
-        tracker.enableAutoActivityTracking(true);
 
         registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
             @Override
