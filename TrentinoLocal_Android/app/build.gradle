@@ -68,18 +68,21 @@ android {
             applicationId "com.xpeppers.tdvpass"
             resValue "string", "facebook_app_id", "yourvalue"
             resValue "string", "google_maps_id", "yourvalue"
+            resValue "string", "google_analytics_tracking_id", "UA-65854002-6"
         }
 
         staging {
             applicationId "com.xpeppers.tdvpass"
             resValue "string", "facebook_app_id", "yourvalue"
             resValue "string", "google_maps_id", "yourvalue"
+            resValue "string", "google_analytics_tracking_id", "yourvalue"
         }
 
         dev {
             applicationId "com.xpeppers.trentinolocal"
             resValue "string", "facebook_app_id", "yourvalue"
             resValue "string", "google_maps_id", "AIzaSyC20LFgVKFp-shpY-fYV3jrUOqVSIztcVc"
+            resValue "string", "google_analytics_tracking_id", "yourvalue"
         }
     }
 }

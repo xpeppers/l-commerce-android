@@ -32,7 +32,6 @@ public class Global extends Application {
     public static final String PROVIDER_FB = "facebook";
     public static String LOG_TAG = "TRENTINO_LOCAL";
 
-    public static String GoogleAnalyticsCode = "UA-65854002-6";
     public static GoogleAnalytics analytics;
     public static Tracker tracker;
 
@@ -62,7 +61,7 @@ public class Global extends Application {
         analytics = GoogleAnalytics.getInstance(this);
         analytics.setLocalDispatchPeriod(1800);
 
-        tracker = analytics.newTracker(GoogleAnalyticsCode); // Replace with actual tracker id
+        tracker = analytics.newTracker(getResources().getString(R.string.google_analytics_tracking_id));
         tracker.enableExceptionReporting(true);
         tracker.enableAdvertisingIdCollection(true);
         tracker.enableAutoActivityTracking(true);
