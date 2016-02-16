@@ -80,6 +80,7 @@ public class MainFragment extends BaseFragment {
         switch (mPageNumber) {
             case 1:
                 if(global.isApiAuthenticated() && global.isFacebookLogin()) {
+                    Tracker.sendScreenView("ACQUISTI");
                     rootView = (ViewGroup) inflater
                             .inflate(R.layout.fragment_offer_boughts, container, false);
                     loadCardList(rootView, RemoteDataType.OFFERBOUGHT);
@@ -91,6 +92,7 @@ public class MainFragment extends BaseFragment {
             case 2:
             case 3:
                 if(mPageNumber == 2 && global.getReseller() != null && global.getReseller().getCustom_url() != null && !global.getReseller().getCustom_url().equals("")) {
+                    Tracker.sendScreenView("EVENTI");
                     rootView = (ViewGroup) inflater
                             .inflate(R.layout.fragment_webview, container, false);
                     WebView webView = (WebView) rootView.findViewById(R.id.webView);
@@ -110,6 +112,7 @@ public class MainFragment extends BaseFragment {
                     });
                 } else {
                     if (global.isApiAuthenticated() && global.isFacebookLogin()) {
+                        Tracker.sendScreenView("PROFILO");
                         rootView = (ViewGroup) inflater
                                 .inflate(R.layout.fragment_profile, container, false);
                         loadProfile(rootView);

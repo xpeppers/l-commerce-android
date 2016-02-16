@@ -31,6 +31,7 @@ import com.xpeppers.servicelib.services.OffersBoughtService;
 import com.xpeppers.servicelib.utils.CallBack;
 import com.xpeppers.trentinolocal.BaseActivity;
 import com.xpeppers.trentinolocal.R;
+import com.xpeppers.trentinolocal.utils.Tracker;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;

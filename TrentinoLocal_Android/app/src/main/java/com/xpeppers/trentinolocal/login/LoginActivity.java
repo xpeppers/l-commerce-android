@@ -17,6 +17,7 @@ import com.xpeppers.servicelib.utils.CallBack;
 import com.xpeppers.trentinolocal.BaseActivity;
 import com.xpeppers.trentinolocal.Global;
 import com.xpeppers.trentinolocal.R;
+import com.xpeppers.trentinolocal.utils.Tracker;
 
 import java.util.Arrays;
 
@@ -30,6 +31,8 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        Tracker.sendScreenView("LOGIN");
 
         initfacebookLogin();
 
