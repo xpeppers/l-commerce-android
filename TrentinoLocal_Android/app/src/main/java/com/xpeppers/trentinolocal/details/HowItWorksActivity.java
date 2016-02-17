@@ -7,14 +7,17 @@ import android.widget.TextView;
 
 import com.xpeppers.trentinolocal.BaseActivity;
 import com.xpeppers.trentinolocal.R;
+import com.xpeppers.trentinolocal.utils.Tracker;
 
-public class HowActivity extends BaseActivity {
+public class HowItWorksActivity extends BaseActivity {
     private TextView tvToolbarTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_how);
+        setContentView(R.layout.activity_how_it_works);
+
+        Tracker.sendScreenView("COME FUNZIONA");
 
         Toolbar mToolbarView = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbarView);

@@ -21,10 +21,6 @@ import com.xpeppers.trentinolocal.utils.Tracker;
 
 import java.util.Arrays;
 
-/**
- * @author Emilio Frusciante - FEj (efrusciante AT wish-op DOT com)
- * @since 07/04/15
- */
 public class LoginActivity extends BaseActivity {
 
     @Override

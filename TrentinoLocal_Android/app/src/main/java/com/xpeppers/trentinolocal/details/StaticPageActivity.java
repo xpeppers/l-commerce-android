@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.xpeppers.trentinolocal.BaseActivity;
 import com.xpeppers.trentinolocal.R;
+import com.xpeppers.trentinolocal.utils.Tracker;
 
 public class StaticPageActivity extends BaseActivity {
     public static String EXTRA_TITLE = "extra_title";
@@ -21,6 +22,8 @@ public class StaticPageActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_static_page);
+
+        Tracker.sendScreenView("SUPPORTO");
 
         Toolbar mToolbarView = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbarView);

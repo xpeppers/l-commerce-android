@@ -46,6 +46,7 @@ import com.xpeppers.trentinolocal.Global;
 import com.xpeppers.trentinolocal.PayPalConf;
 import com.xpeppers.trentinolocal.R;
 import com.xpeppers.trentinolocal.login.LoginActivity;
+import com.xpeppers.trentinolocal.utils.Tracker;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -218,11 +219,13 @@ public class OfferDetailActivity extends BaseActivity {
     }
 
     private void refreshActivity() {
+        final Offer offer = global.getSelectedOffer();
+
+        Tracker.sendScreenView("OFFERTE-" + offer.getTitle());
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                final Offer offer = global.getSelectedOffer();
-
                 tvToolbarTitle.setText(offer.getTitle());
                 tvTitle.setText(Html.fromHtml(offer.getTitle()));
                 //Spannable spannable = (Spannable) tvTitle.getText();

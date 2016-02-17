@@ -196,6 +196,7 @@ public class OfferBoughtDetailActivity extends BaseActivity {
     }
 
     private void asyncResponse(final OfferBought offerBought) {
+        Tracker.sendScreenView("ACQUISTI-" + offerBought.getTitle());
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

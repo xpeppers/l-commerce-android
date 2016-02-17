@@ -11,6 +11,7 @@ import com.rey.material.widget.Button;
 import com.xpeppers.trentinolocal.BaseActivity;
 import com.xpeppers.trentinolocal.R;
 import com.xpeppers.trentinolocal.main.MainActivity;
+import com.xpeppers.trentinolocal.utils.Tracker;
 
 public class ConfirmOrderDetailActivity extends BaseActivity {
     public static final String EXTRA_TITLE = "extra_title";
@@ -21,6 +22,8 @@ public class ConfirmOrderDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_confirm_order);
+
+        Tracker.sendScreenView("PAGAMENTO COMPLETATO");
 
         Intent intent = getIntent();
         String title = intent.getStringExtra(EXTRA_TITLE);

@@ -129,7 +129,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
-            android:name=".details.HowActivity"
+            android:name=".details.HowItWorksActivity"
             android:label="@string/title_activity_how"
             android:parentActivityName=".BaseActivity"
             android:theme="@style/AppTheme" >
