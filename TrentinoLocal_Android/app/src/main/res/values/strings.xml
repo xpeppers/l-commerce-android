@@ -8,7 +8,7 @@
     <string name="title_activity_offer_detail">OfferDetailActivity</string>
     <string name="title_activity_paypal">PaypalActivity</string>
     <string name="title_activity_confirm_payment">ConfirmPaymentActivity</string>
-    <string name="offers">Offerte</string>
+    <string name="offers">Esperienze</string>
     <string name="orders">Acquisti</string>
     <string name="events">Eventi</string>
     <string name="profile">Profilo</string>
