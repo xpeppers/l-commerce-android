@@ -1,10 +1,16 @@
 package com.xpeppers.trentinolocal.main;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -14,6 +20,8 @@ import android.widget.TextView;
 
 import com.facebook.appevents.AppEventsLogger;
 import com.github.ksoichiro.android.observablescrollview.CacheFragmentStatePagerAdapter;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.rey.material.widget.Button;
 import com.xpeppers.servicelib.bean.Auth;
 import com.xpeppers.servicelib.bean.Reseller;
@@ -22,7 +30,9 @@ import com.xpeppers.servicelib.services.UsersService;
 import com.xpeppers.servicelib.utils.CallBack;
 import com.xpeppers.trentinolocal.BaseActivity;
 import com.xpeppers.trentinolocal.Global;
+import com.xpeppers.trentinolocal.QuickstartPreferences;
 import com.xpeppers.trentinolocal.R;
+import com.xpeppers.trentinolocal.RegistrationIntentService;
 import com.xpeppers.trentinolocal.login.LoginActivity;
 
 /**
@@ -38,6 +48,10 @@ public class MainActivity extends BaseActivity {
 
     private ViewPager vpContent;
     private ContentPagerAdapter contentPagerAdapter;
+
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
+    private boolean isReceiverRegistered;
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -117,7 +131,39 @@ public class MainActivity extends BaseActivity {
                 }
             });
         }
+
+
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                SharedPreferences sharedPreferences =
+                        PreferenceManager.getDefaultSharedPreferences(context);
+                boolean sentToken = sharedPreferences
+                        .getBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false);
+                Log.d("RegIntentService", "sentToken= " + sentToken);
+            }
+        };
+
+        // Registering BroadcastReceiver
+        registerReceiver();
+
+        if (checkPlayServices()) {
+            Log.d("RegIntentService", "checkPlayServices= true");
+
+            // Start IntentService to register this application with GCM.
+            Intent _intent = new Intent(this, RegistrationIntentService.class);
+            startService(_intent);
+        }
     }
+
+    private void registerReceiver(){
+        if(!isReceiverRegistered) {
+            LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                    new IntentFilter(QuickstartPreferences.REGISTRATION_COMPLETE));
+            isReceiverRegistered = true;
+        }
+    }
+
 
     @Override
     protected void onResume() {
@@ -125,6 +171,14 @@ public class MainActivity extends BaseActivity {
 
         // Logs 'install' and 'app activate' App Events.
         AppEventsLogger.activateApp(this);
+        registerReceiver();
+    }
+
+    @Override
+    protected void onPause() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+        isReceiverRegistered = false;
+        super.onPause();
     }
 
     protected void configureButtonMenu() {
@@ -304,6 +358,25 @@ public class MainActivity extends BaseActivity {
             }
         }
     }
+
+
+    private boolean checkPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
+                        .show();
+            } else {
+                Log.i("checkPlayServices", "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
+
+
 
     private class ContentPagerAdapter extends CacheFragmentStatePagerAdapter {
         private int pageNumber = NUMBER_PAGES;
