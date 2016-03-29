@@ -72,5 +72,6 @@
     <string name="reservation">PRENOTA %s</string>
     <string name="price_detail" formatted="false">Pronotato con %s tramite applicazione mobile\nPagherai %s al ritiro</string>
     <string name="offer_code">Codice Offerta %s</string>
+    <string name="no_data_message">Acquista la tua prima esperienza</string>
     <string name="go_to_orders_to_see_the_code">Visualizza il codice da mostrare all\'esercente per la riscossione dell\'offerta nella sezione \"Acquisti\" dell\'applicazione</string>
 </resources>
