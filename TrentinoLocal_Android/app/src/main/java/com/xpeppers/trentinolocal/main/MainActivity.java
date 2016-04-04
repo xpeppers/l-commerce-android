@@ -30,9 +30,9 @@ import com.xpeppers.servicelib.services.UsersService;
 import com.xpeppers.servicelib.utils.CallBack;
 import com.xpeppers.trentinolocal.BaseActivity;
 import com.xpeppers.trentinolocal.Global;
-import com.xpeppers.trentinolocal.QuickstartPreferences;
+import com.xpeppers.trentinolocal.gcm.QuickstartPreferences;
 import com.xpeppers.trentinolocal.R;
-import com.xpeppers.trentinolocal.RegistrationIntentService;
+import com.xpeppers.trentinolocal.gcm.RegistrationIntentService;
 import com.xpeppers.trentinolocal.login.LoginActivity;
 
 /**

@@ -1,4 +1,4 @@
-package com.xpeppers.trentinolocal;
+package com.xpeppers.trentinolocal.gcm;
 
 /**
  * Created by linnal on 3/29/16.

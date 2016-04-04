@@ -1,4 +1,4 @@
-package com.xpeppers.trentinolocal;
+package com.xpeppers.trentinolocal.gcm;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -11,7 +11,11 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
-import com.xpeppers.trentinolocal.main.MainActivity;
+import com.xpeppers.trentinolocal.R;
+import com.xpeppers.trentinolocal.details.OfferDetailActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by linnal on 3/29/16.
@@ -32,7 +36,6 @@ public class MyGcmListenerService extends GcmListenerService {
     public void onMessageReceived(String from, Bundle data) {
         String message = data.getString("message");
         Log.d(TAG, "From: " + from);
-        Log.d(TAG, "Message: " + message);
 
         if (from.startsWith("/topics/")) {
             // message received from some topic.
@@ -40,30 +43,25 @@ public class MyGcmListenerService extends GcmListenerService {
             // normal downstream message.
         }
 
-        // [START_EXCLUDE]
-        /**
-         * Production applications would usually process the message here.
-         * Eg: - Syncing with server.
-         *     - Store message in local database.
-         *     - Update UI.
-         */
+        try {
+            JSONObject js = new JSONObject(message);
+            if(js.has("id") && js.has("title")){
+                sendNotification(js.getString("title"), js.getInt("id"));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-        /**
-         * In some cases it may be useful to show a notification indicating to the user
-         * that a message was received.
-         */
-        sendNotification(message);
-        // [END_EXCLUDE]
     }
-    // [END receive_message]
 
     /**
      * Create and show a simple notification containing the received GCM message.
      *
      * @param message GCM message received.
      */
-    private void sendNotification(String message) {
-        Intent intent = new Intent(this, MainActivity.class);
+    private void sendNotification(String message, int offerId) {
+        Intent intent = new Intent(this, OfferDetailActivity.class);
+        intent.putExtra(OfferDetailActivity.EXTRA_OFFER_ID, offerId);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);

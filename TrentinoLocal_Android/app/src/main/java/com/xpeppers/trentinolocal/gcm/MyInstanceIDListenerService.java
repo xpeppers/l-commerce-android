@@ -1,4 +1,4 @@
-package com.xpeppers.trentinolocal;
+package com.xpeppers.trentinolocal.gcm;
 
 import android.content.Intent;
 
