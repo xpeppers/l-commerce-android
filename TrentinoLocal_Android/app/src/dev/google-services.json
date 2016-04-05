@@ -1,17 +1,17 @@
 {
   "project_info": {
-    "project_id": "trentinolocal-3488b",
-    "project_number": "507341785929",
-    "name": "TrentinoLocal"
+    "project_id": "trentinolocaltdvpass",
+    "project_number": "1083200515252",
+    "name": "TrentinoLocalTdvpass"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:507341785929:android:65e4b5df46f48373",
-        "client_id": "android:com.xpeppers.trentinolocal",
+        "mobilesdk_app_id": "1:1083200515252:android:d2b9c4bc6a3951c0",
+        "client_id": "android:com.xpeppers.tdvpass",
         "client_type": 1,
         "android_client_info": {
-          "package_name": "com.xpeppers.trentinolocal",
+          "package_name": "com.xpeppers.tdvpass",
           "certificate_hash": []
         }
       },
