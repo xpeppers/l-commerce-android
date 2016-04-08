@@ -13,6 +13,7 @@ import android.util.Log;
 import com.google.android.gms.gcm.GcmListenerService;
 import com.xpeppers.trentinolocal.R;
 import com.xpeppers.trentinolocal.details.OfferDetailActivity;
+import com.xpeppers.trentinolocal.main.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,7 +36,7 @@ public class MyGcmListenerService extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
         String message = data.getString("message");
-        Log.d(TAG, "From: " + from);
+        Log.i(TAG, "From: " + from);
 
         if (from.startsWith("/topics/")) {
             // message received from some topic.
@@ -45,8 +46,10 @@ public class MyGcmListenerService extends GcmListenerService {
 
         try {
             JSONObject js = new JSONObject(message);
-            if(js.has("id") && js.has("title")){
-                sendNotification(js.getString("title"), js.getInt("id"));
+            if(js.has("generic") && js.has("title")){
+                sendNotification(pendingIntentForMainActivity(), js.getString("title"));
+            }else if(js.has("id") && js.has("title")){
+                sendNotification(pendingIntentForDetail(js.getInt("id")), js.getString("title"));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -54,17 +57,33 @@ public class MyGcmListenerService extends GcmListenerService {
 
     }
 
-    /**
-     * Create and show a simple notification containing the received GCM message.
-     *
-     * @param message GCM message received.
-     */
-    private void sendNotification(String message, int offerId) {
+    private PendingIntent pendingIntentForDetail(int offerId){
         Intent intent = new Intent(this, OfferDetailActivity.class);
         intent.putExtra(OfferDetailActivity.EXTRA_OFFER_ID, offerId);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
+
+        return pendingIntent;
+    }
+
+
+    private PendingIntent pendingIntentForMainActivity(){
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+                PendingIntent.FLAG_ONE_SHOT);
+
+        return pendingIntent;
+    }
+
+    /**
+     * Create and show a simple notification containing the received GCM message.
+     *
+     * @param message GCM message received.
+     */
+    private void sendNotification(PendingIntent pendingIntent, String message) {
+
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
