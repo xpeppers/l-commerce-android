@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -17,6 +18,9 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.facebook.FacebookSdk;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareButton;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -83,10 +87,16 @@ public class OfferDetailActivity extends BaseActivity {
     private ImageView ivOfferSingleImage;
     private GoogleMap map;
 
+    ShareButton shareButton; 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        FacebookSdk.sdkInitialize(this);
+
         setContentView(R.layout.activity_detail_offer);
+
 
         showProgressDialog();
 
@@ -97,6 +107,12 @@ public class OfferDetailActivity extends BaseActivity {
 
         tvToolbarTitle = (TextView) findViewById(R.id.tvToolbarTitle);
         tvToolbarTitle.setText("Dettaglio");
+
+        shareButton = (ShareButton)findViewById(R.id.share_btn);
+        ShareLinkContent content = new ShareLinkContent.Builder()
+                .setContentUrl(Uri.parse("http://dev.tapjoy.com/faq/how-to-find-sender-id-and-api-key-for-gcm/")) //TODO set the right url
+                .build();
+        shareButton.setShareContent(content);
 
         final ScrollView svMain = (ScrollView) findViewById(R.id.svMain);
         ImageView transparentImageView = (ImageView) findViewById(R.id.transparent_image);
@@ -179,11 +195,19 @@ public class OfferDetailActivity extends BaseActivity {
                 onBuyPressed();
             }
         });
+        bPurchase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                shareOnFacebook();
+            }
+        });
 
         Intent intent = getIntent();
         offerId = intent.getLongExtra(EXTRA_OFFER_ID, 0);
         loadData(offerId);
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -228,8 +252,6 @@ public class OfferDetailActivity extends BaseActivity {
             public void run() {
                 tvToolbarTitle.setText(offer.getTitle());
                 tvTitle.setText(Html.fromHtml(offer.getTitle()));
-                //Spannable spannable = (Spannable) tvTitle.getText();
-                //spannable.setSpan(new StrikethroughSpan(), 3, (offer.getTitle() + " Test barrato").length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 tvDescription.setText(Html.fromHtml(offer.getDescription()));
                 tvMerchant.setText(Html.fromHtml(offer.getMerchant()));
                 tvAddress.setText(offer.getAddress().toString());
@@ -321,14 +343,6 @@ public class OfferDetailActivity extends BaseActivity {
                     tvOldPrice.setVisibility(View.GONE);
                 }
 
-                /*
-                String priceLabel = "PRENOTA | ";
-                if (offer.getOriginal_price() > 0) {
-                    priceLabel += "<strike>" + formattedOriginalPrice + "</strike> ";
-                }
-                priceLabel += formattedPrice;
-                Spanned bLabel = Html.fromHtml(priceLabel, null, new CustomHtmlTagHandler());
-                */
 
                 String formattedReservationPrice = new DecimalFormat("##,##0.00€").format(offer.getReservation_price());
                 bPurchase.setText(getResources().getString(R.string.reservation, formattedReservationPrice));
@@ -379,6 +393,10 @@ public class OfferDetailActivity extends BaseActivity {
             map.animateCamera(CameraUpdateFactory.newLatLngZoom(position, 15.0f));
             map.getUiSettings().setScrollGesturesEnabled(false);
         }
+    }
+
+    public void shareOnFacebook(){
+
     }
 
     public void onBuyPressed() {
