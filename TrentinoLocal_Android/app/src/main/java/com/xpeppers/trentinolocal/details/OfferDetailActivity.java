@@ -87,7 +87,7 @@ public class OfferDetailActivity extends BaseActivity {
     private ImageView ivOfferSingleImage;
     private GoogleMap map;
 
-    ShareButton shareButton; 
+    ShareButton shareButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,10 +109,7 @@ public class OfferDetailActivity extends BaseActivity {
         tvToolbarTitle.setText("Dettaglio");
 
         shareButton = (ShareButton)findViewById(R.id.share_btn);
-        ShareLinkContent content = new ShareLinkContent.Builder()
-                .setContentUrl(Uri.parse("http://dev.tapjoy.com/faq/how-to-find-sender-id-and-api-key-for-gcm/")) //TODO set the right url
-                .build();
-        shareButton.setShareContent(content);
+
 
         final ScrollView svMain = (ScrollView) findViewById(R.id.svMain);
         ImageView transparentImageView = (ImageView) findViewById(R.id.transparent_image);
@@ -221,6 +218,7 @@ public class OfferDetailActivity extends BaseActivity {
     }
 
     private void loadData(long offerId) {
+        Log.i("OFFER DETAIL ACTIVITY", offerId + " ");
         OffersService.getInstance(getApplicationContext()).get(offerId, new CallBack() {
             @Override
             public void onSuccess(Object result) {
@@ -231,8 +229,11 @@ public class OfferDetailActivity extends BaseActivity {
 
             @Override
             public void onFailure(Throwable caught) {
+                // TODO: 4/15/16  handle better: dialog error should be changed and better to close current activity
                 hideProgressDialog();
                 asyncDialog("Error", caught.getMessage());
+                Log.i("OFFER DETAIL ACTIVITY", caught.getLocalizedMessage());
+
             }
         });
     }
@@ -378,6 +379,13 @@ public class OfferDetailActivity extends BaseActivity {
 
                 if (map != null) {
                     configureMap(map, offer.getAddress().getLatitude(), offer.getAddress().getLongitude());
+                }
+
+                if(offer.getUrl() != null){
+                    ShareLinkContent content = new ShareLinkContent.Builder()
+                            .setContentUrl(Uri.parse(offer.getUrl()))
+                            .build();
+                    shareButton.setShareContent(content);
                 }
             }
         });

@@ -38,7 +38,7 @@ public class RestClient {
 
         if(servicesProperties != null && !servicesProperties.isEmpty()) {
             BASE_URL = servicesProperties.getProperty(Constants.BASE_URL);
-            Log.d("url", BASE_URL);
+            Log.i("BASE_URL", BASE_URL);
         }
 
 

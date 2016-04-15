@@ -29,6 +29,18 @@ public class Offer implements Serializable {
     private String facebook;
     private String twitter;
 
+
+    private String url;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+
     public long getId() {
         return id;
     }
@@ -183,6 +195,7 @@ public class Offer implements Serializable {
         msg += "telephone: " + getTelephone() + "\n";
         msg += "email: " + getEmail() + "\n";
         msg += "web_site: " + getWeb_site() + "\n";
+        msg += "url: " + getUrl() + "\n";
         msg += "\n\n";
 
         return msg;

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -116,42 +117,7 @@ public class MainFragment extends BaseFragment {
                         rootView = (ViewGroup) inflater
                                 .inflate(R.layout.fragment_profile, container, false);
                         loadProfile(rootView);
-                        /*
-                        TextView tvHow = (TextView) rootView.findViewById(R.id.tvHow);
-                        if(global.getReseller() != null && global.getReseller().getHow_it_works() != null && !global.getReseller().getHow_it_works().equals("")) {
-                            tvHow.setVisibility(View.VISIBLE);
 
-                            tvHow.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Intent staticPage = new Intent(v.getContext(), StaticPageActivity.class);
-                                    staticPage.putExtra(StaticPageActivity.EXTRA_TITLE, rootView.getResources().getString(R.string.how));
-                                    staticPage.putExtra(StaticPageActivity.EXTRA_BODY, global.getReseller().getHow_it_works());
-                                    v.getContext().startActivity(staticPage);
-                                }
-                            });
-                        } else {
-                            tvHow.setVisibility(View.GONE);
-                        }
-
-                        TextView tvSupport = (TextView) rootView.findViewById(R.id.tvSupport);
-                        if(global.getReseller() != null && global.getReseller().getSupport() != null && !global.getReseller().getSupport().equals("")) {
-                            tvSupport.setVisibility(View.VISIBLE);
-
-                            tvSupport.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Intent staticPage = new Intent(v.getContext(), StaticPageActivity.class);
-                                    staticPage.putExtra(StaticPageActivity.EXTRA_TITLE, rootView.getResources().getString(R.string.support));
-                                    staticPage.putExtra(StaticPageActivity.EXTRA_BODY, global.getReseller().getSupport());
-                                    v.getContext().startActivity(staticPage);
-                                }
-                            });
-                        } else {
-                            tvSupport.setVisibility(View.GONE);
-                        }
-
-                        */
 
                         Button bHow = (Button) rootView.findViewById(R.id.bHow);
                         if (global.getReseller() != null && global.getReseller().getHow_it_works() != null && !global.getReseller().getHow_it_works().equals("")) {
@@ -263,7 +229,12 @@ public class MainFragment extends BaseFragment {
     }
 
     private void loadData(RemoteDataType remoteDataType, boolean force, final ViewGroup view) {
-        if(force || !checkSetDataType(remoteDataType)) {
+        Log.i("MAINACT", "fragment loadData " + global.getOffers().size());
+        Boolean b = !checkSetDataType(remoteDataType);
+        Log.i("MAINACT", "fragment loadData " + b);
+        Log.i("MAINACT", "fragment loadData " + remoteDataType);
+
+        if(force || b) {
             switch (remoteDataType) {
                 case OFFER:
                     OffersService.getInstance(global.getApplicationContext()).getAll(new CallBack() {
@@ -330,6 +301,7 @@ public class MainFragment extends BaseFragment {
         switch (remoteDataType) {
             case OFFER:
                 List<Offer> offers = (List<Offer>) results;
+                Log.i("MAINACT", "asyncResponse " + offers.size());
                 global.setOffers(offers);
                 break;
             case OFFERBOUGHT:
@@ -347,6 +319,9 @@ public class MainFragment extends BaseFragment {
     }
 
     private void refreshCard(RemoteDataType remoteDataType) {
+        Log.i("MAINACT", "fragment refreshCard " + remoteDataType);
+        Log.i("MAINACT", "fragment refreshCard " + global.getOffers().size());
+
         switch (remoteDataType) {
             case OFFER:
                 getActivity().runOnUiThread(new Runnable() {

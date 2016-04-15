@@ -49,7 +49,7 @@ public class MyGcmListenerService extends GcmListenerService {
             if(js.has("generic") && js.has("title")){
                 sendNotification(pendingIntentForMainActivity(), js.getString("title"));
             }else if(js.has("id") && js.has("title")){
-                sendNotification(pendingIntentForDetail(js.getInt("id")), js.getString("title"));
+                sendNotification(pendingIntentForDetail(js.getLong("id")), js.getString("title"));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -57,12 +57,12 @@ public class MyGcmListenerService extends GcmListenerService {
 
     }
 
-    private PendingIntent pendingIntentForDetail(int offerId){
+    private PendingIntent pendingIntentForDetail(long offerId){
         Intent intent = new Intent(this, OfferDetailActivity.class);
         intent.putExtra(OfferDetailActivity.EXTRA_OFFER_ID, offerId);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
+                PendingIntent.FLAG_UPDATE_CURRENT);
 
         return pendingIntent;
     }
@@ -70,9 +70,11 @@ public class MyGcmListenerService extends GcmListenerService {
 
     private PendingIntent pendingIntentForMainActivity(){
         Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra(MainActivity.EXTRA_ACTION, "refresh");
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
+                PendingIntent.FLAG_UPDATE_CURRENT);
 
         return pendingIntent;
     }
@@ -97,6 +99,7 @@ public class MyGcmListenerService extends GcmListenerService {
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        int n = (int) System.currentTimeMillis();
+        notificationManager.notify(n , notificationBuilder.build());
     }
 }

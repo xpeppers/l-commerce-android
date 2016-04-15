@@ -30,8 +30,8 @@ import com.xpeppers.servicelib.services.UsersService;
 import com.xpeppers.servicelib.utils.CallBack;
 import com.xpeppers.trentinolocal.BaseActivity;
 import com.xpeppers.trentinolocal.Global;
-import com.xpeppers.trentinolocal.gcm.QuickstartPreferences;
 import com.xpeppers.trentinolocal.R;
+import com.xpeppers.trentinolocal.gcm.QuickstartPreferences;
 import com.xpeppers.trentinolocal.gcm.RegistrationIntentService;
 import com.xpeppers.trentinolocal.login.LoginActivity;
 
@@ -41,8 +41,10 @@ import com.xpeppers.trentinolocal.login.LoginActivity;
  */
 public class MainActivity extends BaseActivity {
     public static String EXTRA_START_PAGE = "start_page";
+    public static String EXTRA_ACTION = "action";
     private int NUMBER_PAGES = 3;
     private int START_PAGE_NUMBER = 0;
+    private String ACTION_REFRESH = "refresh";
 
     private TextView tvToolbarTitle = null;
 
@@ -57,6 +59,20 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Log.i("MAINACT", "on create");
+
+        // Init First Page
+        Intent intent = getIntent();
+        int start_page = intent.getIntExtra(EXTRA_START_PAGE, START_PAGE_NUMBER);
+        String action = intent.getStringExtra(EXTRA_ACTION);
+        if(action != null && action.equals(ACTION_REFRESH)){
+            Global global = (Global) this.getApplicationContext();
+            Log.i("MAINACT", "before "+global.getOffers().size() + " ");
+            global.getOffers().clear();
+            Log.i("MAINACT", "after "+global.getOffers().size() + " ");
+        }
+
 
         Toolbar mToolbarView = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbarView);
@@ -103,9 +119,8 @@ public class MainActivity extends BaseActivity {
 
         configureButtonMenu();
 
-        // Init First Page
-        Intent intent = getIntent();
-        int start_page = intent.getIntExtra(EXTRA_START_PAGE, START_PAGE_NUMBER);
+
+
         vpContent.setCurrentItem(start_page);
         selectButtonMenu(start_page);
         selectHeaderTitle(start_page);
@@ -154,6 +169,8 @@ public class MainActivity extends BaseActivity {
             Intent _intent = new Intent(this, RegistrationIntentService.class);
             startService(_intent);
         }
+
+
     }
 
     private void registerReceiver(){
@@ -168,6 +185,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Log.i("MAINACT", "on resume");
 
         // Logs 'install' and 'app activate' App Events.
         AppEventsLogger.activateApp(this);
@@ -207,6 +225,7 @@ public class MainActivity extends BaseActivity {
             bProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     int pageNumber = 2;
                     if(global.getReseller() != null && global.getReseller().getCustom_url() != null && !global.getReseller().getCustom_url().equals("")) {
                         pageNumber = 3;

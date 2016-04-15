@@ -53,13 +53,15 @@ public class OfferAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             offerViewHolder.getTvOldPrice().setVisibility(View.GONE);
         }
 
-        // show The Image
-        Picasso.with(context)
-                .load(global.getOffers().get(i).getImage_url())
-                .placeholder(R.drawable.placeholder)
-                .fit()
-                .centerCrop()
-                .into(offerViewHolder.getIvOffer());
+        if(global.getOffers().get(i).getImage_url() != null) {
+            // show The Image
+            Picasso.with(context)
+                    .load(global.getOffers().get(i).getImage_url())
+                    .placeholder(R.drawable.placeholder)
+                    .fit()
+                    .centerCrop()
+                    .into(offerViewHolder.getIvOffer());
+        }
     }
 
     @Override

@@ -33,6 +33,17 @@ public class OfferBought implements Serializable {
     private String facebook;
     private String twitter;
 
+    private String url;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+
     public long getId() {
         return id;
     }

@@ -115,12 +115,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
                 <data android:scheme="http"
-                    android:host="dev.tapjoy.com"
-                    android:pathPrefix="/faq" />
-                <!-- note that the leading "/" is required for pathPrefix-->
-                <!-- Accepts URIs that begin with "tdv://offers” -->
-                <data android:scheme="tdv"
-                    android:host="offers" />
+                    android:host="yourvalue" />
             </intent-filter>
         </activity>
         <activity
