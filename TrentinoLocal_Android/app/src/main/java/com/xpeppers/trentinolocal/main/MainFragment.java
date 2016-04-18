@@ -230,7 +230,7 @@ public class MainFragment extends BaseFragment {
 
     private void loadData(RemoteDataType remoteDataType, boolean force, final ViewGroup view) {
         Log.i("MAINACT", "fragment loadData " + global.getOffers().size());
-        Boolean b = !checkSetDataType(remoteDataType);
+        boolean b = !checkSetDataType(remoteDataType);
         Log.i("MAINACT", "fragment loadData " + b);
         Log.i("MAINACT", "fragment loadData " + remoteDataType);
 
