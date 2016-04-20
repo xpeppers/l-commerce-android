@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -229,10 +228,7 @@ public class MainFragment extends BaseFragment {
     }
 
     private void loadData(RemoteDataType remoteDataType, boolean force, final ViewGroup view) {
-        Log.i("MAINACT", "fragment loadData " + global.getOffers().size());
         boolean b = !checkSetDataType(remoteDataType);
-        Log.i("MAINACT", "fragment loadData " + b);
-        Log.i("MAINACT", "fragment loadData " + remoteDataType);
 
         if(force || b) {
             switch (remoteDataType) {
@@ -301,7 +297,6 @@ public class MainFragment extends BaseFragment {
         switch (remoteDataType) {
             case OFFER:
                 List<Offer> offers = (List<Offer>) results;
-                Log.i("MAINACT", "asyncResponse " + offers.size());
                 global.setOffers(offers);
                 break;
             case OFFERBOUGHT:
@@ -319,8 +314,6 @@ public class MainFragment extends BaseFragment {
     }
 
     private void refreshCard(RemoteDataType remoteDataType) {
-        Log.i("MAINACT", "fragment refreshCard " + remoteDataType);
-        Log.i("MAINACT", "fragment refreshCard " + global.getOffers().size());
 
         switch (remoteDataType) {
             case OFFER:

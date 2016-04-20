@@ -109,12 +109,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <intent-filter android:label="tdv_offers">
+            <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="http"
-                    android:host="@string/frontend_baseurl" />
+                <data  android:scheme="http" />
+                <data  android:scheme="https" />
+                <data android:host="@string/frontend_baseurl" />
             </intent-filter>
         </activity>
         <activity
