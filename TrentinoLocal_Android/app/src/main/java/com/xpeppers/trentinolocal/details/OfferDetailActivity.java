@@ -192,12 +192,7 @@ public class OfferDetailActivity extends BaseActivity {
                 onBuyPressed();
             }
         });
-        bPurchase.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                shareOnFacebook();
-            }
-        });
+
 
         Intent intent = getIntent();
         offerId = intent.getLongExtra(EXTRA_OFFER_ID, 0);
@@ -403,9 +398,6 @@ public class OfferDetailActivity extends BaseActivity {
         }
     }
 
-    public void shareOnFacebook(){
-
-    }
 
     public void onBuyPressed() {
         if(global.isApiAuthenticated() && global.isFacebookLogin()) {

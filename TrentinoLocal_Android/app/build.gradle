@@ -24,8 +24,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 5
-        versionName "1.4"
+        versionCode 7
+        versionName "1.6"
         multiDexEnabled true
     }
 
@@ -73,6 +73,7 @@ android {
             resValue "string", "google_maps_id", "yourvalue"
             resValue "string", "google_analytics_tracking_id", "yourvalue"
             resValue "string", "frontend_baseurl", "yourvalue"
+            resValue "string", "gcm_topic", "yourvalue"
         }
 
         staging {
@@ -81,6 +82,7 @@ android {
             resValue "string", "google_maps_id", "yourvalue"
             resValue "string", "google_analytics_tracking_id", "yourvalue"
             resValue "string", "frontend_baseurl", "yourvalue"
+            resValue "string", "gcm_topic", "yourvalue"
         }
 
         dev {
@@ -89,6 +91,7 @@ android {
             resValue "string", "google_maps_id", "yourvalue"
             resValue "string", "google_analytics_tracking_id", "yourvalue"
             resValue "string", "frontend_baseurl", "yourvalue"
+            resValue "string", "gcm_topic", "yourvalue"
         }
     }
 }
