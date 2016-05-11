@@ -31,6 +31,7 @@ import com.xpeppers.servicelib.utils.CallBack;
 import com.xpeppers.trentinolocal.BaseActivity;
 import com.xpeppers.trentinolocal.Global;
 import com.xpeppers.trentinolocal.R;
+import com.xpeppers.trentinolocal.details.OfferDetailActivity;
 import com.xpeppers.trentinolocal.gcm.QuickstartPreferences;
 import com.xpeppers.trentinolocal.gcm.RegistrationIntentService;
 import com.xpeppers.trentinolocal.login.LoginActivity;
@@ -68,9 +69,7 @@ public class MainActivity extends BaseActivity {
         String action = intent.getStringExtra(EXTRA_ACTION);
         if(action != null && action.equals(ACTION_REFRESH)){
             Global global = (Global) this.getApplicationContext();
-            Log.i("MAINACT", "before "+global.getOffers().size() + " ");
             global.getOffers().clear();
-            Log.i("MAINACT", "after "+global.getOffers().size() + " ");
         }
 
 
@@ -170,7 +169,26 @@ public class MainActivity extends BaseActivity {
             startService(_intent);
         }
 
+        checkIfAppWasOpenFromBrowser( getIntent().getDataString() );
 
+
+
+    }
+
+
+    private void checkIfAppWasOpenFromBrowser(String url){
+        getIntent().setData(null);
+
+        if (url != null) {
+            String[] params = url.split("/");
+            if(params[2].equals("offer")){
+                long offerId = Long.parseLong(params[3]);
+                Intent detail = new Intent(this, OfferDetailActivity.class);
+                detail.putExtra(OfferDetailActivity.EXTRA_OFFER_ID, offerId);
+                detail.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(detail);
+            }
+        }
     }
 
     private void registerReceiver(){
@@ -186,10 +204,21 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         Log.i("MAINACT", "on resume");
-
+        if(getIntent().getDataString() != null){
+            checkIfAppWasOpenFromBrowser( getIntent().getDataString() );
+        }
         // Logs 'install' and 'app activate' App Events.
         AppEventsLogger.activateApp(this);
         registerReceiver();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        Log.i("MAINACT", "onNewIntent " + intent.getDataString());
+
+        super.onNewIntent(intent);
+        setIntent(intent);
+        //now getIntent() should always return the last received intent
     }
 
     @Override
