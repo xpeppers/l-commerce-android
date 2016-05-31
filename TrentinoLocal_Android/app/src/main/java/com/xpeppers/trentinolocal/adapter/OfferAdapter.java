@@ -44,7 +44,8 @@ public class OfferAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         String formattedPrice = new DecimalFormat("##,##0.00€").format(global.getOffers().get(i).getPrice());
         offerViewHolder.getTvPrice().setText(formattedPrice);
 
-        if(global.getOffers().get(i).getOriginal_price() > 0) {
+        double original_price = global.getOffers().get(i).getOriginal_price();
+        if(original_price > 0 && original_price > global.getOffers().get(i).getPrice()) {
             String formattedOriginalPrice = new DecimalFormat("##,##0.00€").format(global.getOffers().get(i).getOriginal_price());
             offerViewHolder.getTvOldPrice().setText(Html.fromHtml("<strike>" + formattedOriginalPrice + "</strike>"));
             offerViewHolder.getTvOldPrice().setPaintFlags(offerViewHolder.getTvOldPrice().getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);

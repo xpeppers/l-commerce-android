@@ -330,7 +330,7 @@ public class OfferDetailActivity extends BaseActivity {
                 String formattedPrice = new DecimalFormat("##,##0.00€").format(offer.getPrice());
                 tvPrice.setText(formattedPrice);
 
-                if (offer.getOriginal_price() > 0) {
+                if (offer.getOriginal_price() > 0 && offer.getOriginal_price() > offer.getPrice()) {
                     String formattedOriginalPrice = new DecimalFormat("##,##0.00€").format(offer.getOriginal_price());
                     tvOldPrice.setText(Html.fromHtml("<strike>" + formattedOriginalPrice + "</strike>"));
                     tvOldPrice.setPaintFlags(tvOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
