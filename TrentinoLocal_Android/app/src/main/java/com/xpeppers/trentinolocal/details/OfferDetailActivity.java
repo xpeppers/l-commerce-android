@@ -378,9 +378,14 @@ public class OfferDetailActivity extends BaseActivity {
                 }
 
                 if(offer.getUrl() != null){
-                    ShareLinkContent content = new ShareLinkContent.Builder()
+                    ShareLinkContent.Builder builder = new ShareLinkContent.Builder()
                             .setContentUrl(Uri.parse(offer.getUrl()))
-                            .build();
+                            .setContentTitle(offer.getTitle());
+
+                    if(offer.getImage_url() != null) {
+                        builder.setImageUrl(Uri.parse(offer.getImage_url()));
+                    }
+                    ShareLinkContent content = builder.build();
                     shareButton.setShareContent(content);
                 }
             }
