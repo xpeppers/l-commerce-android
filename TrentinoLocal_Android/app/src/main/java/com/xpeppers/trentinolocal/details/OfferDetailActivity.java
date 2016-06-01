@@ -109,6 +109,7 @@ public class OfferDetailActivity extends BaseActivity {
         tvToolbarTitle.setText("Dettaglio");
 
         shareButton = (ShareButton)findViewById(R.id.share_btn);
+        shareButton.setVisibility(View.VISIBLE);
 
 
         final ScrollView svMain = (ScrollView) findViewById(R.id.svMain);
@@ -412,11 +413,17 @@ public class OfferDetailActivity extends BaseActivity {
                     orderId = order.getId();
                     orderCoupon = order.getCoupon();
 
+                    double reservationPrice = global.getSelectedOffer().getReservation_price();
+                    if( reservationPrice <= 0 ){
+                        return;
+                    }
+
                     PayPalConfiguration config = new PayPalConfiguration()
                             .environment(PayPalConf.MODE)
-                            .clientId(PayPalConf.APP_ID);
+                            .clientId(PayPalConf.APP_ID)
+                            .acceptCreditCards(PayPalConf.AcceptCreditCards);
 
-                    PayPalPayment payment = new PayPalPayment(new BigDecimal(global.getSelectedOffer().getReservation_price()), "EUR",
+                    PayPalPayment payment = new PayPalPayment(new BigDecimal(reservationPrice), "EUR",
                             global.getSelectedOffer().getTitle(), PayPalPayment.PAYMENT_INTENT_AUTHORIZE);
 
                     Intent intent = new Intent(OfferDetailActivity.this, PaymentActivity.class);
