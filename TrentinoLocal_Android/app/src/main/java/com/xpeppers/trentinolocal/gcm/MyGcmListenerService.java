@@ -8,7 +8,6 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
 import com.xpeppers.trentinolocal.R;
@@ -36,13 +35,6 @@ public class MyGcmListenerService extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
         String message = data.getString("message");
-        Log.i(TAG, "From: " + from);
-
-        if (from.startsWith("/topics/")) {
-            // message received from some topic.
-        } else {
-            // normal downstream message.
-        }
 
         try {
             JSONObject js = new JSONObject(message);
@@ -86,15 +78,20 @@ public class MyGcmListenerService extends GcmListenerService {
      */
     private void sendNotification(PendingIntent pendingIntent, String message) {
 
+        boolean useWhiteIcon = (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.tdv_large_icon)
+                .setSmallIcon(useWhiteIcon ? R.drawable.tdv_large_icon_silhouete : R.drawable.tdv_large_icon)
                 .setContentTitle(getResources().getString(R.string.notification_title))
                 .setContentText(message)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
+
+        if(useWhiteIcon) {
+            notificationBuilder.setColor(getResources().getColor(R.color.trentino_background));
+        }
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -102,4 +99,5 @@ public class MyGcmListenerService extends GcmListenerService {
         int n = (int) System.currentTimeMillis();
         notificationManager.notify(n , notificationBuilder.build());
     }
+
 }
