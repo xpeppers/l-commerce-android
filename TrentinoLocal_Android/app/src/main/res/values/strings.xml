@@ -75,4 +75,5 @@
     <string name="no_data_message">Acquista la tua prima esperienza</string>
     <string name="go_to_orders_to_see_the_code">Visualizza il codice da mostrare all\'esercente per la riscossione dell\'offerta nella sezione \"Acquisti\" dell\'applicazione</string>
     <string name="share">Share</string>
+    <string name="notification_title" />
 </resources>
